@@ -17,7 +17,7 @@ import java.util.Collection;
 @AllArgsConstructor
 @Getter
 @Setter
-@Table(name = "users")
+@Table(name = "mistakes")
 public class Mistakes {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

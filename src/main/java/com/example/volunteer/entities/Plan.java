@@ -55,11 +55,11 @@ public class Plan {
     private int total;
 
     @OneToOne
-    private Teacher createdBy;
+    private User createdBy;
 
     private int createdDate;
     @OneToOne
-    private Director createdFor;
+    private User createdFor;
     private  boolean isSingIn;
 
 }

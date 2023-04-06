@@ -3,12 +3,9 @@ package com.example.volunteer.entities;
 import lombok.*;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Data
@@ -16,8 +13,8 @@ import java.util.Collection;
 @AllArgsConstructor
 @Getter
 @Setter
-@Table(name = "departaments")
-public class Departament {
+@Table(name = "departments")
+public class Department {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -26,7 +23,10 @@ public class Departament {
     private String name;
 
     @OneToOne
-    private Director department;
+    private User director;
+
+    @OneToMany
+    private List<User> teachers;
 
 
 }

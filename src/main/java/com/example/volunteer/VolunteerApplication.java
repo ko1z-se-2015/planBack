@@ -22,8 +22,8 @@ public class VolunteerApplication {
 	@Bean
 	CommandLineRunner run(RoleService roleService) {
 		return args -> {
-			roleService.addRole("VOLUNTEER");
-			roleService.addRole("ORGANIZER");
+			roleService.addRole("TEACHER");
+			roleService.addRole("DIRECTOR");
 		};
 	}
 	@Bean
