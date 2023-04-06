@@ -18,7 +18,7 @@ import java.util.Collection;
 @Getter
 @Setter
 @Table(name = "users")
-public class Plan {
+public class   Plan {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -61,5 +61,7 @@ public class Plan {
     @OneToOne
     private User createdFor;
     private  boolean isSingIn;
+
+    private boolean isSaved;
 
 }

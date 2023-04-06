@@ -36,9 +36,6 @@ public class Notification {
     @OneToOne
     private User sendTo;
 
-    @NotNull(message = "это поле должно быть заполнена")
-    @NotEmpty(message = "это поле должно быть заполнена")
-    private String sendFor;
 
 
     private int sendDate;

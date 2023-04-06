@@ -1,4 +1,8 @@
 package com.example.volunteer.repositories;
 
-public class MistakeRepo {
+
+import com.example.volunteer.entities.Mistakes;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface MistakeRepo extends JpaRepository<Mistakes,Long> {
 }
