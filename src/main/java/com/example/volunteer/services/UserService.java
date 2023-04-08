@@ -36,12 +36,10 @@ public class UserService implements UserDetailsService {
 
     private final RoleRepo roleRepo;
 
-    private final EventRepo eventRepo;
-
 
     public final PasswordEncoder passwordEncoder;
 
-    public boolean createVolunteer(User user) {
+    public boolean createTeacher(User user) {
         if (userRepo.findByEmail(user.getEmail()) != null) {
             return false;
         }
@@ -52,7 +50,7 @@ public class UserService implements UserDetailsService {
         return true;
     }
 
-    public boolean createOrganizer(User user) {
+    public boolean createDirector(User user) {
         if (userRepo.findByEmail(user.getEmail()) != null) {
             return false;
         }
@@ -116,47 +114,6 @@ public class UserService implements UserDetailsService {
         return true;
     }
 
-    public boolean joinEvent(String token, Long id_event) {
-        String email = JWT.decode(token).getSubject();
-        User user = userRepo.findByEmail(email);
-        if (user == null) {
-            return false;
-        }
-        Event event = eventRepo.findById(id_event).orElse(null);
-        if (event == null) {
-            return false;
-        }
-        event.getParticipants().add(user);
-        return true;
-    }
-
-    public boolean leaveEvent(String token, Long id_event) {
-        String email = JWT.decode(token).getSubject();
-        User user = userRepo.findByEmail(email);
-        if (user == null) {
-            return false;
-        }
-
-        Event event = eventRepo.findById(id_event).orElse(null);
-        if (event == null) {
-            return false;
-        }
-        event.getParticipants().remove(user);
-        return true;
-    }
-
-    public List<Event> myEvents(String token) {
-        String email = JWT.decode(token).getSubject();
-        User user = userRepo.findByEmail(email);
-        return eventRepo.findAllByParticipants(user);
-    }
-
-    public List<Event> myCreatedEvent(String token) {
-        String email = JWT.decode(token).getSubject();
-        User user = userRepo.findByEmail(email);
-        List<Event> events = eventRepo.findAllByOrganizer(user);
-        return events;
-    }
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
