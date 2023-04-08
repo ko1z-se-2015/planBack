@@ -27,5 +27,7 @@ public class Mistakes {
     private String name;
 
 
-
+    public Mistakes(String name) {
+        this.name = name;
+    }
 }

@@ -104,40 +104,7 @@ public class UserService implements UserDetailsService {
         return user;
     }
 
-    public boolean updateDataUser(String email, UpdateDataUser newData) {
-        User user = userRepo.findByEmail(email);
-        if (user != null) {
-            if (!newData.getFirstName().equals("")) {
-                user.setFirstName(newData.getFirstName());
-            }
-            if (!newData.getSecondName().equals("")) {
-                user.setSecondName(newData.getSecondName());
-            }
-            if (!newData.getPhoneNumber().equals("")) {
-                user.setPhoneNumber(newData.getPhoneNumber());
-            }
-            if (!newData.getDateOfBirthday().equals("")) {
-                user.setDateOfBirthday(newData.getDateOfBirthday());
-            }
-            if (!(newData.getOrganizationName() == null)) {
-                user.setOrganizationName(newData.getOrganizationName());
-            }
-            userRepo.save(user);
-            return true;
-        }
-        return false;
-    }
 
-    public boolean changePhoto(String token, String file) {
-        String email = JWT.decode(token).getSubject();
-        User user = userRepo.findByEmail(email);
-
-        user.setImage(file);
-
-        userRepo.save(user);
-        return true;
-
-    }
 
     public boolean deleteUser(String token) {
         String email = JWT.decode(token).getSubject();

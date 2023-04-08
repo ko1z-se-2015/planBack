@@ -36,8 +36,6 @@ public class Notification {
     @OneToOne
     private User sendTo;
 
-
-
     private int sendDate;
 
 
