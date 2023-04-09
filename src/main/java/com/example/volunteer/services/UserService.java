@@ -89,10 +89,6 @@ public class UserService implements UserDetailsService {
         return user;
     }
 
-    public int getNumUsers() {
-        return userRepo.findAll().size();
-    }
-
     public User getByToken(String token) {
         String email = JWT.decode(token).getSubject();
         User user = userRepo.findByEmail(email);

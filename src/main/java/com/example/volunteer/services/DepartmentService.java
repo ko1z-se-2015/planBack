@@ -33,4 +33,9 @@ public class DepartmentService {
         return  departmentRepo.findDepartmentByTeachers(users);
     }
 
+    public List<Department> getDepartments(){
+        return departmentRepo.findAll();
+    }
+
+
 }
