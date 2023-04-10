@@ -5,23 +5,15 @@ import com.auth0.jwt.JWT;
 
 import com.auth0.jwt.algorithms.Algorithm;
 
-import com.example.volunteer.entities.Event;
 import com.example.volunteer.entities.User;
-import com.example.volunteer.modules.UpdateDataUser;
 import com.example.volunteer.services.UserService;
-import com.example.volunteer.storage.ValidationError;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-
-import javax.validation.Valid;
 
 import java.util.*;
 import java.util.stream.Collectors;

@@ -2,11 +2,7 @@ package com.example.volunteer.services;
 
 
 import com.auth0.jwt.JWT;
-import com.auth0.jwt.algorithms.Algorithm;
-import com.example.volunteer.entities.Event;
 import com.example.volunteer.entities.User;
-import com.example.volunteer.modules.UpdateDataUser;
-import com.example.volunteer.repositories.EventRepo;
 import com.example.volunteer.repositories.RoleRepo;
 import com.example.volunteer.repositories.UserRepo;
 import lombok.RequiredArgsConstructor;
@@ -16,14 +12,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.encrypt.Encryptors;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.*;
 
 @Service
