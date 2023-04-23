@@ -28,5 +28,8 @@ public class Department {
     @OneToMany
     private List<User> teachers;
 
-
+    public Department(String name, User director) {
+        this.name = name;
+        this.director = director;
+    }
 }

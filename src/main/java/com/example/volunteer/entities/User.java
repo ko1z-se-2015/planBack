@@ -40,6 +40,14 @@ public class User {
 
     @NotNull(message = "это поле должно быть заполнена")
     @NotEmpty(message = "это поле должно быть заполнена")
+    private String position;
+
+    @NotNull(message = "это поле должно быть заполнена")
+    @NotEmpty(message = "это поле должно быть заполнена")
+    private String degree;
+
+    @NotNull(message = "это поле должно быть заполнена")
+    @NotEmpty(message = "это поле должно быть заполнена")
     @Email(message = "формат почты неправильный")
     private String email;
 
@@ -58,10 +66,12 @@ public class User {
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Collection<Role> roles = new ArrayList<>();
 
-    public User(String firstName, String lastName, String middleName, String email, String password, String phoneNumber, String dean) {
+    public User(String firstName, String lastName, String middleName, String position, String degree, String email, String password, String phoneNumber, String dean) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.middleName = middleName;
+        this.position = position;
+        this.degree = degree;
         this.email = email;
         this.password = password;
         this.phoneNumber = phoneNumber;

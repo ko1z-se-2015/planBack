@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -27,10 +28,20 @@ public class DepartmentService {
         return departmentRepo.findDepartmentByDirector(user);
     }
 
-    public Department getDepartmentByTeacher(User user){
+        public Department getDepartmentByTeacher(User user){
         List<User> users = new ArrayList<>();
         users.add(user);
         return  departmentRepo.findDepartmentByTeachersIn(users);
+    }
+
+    public void addTeacher(Department department, User user) {
+        Department d = departmentRepo.findByName(department.getName());
+        d.getTeachers().add(user);
+        departmentRepo.save(d);
+    }
+
+    public Department findByName(String name) {
+        return departmentRepo.findByName(name);
     }
 
     public List<Department> getDepartments(){
