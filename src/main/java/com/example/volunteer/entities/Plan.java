@@ -44,7 +44,7 @@ public class Plan {
 
     @NotNull(message = "это поле должно быть заполнена")
     @NotEmpty(message = "это поле должно быть заполнена")
-    private String group;
+    private String groups;
 
     @NotNull(message = "это поле должно быть заполнена")
     @NotEmpty(message = "это поле должно быть заполнена")
