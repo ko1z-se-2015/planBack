@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface DepartmentRepo extends JpaRepository<Department,Long> {
     Department findDepartmentByDirector(User user);
-    Department findDepartmentByTeachers(List<User> user);
+    Department findDepartmentByTeachersIn(List<User> user);
 
 }

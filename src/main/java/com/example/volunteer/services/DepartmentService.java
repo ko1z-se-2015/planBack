@@ -30,7 +30,7 @@ public class DepartmentService {
     public Department getDepartmentByTeacher(User user){
         List<User> users = new ArrayList<>();
         users.add(user);
-        return  departmentRepo.findDepartmentByTeachers(users);
+        return  departmentRepo.findDepartmentByTeachersIn(users);
     }
 
     public List<Department> getDepartments(){

@@ -17,8 +17,8 @@ import java.util.Collection;
 @AllArgsConstructor
 @Getter
 @Setter
-@Table(name = "users")
-public class   Plan {
+@Table(name = "plan")
+public class Plan {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -32,7 +32,7 @@ public class   Plan {
 
     @NotNull(message = "это поле должно быть заполнена")
     @NotEmpty(message = "это поле должно быть заполнена")
-    private int pratices;
+    private int practices;
 
     @NotNull(message = "это поле должно быть заполнена")
     @NotEmpty(message = "это поле должно быть заполнена")
@@ -60,7 +60,7 @@ public class   Plan {
     private int createdDate;
     @OneToOne
     private User createdFor;
-    private  boolean isSingIn;
+    private boolean isSingIn;
 
     private boolean isSaved;
 
