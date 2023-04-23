@@ -25,6 +25,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    
     @NotNull(message = "'это поле должно быть заполнена")
     @NotEmpty(message = "это поле должно быть заполнена")
     private String firstName;
@@ -51,16 +52,19 @@ public class User {
     @Pattern(regexp = "^[0-9]{9,15}$" , message = "Введеный формат должен быть xxxxxxxxxx")
     private String phoneNumber;
 
-//    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE, pattern ="dd/MM/yyyy")
-//    @JsonFormat(pattern = "dd/MM/yyyy", shape = JsonFormat.Shape.STRING)
-//    @NotNull(message = "это поле должно быть заполнена")
-//    @Past(message = "Дата должна быть прошлой")
-//    private LocalDate dateOfBirthday;
-
     @Column(columnDefinition = "TEXT")
     private String dean;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Collection<Role> roles = new ArrayList<>();
 
+    public User(String firstName, String lastName, String middleName, String email, String password, String phoneNumber, String dean) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.middleName = middleName;
+        this.email = email;
+        this.password = password;
+        this.phoneNumber = phoneNumber;
+        this.dean = dean;
+    }
 }

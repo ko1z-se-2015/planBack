@@ -1,6 +1,8 @@
 package com.example.volunteer;
 
+import com.example.volunteer.entities.User;
 import com.example.volunteer.services.RoleService;
+import com.example.volunteer.services.UserService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -20,10 +22,11 @@ public class VolunteerApplication {
 	}
 
 	@Bean
-	CommandLineRunner run(RoleService roleService) {
+	CommandLineRunner run(RoleService roleService, UserService userService) {
 		return args -> {
 			roleService.addRole("TEACHER");
 			roleService.addRole("DIRECTOR");
+			userService.createTeacher(new User("Kanat", "Berkinbayev", "Galymuly", "asda@asd.ru", "qwerty", "77777777777", "asdasd"));
 		};
 	}
 	@Bean
