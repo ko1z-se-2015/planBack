@@ -67,4 +67,9 @@ public class User {
         this.phoneNumber = phoneNumber;
         this.dean = dean;
     }
+
+    public User(String email, String password) {
+        this.email = email;
+        this.password = password;
+    }
 }
