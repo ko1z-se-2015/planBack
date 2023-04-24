@@ -36,7 +36,6 @@ public class PlanController {
     public ResponseEntity getMyPlans(@RequestHeader(value="Authorization") String authorization){
         User user = userService.getByToken(authorization);
         return ResponseEntity.ok(planService.getPlanByCreatedBy(user));
-
     }
 
     @GetMapping("/get-plans-to-me")
