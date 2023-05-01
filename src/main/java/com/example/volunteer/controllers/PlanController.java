@@ -1,6 +1,7 @@
 package com.example.volunteer.controllers;
 
 
+import com.example.volunteer.entities.AcademicWork;
 import com.example.volunteer.entities.Plan;
 import com.example.volunteer.entities.User;
 import com.example.volunteer.services.PlanService;
@@ -9,6 +10,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @Slf4j
@@ -43,4 +46,9 @@ public class PlanController {
         User user = userService.getByToken(authorization);
         return ResponseEntity.ok(planService.getPlanByCreatedFor(user));
     }
+
+//    @PostMapping("/add-academic-work")
+//    public ResponseEntity addAcademicWork(@RequestHeader(value="Authorization") String authorization, AcademicWork academicWork){
+//        User user = userService.getByToken(authorization);
+//    }
 }

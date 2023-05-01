@@ -26,6 +26,6 @@ public class AcademicMethod {
 
     private String comment;
 
-    @ManyToOne
-    private User createdBy;
+//    @ManyToOne()
+//    private Long id_plan;
 }
