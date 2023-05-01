@@ -28,7 +28,7 @@ public class VolunteerApplication {
     User teacher = new User("Kanat", "Berkinbayev", "Galymuly", "Associate Professor", "Research", "asd@asd.ru", "qwerty", "77777777777", "asdasd");
     User director = new User("Daniyar", "Myrzasary", "Timuruly", "Director of Department", "Research", "kk@kk.kz", "qwerty", "77777777777", "asdasd");
     Department department = new Department("IT department", director);
-    Plan plan = new Plan("as", "das", "das", "das", "das", "da", "ds", "aa", "aa", "aa", "aa", "aa", "aa", "aa", "aa", "aa", "aa", "aa", "aa", "aa", "aa", "aa", "aa");
+//    Plan plan = new Plan("as", "das", "das", "das", "das", "da", "ds", "aa", "aa", "aa", "aa", "aa", "aa", "aa", "aa", "aa", "aa", "aa", "aa", "aa", "aa", "aa", "aa");
 
     @Bean
     CommandLineRunner run(RoleService roleService, UserService userService, DepartmentService departmentService, PlanService planService) {
@@ -39,9 +39,9 @@ public class VolunteerApplication {
             userService.createDirector(director);
             departmentService.createDepartment(department);
             departmentService.addTeacher(department, teacher);
-            plan.setCreatedBy(userService.getByEmail("asd@asd.ru"));
-            plan.setCreatedFor(userService.getByEmail("kk@kk.kz"));
-            planService.createPlan(plan);
+//            plan.setCreatedBy(userService.getByEmail("asd@asd.ru"));
+//            plan.setCreatedFor(userService.getByEmail("kk@kk.kz"));
+//            planService.createPlan(plan);
         };
     }
 
