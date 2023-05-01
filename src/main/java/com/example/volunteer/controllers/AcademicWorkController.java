@@ -2,6 +2,8 @@ package com.example.volunteer.controllers;
 
 import com.example.volunteer.entities.AcademicWork;
 import com.example.volunteer.entities.User;
+import com.example.volunteer.modules.AcademicWorksToDelete;
+import com.example.volunteer.modules.UpdateAcademicWork;
 import com.example.volunteer.services.AcademicWorkService;
 import com.example.volunteer.services.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -46,8 +48,16 @@ public class AcademicWorkController {
         return new ResponseEntity("academic work are  deleted", HttpStatus.OK);
     }
 
+    @PostMapping("/delete")
+    public ResponseEntity deleteAcademicWorks(@RequestBody AcademicWorksToDelete academicWorks) {
+        for(AcademicWork item: academicWorks.getItems()){
+            academicWorkService.deleteAcademicWorkById(item.getId());
+        }
+        return new ResponseEntity("academic works are deleted", HttpStatus.OK);
+    }
+
     @PostMapping("/update")
-    public ResponseEntity  updateAcademicWorkById(@RequestBody AcademicWork academicWork){
+    public ResponseEntity  updateAcademicWorkById(@RequestBody UpdateAcademicWork academicWork){
         academicWorkService.updateAcademicWork(academicWork);
         return new ResponseEntity("academic work are updated", HttpStatus.OK);
     }

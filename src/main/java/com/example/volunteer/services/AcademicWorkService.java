@@ -2,6 +2,7 @@ package com.example.volunteer.services;
 
 import com.example.volunteer.entities.AcademicWork;
 import com.example.volunteer.entities.User;
+import com.example.volunteer.modules.UpdateAcademicWork;
 import com.example.volunteer.repositories.AcademicWorkRepo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -31,11 +32,25 @@ public class AcademicWorkService {
         academicWorkRepo.delete(academicWork);
     }
 
+
     public AcademicWork getAcademicWorkById(Long id){
         return academicWorkRepo.getById(id);
     }
 
-    public void updateAcademicWork(AcademicWork academicWork){
-        academicWorkRepo.save(academicWork);
+    public void updateAcademicWork(UpdateAcademicWork academicWork){
+        AcademicWork toUpdate = academicWorkRepo.getById(academicWork.getId());
+        toUpdate.setNameOfDiscipline(academicWork.getNameOfDiscipline());
+        toUpdate.setCourse(academicWork.getCourse());
+        toUpdate.setGroups(academicWork.getGroups());
+        toUpdate.setTrimester(academicWork.getTrimester());
+        toUpdate.setLecturesPlan(academicWork.getLecturesPlan());
+        toUpdate.setLecturesFact(academicWork.getLecturesFact());
+        toUpdate.setPracticesPlan(academicWork.getPracticesPlan());
+        toUpdate.setPracticesFact(academicWork.getPracticesFact());
+        toUpdate.setHoursPlan(academicWork.getHoursPlan());
+        toUpdate.setHoursFact(academicWork.getHoursFact());
+        toUpdate.setTotalPlan(academicWork.getTotalPlan());
+        toUpdate.setTotalFact(academicWork.getTotalFact());
+        academicWorkRepo.save(toUpdate);
     }
 }
