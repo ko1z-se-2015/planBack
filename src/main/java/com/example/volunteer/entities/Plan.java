@@ -31,6 +31,4 @@ public class Plan {
     private User createdBy;
     @OneToOne
     private User createdFor;
-
-
 }

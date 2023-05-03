@@ -8,5 +8,4 @@ import java.util.List;
 
 public interface AcademicWorkRepo extends JpaRepository<AcademicWork,Long> {
 
-    List<AcademicWork> findAcademicWorksByCreatedBy(User user);
 }

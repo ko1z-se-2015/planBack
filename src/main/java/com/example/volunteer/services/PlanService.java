@@ -1,5 +1,6 @@
 package com.example.volunteer.services;
 
+import com.example.volunteer.entities.AcademicWork;
 import com.example.volunteer.entities.Plan;
 import com.example.volunteer.entities.User;
 import com.example.volunteer.repositories.PlanRepo;
@@ -27,6 +28,14 @@ public class PlanService {
 
     public List<Plan> getPlanByCreatedFor(User user){
         return planRepo.findAllByCreatedFor(user);
+    }
+
+    public void addAcademicWorks(Plan plan, AcademicWork academicWork) {
+        Plan myPlan = planRepo.getById(plan.getId());
+        List<AcademicWork> myAcademicWork = myPlan.getAcademicWorks();
+        myAcademicWork.add(academicWork);
+        myPlan.setAcademicWorks(myAcademicWork);
+        planRepo.save(myPlan);
     }
 
 }

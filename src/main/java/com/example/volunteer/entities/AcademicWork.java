@@ -27,7 +27,5 @@ public class AcademicWork {
     private String hoursFact;
     private String totalPlan;
     private String totalFact;
-    @ManyToOne
-    private User createdBy;
 
 }

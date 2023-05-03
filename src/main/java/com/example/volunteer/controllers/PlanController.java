@@ -47,8 +47,9 @@ public class PlanController {
         return ResponseEntity.ok(planService.getPlanByCreatedFor(user));
     }
 
-//    @PostMapping("/add-academic-work")
-//    public ResponseEntity addAcademicWork(@RequestHeader(value="Authorization") String authorization, AcademicWork academicWork){
-//        User user = userService.getByToken(authorization);
-//    }
+    @PostMapping("/add-academic-work")
+    public ResponseEntity addAcademicWork(@RequestHeader(value="Authorization") String authorization, AcademicWork academicWork, Plan plan){
+        planService.addAcademicWorks(plan, academicWork);
+        return new ResponseEntity("academic work added", HttpStatus.CREATED);
+    }
 }

@@ -23,10 +23,6 @@ public class AcademicWorkService {
         academicWorkRepo.save(academicWork);
     }
 
-    public List<AcademicWork> getMyAcademicWorks(User user){
-        return academicWorkRepo.findAcademicWorksByCreatedBy(user);
-    }
-
     public void deleteAcademicWorkById(Long id){
         AcademicWork academicWork = academicWorkRepo.getById(id);
         academicWorkRepo.delete(academicWork);

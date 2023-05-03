@@ -10,14 +10,14 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Getter
 @Setter
-@Table(name = "academic_method")
-public class AcademicMethod {
+@Table(name = "educational_work")
+public class EducationalWork {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String discipline;
-    private String nameWork;
+    private String nameOfWork;
     private String deadlines;
-    private String infoImplementation;
-    private String comment;
+    private String informationOnImplementation;
+    private String results;
+    private String comments;
 }

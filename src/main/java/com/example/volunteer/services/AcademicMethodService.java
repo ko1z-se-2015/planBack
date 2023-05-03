@@ -23,10 +23,6 @@ public class AcademicMethodService {
         academicMethodRepo.save(AcademicMethod);
     }
 
-    public List<AcademicMethod> getMyAcademicMethods(User user){
-        return academicMethodRepo.findAcademicMethodsByCreatedBy(user);
-    }
-
     public void deleteAcademicMethodById(Long id){
         AcademicMethod AcademicMethod = academicMethodRepo.getById(id);
         academicMethodRepo.delete(AcademicMethod);

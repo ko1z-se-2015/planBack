@@ -31,17 +31,8 @@ public class AcademicMethodController {
 
     @PostMapping("/save")
     public ResponseEntity saveMyAcademicWork(@RequestHeader(value = "Authorization") String token, @RequestBody AcademicMethod academicWork) {
-        User user = userService.getByToken(token);
-        academicWork.setCreatedBy(user);
         academicMethodService.saveAcademicMethod(academicWork);
         return new ResponseEntity("academic method added", HttpStatus.CREATED);
-    }
-
-    @GetMapping("/get")
-    public ResponseEntity getMyAcademicWorks(@RequestHeader(value = "Authorization") String token) {
-        User user = userService.getByToken(token);
-        List<AcademicMethod> academicWorks = academicMethodService.getMyAcademicMethods(user);
-        return ResponseEntity.ok(academicWorks);
     }
 
     @PostMapping("/delete-by-id")
