@@ -7,6 +7,7 @@ import com.example.volunteer.entities.Plan;
 import com.example.volunteer.entities.User;
 import com.example.volunteer.modules.AddAcademicMethod;
 import com.example.volunteer.modules.AddAcademicWork;
+import com.example.volunteer.modules.AddReseachWork;
 import com.example.volunteer.services.PlanService;
 import com.example.volunteer.services.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -63,8 +64,8 @@ public class PlanController {
     }
 
     @PostMapping("/add-research-work")
-    public ResponseEntity addResearchWork(@RequestHeader(value="Authorization") String authorization, @RequestBody AddAcademicMethod addAcademicMethod){
-        planService.addAcademicMethods(addAcademicMethod);
-        return new ResponseEntity("academic method added", HttpStatus.CREATED);
+    public ResponseEntity addResearchWork(@RequestHeader(value="Authorization") String authorization, @RequestBody AddReseachWork addReseachWork){
+        planService.addResearchWork(addReseachWork);
+        return new ResponseEntity("research work added", HttpStatus.CREATED);
     }
 }
