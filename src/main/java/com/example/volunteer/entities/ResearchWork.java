@@ -16,14 +16,14 @@ public class ResearchWork {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String typeOfTheWork;
+    private int typeOfTheWork;
     //type1
     private String nameOfTheArticle;
     private String nameOfTheJournal;
     private String coAuthors;
     //type2
     private String conferenceName;
-    private Date date;
+    private String date;
     private String topicOfTheSpeech;
     //type3
     private String event;
@@ -38,16 +38,35 @@ public class ResearchWork {
     private String comments;
 
     //type1
-    public ResearchWork(String typeOfTheWork, String nameOfTheArticle, String nameOfTheJournal, String coAuthors, String deadlines, String informationOnImplementation, String results, String comments) {
+    public ResearchWork(int typeOfTheWork, String text1, String text2, String text3, String deadlines, String informationOnImplementation, String results, String comments) {
         this.typeOfTheWork = typeOfTheWork;
-        this.nameOfTheArticle = nameOfTheArticle;
-        this.nameOfTheJournal = nameOfTheJournal;
-        this.coAuthors = coAuthors;
+        if (typeOfTheWork == 1) {
+            this.nameOfTheArticle = text1;
+            this.nameOfTheJournal = text2;
+            this.coAuthors = text3;
+        }
+        if (typeOfTheWork == 2) {
+            this.conferenceName = text1;
+            this.date = text2;
+            this.topicOfTheSpeech = text3;
+        }
+        if (typeOfTheWork == 3) {
+            this.nameOfTheArticle = text1;
+            this.event = text2;
+            this.students = text3;
+        }
         this.deadlines = deadlines;
         this.informationOnImplementation = informationOnImplementation;
         this.results = results;
         this.comments = comments;
     }
 
-
+    public ResearchWork(int typeOfTheWork, String nameOfTheWorks, String deadlines, String informationOnImplementation, String results, String comments) {
+        this.typeOfTheWork = typeOfTheWork;
+        this.nameOfTheWorks = nameOfTheWorks;
+        this.deadlines = deadlines;
+        this.informationOnImplementation = informationOnImplementation;
+        this.results = results;
+        this.comments = comments;
+    }
 }

@@ -20,4 +20,6 @@ public class AcademicMethod {
     private String deadlines;
     private String infoImplementation;
     private String comment;
+    @ManyToOne
+    private User createdBy;
 }
