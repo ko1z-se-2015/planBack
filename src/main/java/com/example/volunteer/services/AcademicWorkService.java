@@ -1,9 +1,11 @@
 package com.example.volunteer.services;
 
 import com.example.volunteer.entities.AcademicWork;
+import com.example.volunteer.entities.Plan;
 import com.example.volunteer.entities.User;
 import com.example.volunteer.modules.UpdateAcademicWork;
 import com.example.volunteer.repositories.AcademicWorkRepo;
+import com.example.volunteer.repositories.PlanRepo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -18,6 +20,7 @@ import java.util.List;
 public class AcademicWorkService {
 
     private final AcademicWorkRepo academicWorkRepo;
+    private final PlanRepo planRepo;
 
     public void saveAcademicWork(AcademicWork academicWork){
         academicWorkRepo.save(academicWork);
@@ -25,6 +28,9 @@ public class AcademicWorkService {
 
     public void deleteAcademicWorkById(Long id){
         AcademicWork academicWork = academicWorkRepo.getById(id);
+        Plan plan = planRepo.findByAcademicWorksContaining(academicWork);
+        plan.getAcademicWorks().remove(academicWork);
+        planRepo.save(plan);
         academicWorkRepo.delete(academicWork);
     }
 

@@ -46,6 +46,12 @@ public class PlanService {
         planRepo.save(myPlan);
     }
 
+    public Plan getLastMyPlan(User user){
+        List<Plan> plans = planRepo.findAllByCreatedByOrderByIdDesc(user);
+        Plan plan =  plans.get(0);
+        return plan;
+    }
+
     public void addAcademicMethods(AddAcademicMethod addAcademicMethod) {
         Plan myPlan = planRepo.getById(addAcademicMethod.getIdPlan());
         List<AcademicMethod> myAcademicMethods = myPlan.getAcademicMethods();

@@ -1,9 +1,11 @@
 package com.example.volunteer.services;
 
 import com.example.volunteer.entities.AcademicMethod;
+import com.example.volunteer.entities.Plan;
 import com.example.volunteer.entities.User;
 import com.example.volunteer.modules.UpdateAcademicMethod;
 import com.example.volunteer.repositories.AcademicMethodRepo;
+import com.example.volunteer.repositories.PlanRepo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -18,14 +20,18 @@ import java.util.List;
 public class AcademicMethodService {
 
     private final AcademicMethodRepo academicMethodRepo;
+    private final PlanRepo planRepo;
 
     public void saveAcademicMethod(AcademicMethod AcademicMethod){
         academicMethodRepo.save(AcademicMethod);
     }
 
     public void deleteAcademicMethodById(Long id){
-        AcademicMethod AcademicMethod = academicMethodRepo.getById(id);
-        academicMethodRepo.delete(AcademicMethod);
+        AcademicMethod academicMethod = academicMethodRepo.getById(id);
+        Plan plan = planRepo.findByAcademicMethodsContaining(academicMethod);
+        plan.getAcademicMethods().remove(academicMethod);
+        planRepo.save(plan);
+        academicMethodRepo.delete(academicMethod);
     }
 
 

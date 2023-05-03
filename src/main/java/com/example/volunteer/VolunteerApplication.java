@@ -25,10 +25,10 @@ public class VolunteerApplication {
 
     }
 
-    User teacher1 = new User("Amira", "Balkiyaeva", "Talgatkyzy", "Senior-lector", "High-research", "0.5", "ako@mail.ru", "ako");
-    //User teacher = new User("Kanat", "Berkinbayev", "Galymuly", "Associate Professor", "Research", "asd@asd.ru", "qwerty", "77777777777", "asdasd");
+//    User teacher1 = new User("Amira", "Balkiyaeva", "Talgatkyzy", "Senior-lector", "High-research", "0.5", "ako@mail.ru", "ako");
+    User teacher = new User("Kanat", "Berkinbayev", "Galymuly", "Associate Professor", "Research", "0.5", "asd@asd.ru",  "qwerty");
     User director = new User("Daniyar", "Myrzasary", "Timuruly", "Director of Department", "Research", "1", "kk@kk.kz", "qwerty");
-    //Department department = new Department("IT department", director);
+    Department department = new Department("IT department", director);
 //    Plan plan = new Plan("as", "das", "das", "das", "das", "da", "ds", "aa", "aa", "aa", "aa", "aa", "aa", "aa", "aa", "aa", "aa", "aa", "aa", "aa", "aa", "aa", "aa");
 
     @Bean
@@ -36,10 +36,10 @@ public class VolunteerApplication {
         return args -> {
             roleService.addRole("TEACHER");
             roleService.addRole("DIRECTOR");
-            userService.createTeacher(teacher1);
-            //userService.createDirector(director);
-            //departmentService.createDepartment(department);
-            //departmentService.addTeacher(department, teacher1);
+            userService.createTeacher(teacher);
+            userService.createDirector(director);
+            departmentService.createDepartment(department);
+            departmentService.addTeacher(department, teacher);
 //            plan.setCreatedBy(userService.getByEmail("asd@asd.ru"));
 //            plan.setCreatedFor(userService.getByEmail("kk@kk.kz"));
 //            planService.createPlan(plan);

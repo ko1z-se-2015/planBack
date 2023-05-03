@@ -4,6 +4,7 @@ import lombok.*;
 
 @Data
 @NoArgsConstructor
+//@AllArgsConstructor
 @Getter
 @Setter
 public class AddReseachWork {
