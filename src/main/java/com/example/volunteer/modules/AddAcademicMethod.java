@@ -8,7 +8,6 @@ import lombok.*;
 @Getter
 @Setter
 public class AddAcademicMethod {
-
     private Long idPlan;
     private String discipline;
     private String nameWork;

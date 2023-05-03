@@ -5,6 +5,7 @@ import com.example.volunteer.entities.AcademicWork;
 import com.example.volunteer.entities.Plan;
 import com.example.volunteer.entities.User;
 import com.example.volunteer.modules.AddAcademicMethod;
+import com.example.volunteer.modules.AddAcademicWork;
 import com.example.volunteer.repositories.AcademicMethodRepo;
 import com.example.volunteer.repositories.AcademicWorkRepo;
 import com.example.volunteer.repositories.PlanRepo;
@@ -36,10 +37,10 @@ public class PlanService {
         return planRepo.findAllByCreatedFor(user);
     }
 
-    public void addAcademicWorks(Plan plan, AcademicWork academicWork) {
-        Plan myPlan = planRepo.getById(plan.getId());
+    public void addAcademicWorks(AddAcademicWork addAcademicWork) {
+        Plan myPlan = planRepo.getById(addAcademicWork.getIdPlan());
         List<AcademicWork> myAcademicWork = myPlan.getAcademicWorks();
-        AcademicWork newAcademicwork = academicWorkRepo.save(academicWork);
+        AcademicWork newAcademicwork = academicWorkRepo.save(new AcademicWork(addAcademicWork.getNameOfDiscipline(), addAcademicWork.getCourse(), addAcademicWork.getTrimester(), addAcademicWork.getGroups(), addAcademicWork.getLecturesPlan(), addAcademicWork.getLecturesFact(), addAcademicWork.getPracticesPlan(), addAcademicWork.getPracticesFact(), addAcademicWork.getHoursPlan(), addAcademicWork.getHoursFact(), addAcademicWork.getTotalPlan(), addAcademicWork.getTotalFact()));
         myAcademicWork.add(newAcademicwork);
         myPlan.setAcademicWorks(myAcademicWork);
         planRepo.save(myPlan);
