@@ -38,13 +38,17 @@ public class User {
     @NotEmpty(message = "это поле должно быть заполнена")
     private String middleName;
 
-    @NotNull(message = "это поле должно быть заполнена")
+    @NotNull(message = "это поле должно быть заполнена") // ПРОФЕССОР / АССОЦИИРОВАННЫЙ ПРОФЕССОР / АССИСТЕНТ-ПРОФЕССОР / СЕНЬОР–ЛЕКТОР / ПРЕПОДАВАТЕЛЬ
     @NotEmpty(message = "это поле должно быть заполнена")
     private String position;
 
-    @NotNull(message = "это поле должно быть заполнена")
+    @NotNull(message = "это поле должно быть заполнена") //degree может быть HIGH-RESEARCH TEACHER / RESEARCH TEACHER / TEACHER
     @NotEmpty(message = "это поле должно быть заполнена")
     private String degree;
+
+    @NotNull(message = "это поле должно быть заполнена") //TODO написать ставку - она может быть 1 / 0.5 / 0.25
+    @NotEmpty(message = "это поле должно быть заполнена")
+    private String rate;
 
     @NotNull(message = "это поле должно быть заполнена")
     @NotEmpty(message = "это поле должно быть заполнена")
@@ -55,27 +59,23 @@ public class User {
     @NotEmpty(message = "это поле должно быть заполнена")
     private String password;
 
-    @NotNull(message = "это поле должно быть заполнена")
-    @NotEmpty(message = "это поле должно быть заполнена")
-    @Pattern(regexp = "^[0-9]{9,15}$" , message = "Введеный формат должен быть xxxxxxxxxx")
-    private String phoneNumber;
-
-    @Column(columnDefinition = "TEXT")
-    private String dean;
+//    @NotNull(message = "это поле должно быть заполнена")
+//    @NotEmpty(message = "это поле должно быть заполнена")
+//    @Pattern(regexp = "^[0-9]{9,15}$" , message = "Введеный формат должен быть xxxxxxxxxx")
+//    private String phoneNumber;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Collection<Role> roles = new ArrayList<>();
 
-    public User(String firstName, String lastName, String middleName, String position, String degree, String email, String password, String phoneNumber, String dean) {
+    public User(String firstName, String lastName, String middleName, String position, String degree, String rate, String email, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.middleName = middleName;
         this.position = position;
         this.degree = degree;
+        this.rate = rate;
         this.email = email;
         this.password = password;
-        this.phoneNumber = phoneNumber;
-        this.dean = dean;
     }
 
     public User(String email, String password) {

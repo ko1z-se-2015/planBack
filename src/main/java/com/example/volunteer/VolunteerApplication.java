@@ -36,10 +36,10 @@ public class VolunteerApplication {
         return args -> {
             roleService.addRole("TEACHER");
             roleService.addRole("DIRECTOR");
-            userService.createTeacher(teacher);
-            userService.createDirector(director);
-            departmentService.createDepartment(department);
-            departmentService.addTeacher(department, teacher);
+            userService.createTeacher(teacher1);
+            //userService.createDirector(director);
+            //departmentService.createDepartment(department);
+            //departmentService.addTeacher(department, teacher1);
 //            plan.setCreatedBy(userService.getByEmail("asd@asd.ru"));
 //            plan.setCreatedFor(userService.getByEmail("kk@kk.kz"));
 //            planService.createPlan(plan);
