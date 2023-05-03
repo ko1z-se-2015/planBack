@@ -25,9 +25,10 @@ public class VolunteerApplication {
 
     }
 
-    User teacher = new User("Kanat", "Berkinbayev", "Galymuly", "Associate Professor", "Research", "asd@asd.ru", "qwerty", "77777777777", "asdasd");
-    User director = new User("Daniyar", "Myrzasary", "Timuruly", "Director of Department", "Research", "kk@kk.kz", "qwerty", "77777777777", "asdasd");
-    Department department = new Department("IT department", director);
+    User teacher1 = new User("Amira", "Balkiyaeva", "Talgatkyzy", "Senior-lector", "High-research", "0.5", "ako@mail.ru", "ako");
+    //User teacher = new User("Kanat", "Berkinbayev", "Galymuly", "Associate Professor", "Research", "asd@asd.ru", "qwerty", "77777777777", "asdasd");
+    User director = new User("Daniyar", "Myrzasary", "Timuruly", "Director of Department", "Research", "1", "kk@kk.kz", "qwerty");
+    //Department department = new Department("IT department", director);
 //    Plan plan = new Plan("as", "das", "das", "das", "das", "da", "ds", "aa", "aa", "aa", "aa", "aa", "aa", "aa", "aa", "aa", "aa", "aa", "aa", "aa", "aa", "aa", "aa");
 
     @Bean

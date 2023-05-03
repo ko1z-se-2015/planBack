@@ -28,4 +28,18 @@ public class AcademicWork {
     private String totalPlan;
     private String totalFact;
 
+    public AcademicWork(String nameOfDiscipline, String course, String trimester, String groups, String lecturesPlan, String lecturesFact, String practicesPlan, String practicesFact, String hoursPlan, String hoursFact, String totalPlan, String totalFact) {
+        this.nameOfDiscipline = nameOfDiscipline;
+        this.course = course;
+        this.trimester = trimester;
+        this.groups = groups;
+        this.lecturesPlan = lecturesPlan;
+        this.lecturesFact = lecturesFact;
+        this.practicesPlan = practicesPlan;
+        this.practicesFact = practicesFact;
+        this.hoursPlan = hoursPlan;
+        this.hoursFact = hoursFact;
+        this.totalPlan = totalPlan;
+        this.totalFact = totalFact;
+    }
 }

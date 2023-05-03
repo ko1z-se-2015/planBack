@@ -31,4 +31,8 @@ public class Plan {
     private User createdBy;
     @OneToOne
     private User createdFor;
+
+    public Plan(Long id) {
+        this.id = id;
+    }
 }

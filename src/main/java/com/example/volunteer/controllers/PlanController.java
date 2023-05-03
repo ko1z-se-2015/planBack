@@ -1,9 +1,11 @@
 package com.example.volunteer.controllers;
 
 
+import com.example.volunteer.entities.AcademicMethod;
 import com.example.volunteer.entities.AcademicWork;
 import com.example.volunteer.entities.Plan;
 import com.example.volunteer.entities.User;
+import com.example.volunteer.modules.AddAcademicMethod;
 import com.example.volunteer.services.PlanService;
 import com.example.volunteer.services.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -51,5 +53,11 @@ public class PlanController {
     public ResponseEntity addAcademicWork(@RequestHeader(value="Authorization") String authorization, AcademicWork academicWork, Plan plan){
         planService.addAcademicWorks(plan, academicWork);
         return new ResponseEntity("academic work added", HttpStatus.CREATED);
+    }
+
+    @PostMapping("/add-academic-methods")
+    public ResponseEntity addAcademicWork(@RequestHeader(value="Authorization") String authorization,@RequestBody AddAcademicMethod addAcademicMethod){
+        planService.addAcademicMethods(addAcademicMethod);
+        return new ResponseEntity("academic method added", HttpStatus.CREATED);
     }
 }
