@@ -61,4 +61,10 @@ public class PlanController {
         planService.addAcademicMethods(addAcademicMethod);
         return new ResponseEntity("academic method added", HttpStatus.CREATED);
     }
+
+    @PostMapping("/add-research-work")
+    public ResponseEntity addResearchWork(@RequestHeader(value="Authorization") String authorization, @RequestBody AddAcademicMethod addAcademicMethod){
+        planService.addAcademicMethods(addAcademicMethod);
+        return new ResponseEntity("academic method added", HttpStatus.CREATED);
+    }
 }

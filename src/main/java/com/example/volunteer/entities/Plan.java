@@ -27,6 +27,8 @@ public class Plan {
     private List<AcademicWork> academicWorks;
     @OneToMany
     private List<AcademicMethod> academicMethods;
+    @OneToMany
+    private List<ResearchWork> researchWorks;
     @OneToOne
     private User createdBy;
     @OneToOne
