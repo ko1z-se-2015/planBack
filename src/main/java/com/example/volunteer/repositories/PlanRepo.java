@@ -1,10 +1,7 @@
 package com.example.volunteer.repositories;
 
 
-import com.example.volunteer.entities.AcademicMethod;
-import com.example.volunteer.entities.AcademicWork;
-import com.example.volunteer.entities.Plan;
-import com.example.volunteer.entities.User;
+import com.example.volunteer.entities.*;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -18,4 +15,5 @@ public interface PlanRepo extends JpaRepository<Plan,Long> {
 
     Plan findByAcademicWorksContaining(AcademicWork academicWork);
     Plan findByAcademicMethodsContaining(AcademicMethod academicMethod);
+    Plan findByEducationalWorksContaining(EducationalWork educationalWork);
 }

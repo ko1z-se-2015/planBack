@@ -4,10 +4,8 @@ import com.example.volunteer.entities.*;
 import com.example.volunteer.modules.AddAcademicMethod;
 import com.example.volunteer.modules.AddAcademicWork;
 import com.example.volunteer.modules.AddReseachWork;
-import com.example.volunteer.repositories.AcademicMethodRepo;
-import com.example.volunteer.repositories.AcademicWorkRepo;
-import com.example.volunteer.repositories.PlanRepo;
-import com.example.volunteer.repositories.ResearchWorkRepo;
+import com.example.volunteer.modules.AddEducationalWork;
+import com.example.volunteer.repositories.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -25,6 +23,7 @@ public class PlanService {
     private final AcademicWorkRepo academicWorkRepo;
     private final AcademicMethodRepo academicMethodRepo;
     private final ResearchWorkRepo researchWorkRepo;
+    private final EducationalWorkRepo educationalWorkRepo;
 
     public void createPlan(Plan plan){
         planRepo.save(plan);
@@ -72,6 +71,15 @@ public class PlanService {
         }
         myResearchWork.add(newResearchWork);
         myPlan.setResearchWorks(myResearchWork);
+        planRepo.save(myPlan);
+    }
+
+    public void addEducationalWork(AddEducationalWork addEducationalWork) {
+        Plan myPlan = planRepo.getById(addEducationalWork.getIdPlan());
+        List<EducationalWork> myEducationalWork = myPlan.getEducationalWorks();
+        EducationalWork newEducationalWork = educationalWorkRepo.save(new EducationalWork(addEducationalWork.getNameOfTheWork(), addEducationalWork.getDeadlines(), addEducationalWork.getInformationOnImplementation(), addEducationalWork.getResults(), addEducationalWork.getComments()));
+        myEducationalWork.add(newEducationalWork);
+        myPlan.setEducationalWorks(myEducationalWork);
         planRepo.save(myPlan);
     }
 
