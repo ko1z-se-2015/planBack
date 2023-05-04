@@ -17,7 +17,15 @@ public class SocialWork {
     private Long id;
     private String nameOfTheWork;
     private String deadlines;
-    private String informationOnImplementation;
+    private String infoImplementation;
     private String results;
     private String comments;
+
+    public SocialWork(String nameOfTheWork, String deadlines, String infoImplementation, String results, String comments) {
+        this.nameOfTheWork = nameOfTheWork;
+        this.deadlines = deadlines;
+        this.infoImplementation = infoImplementation;
+        this.results = results;
+        this.comments = comments;
+    }
 }

@@ -21,6 +21,7 @@ public class PlanService {
     private final AcademicMethodRepo academicMethodRepo;
     private final ResearchWorkRepo researchWorkRepo;
     private final EducationalWorkRepo educationalWorkRepo;
+    private final SocialWorkRepo socialWorkRepo;
 
     public void createPlan(Plan plan){
         planRepo.save(plan);
@@ -82,10 +83,10 @@ public class PlanService {
 
     public void addSocialWork(AddSocialWork addSocialWork) {
         Plan myPlan = planRepo.getById(addSocialWork.getIdPlan());
-        List<EducationalWork> myEducationalWork = myPlan.getEducationalWorks();
-        EducationalWork newEducationalWork = educationalWorkRepo.save(new EducationalWork(addSocialWork.getNameOfTheWork(), addSocialWork.getDeadlines(), addSocialWork.getInfoImplementation(), addSocialWork.getResults(), addSocialWork.getComments()));
-        myEducationalWork.add(newEducationalWork);
-        myPlan.setEducationalWorks(myEducationalWork);
+        List<SocialWork> mySocialWork = myPlan.getSocialWorks();
+        SocialWork newSocialWork = socialWorkRepo.save(new SocialWork(addSocialWork.getNameOfTheWork(), addSocialWork.getDeadlines(), addSocialWork.getInfoImplementation(), addSocialWork.getResults(), addSocialWork.getComments()));
+        mySocialWork.add(newSocialWork);
+        myPlan.setSocialWorks(mySocialWork);
         planRepo.save(myPlan);
     }
 

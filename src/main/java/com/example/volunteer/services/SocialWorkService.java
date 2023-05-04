@@ -39,7 +39,7 @@ public class SocialWorkService {
         SocialWork toUpdate = socialWorkRepo.getById(socialWork.getId());
         toUpdate.setNameOfTheWork(socialWork.getNameOfTheWork());
         toUpdate.setDeadlines(socialWork.getDeadlines());
-        toUpdate.setInformationOnImplementation(socialWork.getInformationOnImplementation());
+        toUpdate.setInfoImplementation(socialWork.getInfoImplementation());
         toUpdate.setResults(socialWork.getResults());
         toUpdate.setComments(socialWork.getComments());
         socialWorkRepo.save(toUpdate);
