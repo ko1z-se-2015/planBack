@@ -17,14 +17,14 @@ public class EducationalWork {
     private Long id;
     private String nameOfTheWork;
     private String deadlines;
-    private String informationOnImplementation;
+    private String infoImplementation;
     private String results;
     private String comments;
 
     public EducationalWork(String nameOfTheWork, String deadlines, String informationOnImplementation, String results, String comments) {
         this.nameOfTheWork = nameOfTheWork;
         this.deadlines = deadlines;
-        this.informationOnImplementation = informationOnImplementation;
+        this.infoImplementation = informationOnImplementation;
         this.results = results;
         this.comments = comments;
     }

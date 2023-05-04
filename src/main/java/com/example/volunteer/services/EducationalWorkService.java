@@ -39,7 +39,7 @@ public class EducationalWorkService {
         EducationalWork toUpdate = educationalWorkRepo.getById(educationalWork.getId());
         toUpdate.setNameOfTheWork(educationalWork.getNameOfTheWork());
         toUpdate.setDeadlines(educationalWork.getDeadlines());
-        toUpdate.setInformationOnImplementation(educationalWork.getInformationOnImplementation());
+        toUpdate.setInfoImplementation(educationalWork.getInfoImplementation());
         toUpdate.setResults(educationalWork.getResults());
         toUpdate.setComments(educationalWork.getComments());
         educationalWorkRepo.save(toUpdate);

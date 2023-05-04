@@ -11,7 +11,7 @@ public class AddEducationalWork {
     private Long idPlan;
     private String nameOfTheWork;
     private String deadlines;
-    private String informationOnImplementation;
+    private String infoImplementation;
     private String results;
     private String comments;
 }

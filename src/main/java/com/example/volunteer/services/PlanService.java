@@ -77,7 +77,7 @@ public class PlanService {
     public void addEducationalWork(AddEducationalWork addEducationalWork) {
         Plan myPlan = planRepo.getById(addEducationalWork.getIdPlan());
         List<EducationalWork> myEducationalWork = myPlan.getEducationalWorks();
-        EducationalWork newEducationalWork = educationalWorkRepo.save(new EducationalWork(addEducationalWork.getNameOfTheWork(), addEducationalWork.getDeadlines(), addEducationalWork.getInformationOnImplementation(), addEducationalWork.getResults(), addEducationalWork.getComments()));
+        EducationalWork newEducationalWork = educationalWorkRepo.save(new EducationalWork(addEducationalWork.getNameOfTheWork(), addEducationalWork.getDeadlines(), addEducationalWork.getInfoImplementation(), addEducationalWork.getResults(), addEducationalWork.getComments()));
         myEducationalWork.add(newEducationalWork);
         myPlan.setEducationalWorks(myEducationalWork);
         planRepo.save(myPlan);
