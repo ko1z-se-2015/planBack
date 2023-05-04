@@ -1,10 +1,7 @@
 package com.example.volunteer.services;
 
 import com.example.volunteer.entities.*;
-import com.example.volunteer.modules.AddAcademicMethod;
-import com.example.volunteer.modules.AddAcademicWork;
-import com.example.volunteer.modules.AddReseachWork;
-import com.example.volunteer.modules.AddEducationalWork;
+import com.example.volunteer.modules.*;
 import com.example.volunteer.repositories.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -78,6 +75,15 @@ public class PlanService {
         Plan myPlan = planRepo.getById(addEducationalWork.getIdPlan());
         List<EducationalWork> myEducationalWork = myPlan.getEducationalWorks();
         EducationalWork newEducationalWork = educationalWorkRepo.save(new EducationalWork(addEducationalWork.getNameOfTheWork(), addEducationalWork.getDeadlines(), addEducationalWork.getInfoImplementation(), addEducationalWork.getResults(), addEducationalWork.getComments()));
+        myEducationalWork.add(newEducationalWork);
+        myPlan.setEducationalWorks(myEducationalWork);
+        planRepo.save(myPlan);
+    }
+
+    public void addSocialWork(AddSocialWork addSocialWork) {
+        Plan myPlan = planRepo.getById(addSocialWork.getIdPlan());
+        List<EducationalWork> myEducationalWork = myPlan.getEducationalWorks();
+        EducationalWork newEducationalWork = educationalWorkRepo.save(new EducationalWork(addSocialWork.getNameOfTheWork(), addSocialWork.getDeadlines(), addSocialWork.getInfoImplementation(), addSocialWork.getResults(), addSocialWork.getComments()));
         myEducationalWork.add(newEducationalWork);
         myPlan.setEducationalWorks(myEducationalWork);
         planRepo.save(myPlan);

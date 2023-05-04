@@ -2,10 +2,7 @@ package com.example.volunteer.controllers;
 
 import com.example.volunteer.entities.Plan;
 import com.example.volunteer.entities.User;
-import com.example.volunteer.modules.AddAcademicMethod;
-import com.example.volunteer.modules.AddAcademicWork;
-import com.example.volunteer.modules.AddEducationalWork;
-import com.example.volunteer.modules.AddReseachWork;
+import com.example.volunteer.modules.*;
 import com.example.volunteer.services.PlanService;
 import com.example.volunteer.services.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -78,5 +75,11 @@ public class PlanController {
     public ResponseEntity addEducationalWork(@RequestHeader(value="Authorization") String authorization, @RequestBody AddEducationalWork addEducationalWork){
         planService.addEducationalWork(addEducationalWork);
         return new ResponseEntity("educational work added", HttpStatus.CREATED);
+    }
+
+    @PostMapping("/add-social-work")
+    public ResponseEntity addSocialWork(@RequestHeader(value="Authorization") String authorization, @RequestBody AddSocialWork addSocialWork){
+        planService.addSocialWork(addSocialWork);
+        return new ResponseEntity("socail work added", HttpStatus.CREATED);
     }
 }

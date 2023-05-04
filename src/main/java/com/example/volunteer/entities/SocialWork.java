@@ -15,7 +15,7 @@ public class SocialWork {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String nameOfWork;
+    private String nameOfTheWork;
     private String deadlines;
     private String informationOnImplementation;
     private String results;

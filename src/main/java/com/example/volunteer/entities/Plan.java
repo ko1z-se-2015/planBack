@@ -31,6 +31,8 @@ public class Plan {
     private List<ResearchWork> researchWorks;
     @OneToMany
     private List<EducationalWork> educationalWorks;
+    @OneToMany
+    private List<SocialWork> socialWorks;
     @OneToOne
     private User createdBy;
     @OneToOne

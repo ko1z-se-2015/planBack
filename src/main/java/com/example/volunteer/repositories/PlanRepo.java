@@ -16,4 +16,5 @@ public interface PlanRepo extends JpaRepository<Plan,Long> {
     Plan findByAcademicWorksContaining(AcademicWork academicWork);
     Plan findByAcademicMethodsContaining(AcademicMethod academicMethod);
     Plan findByEducationalWorksContaining(EducationalWork educationalWork);
+    Plan findBySocialWorksContaining(SocialWork socialWork);
 }
