@@ -82,4 +82,10 @@ public class PlanController {
         planService.addSocialWork(addSocialWork);
         return new ResponseEntity("socail work added", HttpStatus.CREATED);
     }
+
+    @GetMapping("/get-by-id")
+    public ResponseEntity getPlanById(@RequestHeader(value="Authorization") String authorization, @RequestParam(name="id") Integer id){
+        Plan plan = planService.getPlanById(Long.valueOf(id));
+        return ResponseEntity.ok(plan);
+    }
 }

@@ -90,4 +90,9 @@ public class PlanService {
         planRepo.save(myPlan);
     }
 
+    public Plan getPlanById(Long id){
+        Plan myPlan = planRepo.findById(id).get();
+        return myPlan;
+    }
+
 }
