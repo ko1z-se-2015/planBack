@@ -420,6 +420,8 @@ public class VolunteerApplication {
             userService.createDirector(director);
             userService.assignPositionByEmailAndName("asd@asd.ru", "ASSOCIATE PROFESSOR");
             userService.assignDegreeByEmailAndName("asd@asd.ru", "RESEARCH TEACHER");
+            userService.assignDegreeByEmailAndName("kk@kk.kz", "RESEARCH TEACHER");
+            userService.assignPositionByEmailAndName("kk@kk.kz", "ASSOCIATE PROFESSOR");
 
             departmentService.createDepartment(department);
             departmentService.addTeacher(department, teacher);
