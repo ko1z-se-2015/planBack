@@ -1,6 +1,7 @@
 package com.example.volunteer.entities;
 
 import com.example.volunteer.entities.kpi_sections.KpiSection;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,9 +31,11 @@ public class Position {
     @Column(columnDefinition = "TEXT")
     private String nameEn;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "position", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<User> users = new ArrayList<>();
 
+    @JsonIgnore
     @OneToMany(mappedBy = "position", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<KpiSection> kpiSections = new ArrayList<>();
 
