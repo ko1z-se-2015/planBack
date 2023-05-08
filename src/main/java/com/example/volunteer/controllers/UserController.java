@@ -108,7 +108,11 @@ public class UserController {
     @GetMapping("/getUser")
     public ResponseEntity getUser(@RequestHeader(value = "Authorization") String authorization) {
         User user = userService.getByToken(authorization);
+        user.getPosition().setUsers(null);
+        user.getPosition().setKpiSections(null);
         user.setPassword(null);
+        user.getDegree().setUsers(null);
+        user.getDegree().setKpiSections(null);
         return ResponseEntity.ok(user);
     }
 
