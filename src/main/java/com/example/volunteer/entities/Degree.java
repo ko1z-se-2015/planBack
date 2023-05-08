@@ -15,8 +15,8 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "position")
-public class Position {
+@Table(name = "degree")
+public class Degree {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -30,13 +30,13 @@ public class Position {
     @Column(columnDefinition = "TEXT")
     private String nameEn;
 
-    @OneToMany(mappedBy = "position", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "degree", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<User> users = new ArrayList<>();
 
-    @OneToMany(mappedBy = "position", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "degree", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<KpiSection> kpiSections = new ArrayList<>();
 
-    public Position(String nameRu, String nameKz, String nameEn) {
+    public Degree(String nameRu, String nameKz, String nameEn) {
         this.nameRu = nameRu;
         this.nameKz = nameKz;
         this.nameEn = nameEn;

@@ -2,6 +2,8 @@ package com.example.volunteer.services;
 
 
 import com.auth0.jwt.JWT;
+import com.example.volunteer.entities.Degree;
+import com.example.volunteer.entities.Position;
 import com.example.volunteer.entities.User;
 import com.example.volunteer.repositories.RoleRepo;
 import com.example.volunteer.repositories.UserRepo;
@@ -25,9 +27,10 @@ import java.util.*;
 public class UserService implements UserDetailsService {
 
     private final UserRepo userRepo;
-
     private final RoleRepo roleRepo;
 
+    private final PositionService positionService;
+    private final DegreeService degreeService;
 
     public final PasswordEncoder passwordEncoder;
 
@@ -52,6 +55,43 @@ public class UserService implements UserDetailsService {
 
         return true;
     }
+
+    //ASSIGNING THE USER'S DATA
+
+    public boolean assignPositionByEmailAndName(String email, String positionName) {
+        User user = userRepo.findByEmail(email);
+        if (user == null) {
+            return false;
+        }
+
+        Position position = positionService.getPositionByName(positionName);
+        if (position == null) {
+            return false;
+        }
+
+        user.setPosition(position);
+        userRepo.save(user);
+        return true;
+    }
+
+    public boolean assignDegreeByEmailAndName(String email, String degreeName) {
+        User user = userRepo.findByEmail(email);
+        if (user == null) {
+            return false;
+        }
+
+        Degree degree = degreeService.getDegreeByName(degreeName);
+        if (degree == null) {
+            return false;
+        }
+
+        user.setDegree(degree);
+        userRepo.save(user);
+        return true;
+    }
+
+
+    //AUTHORIZING USER
 
     public boolean loginUser(User data) {
         User user = userRepo.findByEmail(data.getEmail());
