@@ -38,7 +38,7 @@ public class UserService implements UserDetailsService {
         if (userRepo.findByEmail(user.getEmail()) != null) {
             return false;
         }
-        user.getRoles().add(roleRepo.findById(1L).orElse(null));
+        user.getRoles().add(roleRepo.findByRoleName("TEACHER"));
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepo.save(user);
 
@@ -49,7 +49,7 @@ public class UserService implements UserDetailsService {
         if (userRepo.findByEmail(user.getEmail()) != null) {
             return false;
         }
-        user.getRoles().add(roleRepo.findById(2L).orElse(null));
+        user.getRoles().add(roleRepo.findByRoleName("DIRECTOR"));
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepo.save(user);
 
