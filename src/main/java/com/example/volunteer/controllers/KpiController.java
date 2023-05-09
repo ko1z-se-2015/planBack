@@ -31,8 +31,9 @@ public class KpiController {
 
     @PostMapping("/save")
     public ResponseEntity saveMyAcademicWork(@RequestHeader(value = "Authorization") String token,
+                                             @RequestParam Long kpiSectionId,
                                              @RequestBody KPI kpi) {
-        kpiService.saveKpi(kpi);
+        kpiService.saveKpi(kpiSectionId, kpi);
         return new ResponseEntity("kpi added", HttpStatus.CREATED);
     }
 

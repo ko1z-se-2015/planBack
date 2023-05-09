@@ -4,6 +4,7 @@ import com.example.volunteer.entities.KPI;
 import com.example.volunteer.entities.PdfFile;
 import com.example.volunteer.entities.Plan;
 import com.example.volunteer.repositories.KpiRepo;
+import com.example.volunteer.repositories.KpiSectionRepo;
 import com.example.volunteer.repositories.PdfFileRepo;
 import com.example.volunteer.repositories.PlanRepo;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class KpiService {
 
     private final KpiRepo kpiRepo;
+    private final KpiSectionRepo kpiSectionRepo;
     private final PdfFileRepo pdfFileRepo;
     private final PlanRepo planRepo;
 
@@ -26,7 +28,8 @@ public class KpiService {
         return kpiRepo.getById(id);
     }
 
-    public void saveKpi(KPI kpi){
+    public void saveKpi(Long kpiSectionId, KPI kpi){
+        kpi.setKpiSection(kpiSectionRepo.getById(kpiSectionId));
         kpiRepo.save(kpi);
     }
 
@@ -47,6 +50,7 @@ public class KpiService {
         toUpdate.setResults(kpi.getResults());
         toUpdate.setComments(kpi.getComments());
         toUpdate.setPdfFile(kpi.getPdfFile());
+        toUpdate.setPdfFileName(kpi.getPdfFileName());
         toUpdate.setPercentage(kpi.getPercentage());
         toUpdate.setAuthorsNumber(kpi.getAuthorsNumber());
         kpiRepo.save(toUpdate);

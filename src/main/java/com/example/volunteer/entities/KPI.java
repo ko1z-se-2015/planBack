@@ -47,7 +47,7 @@ public class KPI {
 
 
     //TODO REDO KPI IF NECESSARY
-    public KPI(String nameOfTheWork, String deadlines, String informationOnImplementation, String results, String comments, String pdfFile, String pdfFileName, float percentage, int authorsNumber, KpiSection kpiSection) {
+    public KPI(String nameOfTheWork, String deadlines, String informationOnImplementation, String results, String comments, String pdfFile, String pdfFileName, float percentage, int authorsNumber) {
         this.nameOfTheWork = nameOfTheWork;
         this.deadlines = deadlines;
         this.informationOnImplementation = informationOnImplementation;
@@ -56,7 +56,6 @@ public class KPI {
         this.pdfFile = pdfFile;
         this.percentage = percentage;
         this.authorsNumber = authorsNumber;
-        this.kpiSection = kpiSection;
         this.pdfFileName = pdfFileName;
     }
 
