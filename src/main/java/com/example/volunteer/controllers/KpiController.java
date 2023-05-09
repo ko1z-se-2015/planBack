@@ -56,14 +56,6 @@ public class KpiController {
         return new ResponseEntity("kpi is updated", HttpStatus.OK);
     }
 
-    @PostMapping("/upload-supporting-document")
-    public ResponseEntity<String> uploadPdfFile(@RequestParam Long kpiId,
-                                                @RequestParam String fileName,
-                                                @RequestBody byte[] data) {
-        kpiService.uploadPdfFile(kpiId, fileName, data);
-        return ResponseEntity.ok("PDF file uploaded successfully.");
-    }
-
     @GetMapping("/download-supporting-document")
     public ResponseEntity<String> downloadPdfFile(HttpServletResponse response,
                                                   @RequestParam Long kpiId){

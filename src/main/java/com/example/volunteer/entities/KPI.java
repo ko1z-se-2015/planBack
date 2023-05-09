@@ -32,9 +32,8 @@ public class KPI {
     @Column(length = 2000)
     private String comments;
 
-    @JsonIgnore
-    @OneToOne(mappedBy = "kpi", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private PdfFile pdfFile;
+    @Column(columnDefinition = "TEXT")
+    private String pdfFile;
 
     private float percentage;
 
@@ -46,7 +45,7 @@ public class KPI {
 
 
     //TODO REDO KPI IF NECESSARY
-    public KPI(String nameOfTheWork, String deadlines, String informationOnImplementation, String results, String comments, PdfFile pdfFile, float percentage, int authorsNumber, KpiSection kpiSection) {
+    public KPI(String nameOfTheWork, String deadlines, String informationOnImplementation, String results, String comments, String pdfFile, float percentage, int authorsNumber, KpiSection kpiSection) {
         this.nameOfTheWork = nameOfTheWork;
         this.deadlines = deadlines;
         this.informationOnImplementation = informationOnImplementation;

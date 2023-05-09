@@ -52,21 +52,4 @@ public class KpiService {
         kpiRepo.save(toUpdate);
     }
 
-    public void uploadPdfFile(Long kpiId, String fileName, byte[] data){
-        KPI kpi = kpiRepo.getById(kpiId);
-
-        PdfFile pdfFile = new PdfFile();
-        pdfFile.setFileName(fileName);
-        pdfFile.setData(data);
-        pdfFile.setKpi(kpi);
-
-        pdfFileRepo.save(pdfFile);
-
-        kpi.setPdfFile(pdfFile);
-        kpiRepo.save(kpi);
-    }
-
-
-
-
 }
