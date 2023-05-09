@@ -53,9 +53,6 @@ public class KpiSection {
     @Column
     private boolean anotherSection; //SHOULD BE TRUE IF APPLICABLE (IF THERE IS A SOLUTION OF CLOSING THE ANOTHER SECTION BY THIS SECTION), OTHERWISE SHOULD BE FALSE AND HIDDEN FOR THE USER
 
-    @Column
-    private int anotherSectionNumber;
-
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "position_id")
     private Position position;
