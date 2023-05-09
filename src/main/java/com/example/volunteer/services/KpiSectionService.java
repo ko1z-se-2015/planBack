@@ -27,11 +27,18 @@ public class KpiSectionService {
         return kpiSectionRepo.findAll();
     }
 
-    public KpiSection findByPositionNameAndDegreeName(String positionName, String degreeName) {
+    public List<KpiSection> getByPositionNameAndDegreeName(String positionName, String degreeName) {
         Position position = positionRepo.findByName(positionName);
         Degree degree = degreeRepo.findByName(degreeName);
 
         return kpiSectionRepo.findByPositionAndDegree(position, degree);
+    }
+
+    public KpiSection getByPositionNameAndDegreeNameAndSectionNumber (String positionName, String degreeName, int sectionNumber) {
+        Position position = positionRepo.findByName(positionName);
+        Degree degree = degreeRepo.findByName(degreeName);
+
+        return kpiSectionRepo.findByPositionAndDegreeAndSectionNumber(position, degree, sectionNumber);
     }
 
     public KpiSection save(KpiSection kpiSection, String positionName, String degreeName) {
