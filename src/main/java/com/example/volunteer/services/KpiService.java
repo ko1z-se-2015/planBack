@@ -29,7 +29,7 @@ public class KpiService {
     }
 
     public void saveKpi(Long kpiSectionId, KPI kpi){
-        kpi.setKpiSection(kpiSectionRepo.getById(kpiSectionId));
+        kpi.setKpiSection(kpiSectionRepo.findById(kpiSectionId).get());
         kpiRepo.save(kpi);
     }
 
