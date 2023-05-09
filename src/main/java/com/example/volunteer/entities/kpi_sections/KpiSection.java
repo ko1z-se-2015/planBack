@@ -1,10 +1,13 @@
 package com.example.volunteer.entities.kpi_sections;
 
 import com.example.volunteer.entities.Degree;
+import com.example.volunteer.entities.KPI;
 import com.example.volunteer.entities.Position;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -61,6 +64,9 @@ public class KpiSection {
     @JoinColumn(name = "degree_id")
     private Degree degree;
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "kpiSection", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<KPI> kpiList = new ArrayList<>();
 
     public KpiSection(int sectionNumber, String name, String notes, List<String> options, float rate_full, float rate_half, float rate_quarter, int percentage, boolean authorsByParts, boolean anotherSection) {
         this.sectionNumber = sectionNumber;

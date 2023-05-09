@@ -33,6 +33,8 @@ public class Plan {
     private List<EducationalWork> educationalWorks;
     @OneToMany
     private List<SocialWork> socialWorks;
+    @OneToMany
+    private List<KPI> kpis;
     @OneToOne
     private User createdBy;
     @OneToOne

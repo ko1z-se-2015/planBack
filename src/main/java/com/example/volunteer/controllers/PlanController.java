@@ -1,5 +1,6 @@
 package com.example.volunteer.controllers;
 
+import com.example.volunteer.entities.KPI;
 import com.example.volunteer.entities.Plan;
 import com.example.volunteer.entities.User;
 import com.example.volunteer.modules.*;
@@ -80,7 +81,13 @@ public class PlanController {
     @PostMapping("/add-social-work")
     public ResponseEntity addSocialWork(@RequestHeader(value="Authorization") String authorization, @RequestBody AddSocialWork addSocialWork){
         planService.addSocialWork(addSocialWork);
-        return new ResponseEntity("socail work added", HttpStatus.CREATED);
+        return new ResponseEntity("social work added", HttpStatus.CREATED);
+    }
+
+    @PostMapping("/add-kpi")
+    public ResponseEntity addKPI(@RequestHeader(value="Authorization") String authorization, @RequestParam(name = "id") Long planId, @RequestBody KPI kpi){
+        planService.addKpi(planId, kpi);
+        return new ResponseEntity("kpi added", HttpStatus.CREATED);
     }
 
     @GetMapping("/get-by-id")
