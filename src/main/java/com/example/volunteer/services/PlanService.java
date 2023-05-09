@@ -23,6 +23,7 @@ public class PlanService {
     private final EducationalWorkRepo educationalWorkRepo;
     private final SocialWorkRepo socialWorkRepo;
     private final KpiRepo kpiRepo;
+    private final KpiSectionRepo kpiSectionRepo;
 
     public void createPlan(Plan plan){
         planRepo.save(plan);
@@ -91,9 +92,10 @@ public class PlanService {
         planRepo.save(myPlan);
     }
 
-    public void addKpi(Long planId, KPI kpi) {
+    public void addKpi(Long planId, Long idSection,KPI kpi) {
         Plan myPlan = planRepo.getById(planId);
         List<KPI> kpis = myPlan.getKpis();
+        kpi.setKpiSection(kpiSectionRepo.findById(idSection).get());
         KPI newKpi = kpiRepo.save(kpi);
         kpis.add(kpi);
         myPlan.setKpis(kpis);

@@ -85,8 +85,8 @@ public class PlanController {
     }
 
     @PostMapping("/add-kpi")
-    public ResponseEntity addKPI(@RequestHeader(value="Authorization") String authorization, @RequestParam(name = "id") Long planId, @RequestBody KPI kpi){
-        planService.addKpi(planId, kpi);
+    public ResponseEntity addKPI(@RequestHeader(value="Authorization") String authorization, @RequestParam(name = "id") Long planId,@RequestParam(name = "idSection") Long idSection, @RequestBody KPI kpi){
+        planService.addKpi(planId, idSection,kpi);
         return new ResponseEntity("kpi added", HttpStatus.CREATED);
     }
 
