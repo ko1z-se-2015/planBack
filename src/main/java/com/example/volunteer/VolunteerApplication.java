@@ -402,6 +402,21 @@ public class VolunteerApplication {
 
     User teacher = new User("Kanat", "Berkinbayev", "Galymuly", "0.5", "asd@asd.ru",  "qwerty");
     User director = new User("Daniyar", "Myrzasary", "Timuruly", "1", "kk@kk.kz", "qwerty");
+
+    User olzhas = new User("Олжас", "Тұрар", "Нұрқонысұлы", "1", "olzhas.turar@astanait.edu.kz", "olzhas");
+    User assel = new User("Асель", "Смайыл", "Маралбайқызы", "1", "assel.smaiyl@astanait.edu.kz", "assel");
+    User baurzhan = new User("Бауржан", "Ильясов", "Рашитович", "1", "baurzhan.ilyassov@astanait.edu.kz", "baurzhan");
+    User zhibek = new User("Жибек", "Тлешова", "Кенесбековна", "1", "Zhibek.Tleshova@astanait.edu.kz", "zhibek");
+
+    List<User> directors = new ArrayList<>();
+
+    List<Department> departments = new ArrayList<>(Arrays.asList(
+            new Department("Department of Computational and Data Science", olzhas),
+            new Department("Department of Computer Engineering", assel),
+            new Department("Department of Intellectual Systems and Cybersecurity", baurzhan),
+            new Department("Department of General Educational Disciplines", zhibek)
+    ));
+
     Department department = new Department("IT department", director);
 //    Plan plan = new Plan("as", "das", "das", "das", "das", "da", "ds", "aa", "aa", "aa", "aa", "aa", "aa", "aa", "aa", "aa", "aa", "aa", "aa", "aa", "aa", "aa", "aa");
 
@@ -410,6 +425,11 @@ public class VolunteerApplication {
                           PositionService positionService, DegreeService degreeService,
                           KpiSectionService kpiSectionService) {
         return args -> {
+            directors.add(olzhas);
+            directors.add(zhibek);
+            directors.add(assel);
+            directors.add(baurzhan);
+
             positionList.forEach(positionService::savePosition);
             degreeList.forEach(degreeService::saveDegree);
 
@@ -418,6 +438,9 @@ public class VolunteerApplication {
 
             userService.createTeacher(teacher);
             userService.createDirector(director);
+
+            directors.forEach(userService::createDirector);
+
             userService.assignPositionByEmailAndName("asd@asd.ru", "ASSOCIATE PROFESSOR");
             userService.assignDegreeByEmailAndName("asd@asd.ru", "RESEARCH TEACHER");
             userService.assignDegreeByEmailAndName("kk@kk.kz", "RESEARCH TEACHER");
@@ -425,6 +448,8 @@ public class VolunteerApplication {
 
             departmentService.createDepartment(department);
             departmentService.addTeacher(department, teacher);
+
+            departments.forEach(departmentService::createDepartment);
 //            plan.setCreatedBy(userService.getByEmail("asd@asd.ru"));
 //            plan.setCreatedFor(userService.getByEmail("kk@kk.kz"));
 //            planService.createPlan(plan);
