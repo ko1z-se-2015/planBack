@@ -38,6 +38,7 @@ public class User {
     @NotEmpty(message = "это поле должно быть заполнена")
     private String middleName;
 
+    @Column(columnDefinition = "TEXT")
     private String photo;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
