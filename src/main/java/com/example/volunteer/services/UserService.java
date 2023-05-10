@@ -56,6 +56,9 @@ public class UserService implements UserDetailsService {
         return true;
     }
 
+    public void update(User user) {
+        userRepo.save(user);
+    }
     //ASSIGNING THE USER'S DATA
 
     public boolean assignPositionByEmailAndName(String email, String positionName) {
