@@ -38,6 +38,8 @@ public class User {
     @NotEmpty(message = "это поле должно быть заполнена")
     private String middleName;
 
+    private String photo;
+
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "position_id")
     private Position position;
@@ -75,6 +77,17 @@ public class User {
         this.rate = rate;
         this.email = email;
         this.password = password;
+    }
+
+    public User(String firstName, String lastName, String middleName, String photo, String rate, Position position, Degree degree) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.middleName = middleName;
+        this.photo = photo;
+        this.rate = rate;
+        this.position = position;
+        this.degree = degree;
+
     }
 
     public User(String email, String password) {

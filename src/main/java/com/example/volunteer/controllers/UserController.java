@@ -48,25 +48,19 @@ public class UserController {
         return new ResponseEntity("user wasn't added", HttpStatus.BAD_REQUEST);
     }
 
-//    @PostMapping("/updateDataUser")
-//    public ResponseEntity updateDataUser(@RequestHeader(value = "Authorization") String authorization,
-//                                         @Valid @RequestBody UpdateDataUser updateDataUser, BindingResult bindingResult) {
-//        if (bindingResult.hasErrors()) {
-//            List<FieldError> errors = bindingResult.getFieldErrors();
-//            List<ValidationError> validationErrors = new ArrayList<>();
-//            for (FieldError error : errors) {
-//                validationErrors.add(new ValidationError(error.getField(), error.getDefaultMessage()));
-//            }
-//            return ResponseEntity.ok(validationErrors);
-//        }
-//
-//        User user = userService.getByToken(authorization);
-//        if (userService.updateDataUser(user.getEmail(), updateDataUser)) {
-//            return new ResponseEntity("data was updated", HttpStatus.ACCEPTED);
-//        }
-//
-//        return new ResponseEntity("error", HttpStatus.BAD_REQUEST);
-//    }
+    @PostMapping("/update")
+    public ResponseEntity updateUser(@RequestHeader(value = "Authorization") String authorization, @RequestBody User updatedUser) {
+        User user = userService.getByToken(authorization);
+        user.setFirstName(updatedUser.getFirstName());
+        user.setLastName(updatedUser.getLastName());
+        user.setMiddleName(updatedUser.getMiddleName());
+        user.setPhoto(updatedUser.getPhoto());
+        user.setRate(updatedUser.getRate());
+        user.setPosition(updatedUser.getPosition());
+        user.setDegree(updatedUser.getDegree());
+        userService.update(user);
+        return ResponseEntity.ok("user updated");
+    }
 
     @PostMapping("/deleteUser")
     public ResponseEntity deleteUser(@RequestParam String email) {
