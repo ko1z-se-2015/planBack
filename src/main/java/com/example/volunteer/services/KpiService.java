@@ -53,6 +53,7 @@ public class KpiService {
         toUpdate.setPdfFileName(kpi.getPdfFileName());
         toUpdate.setPercentage(kpi.getPercentage());
         toUpdate.setAuthorsNumber(kpi.getAuthorsNumber());
+        toUpdate.setAnotherSectionNumber(kpi.getAnotherSectionNumber());
         kpiRepo.save(toUpdate);
     }
 

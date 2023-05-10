@@ -45,8 +45,21 @@ public class KPI {
     @JoinColumn(name = "kpi_section_id")
     private KpiSection kpiSection;
 
-
+    private int anotherSectionNumber;
     //TODO REDO KPI IF NECESSARY
+    public KPI(String nameOfTheWork, String deadlines, String informationOnImplementation, String results, String comments, String pdfFile, String pdfFileName, float percentage, int authorsNumber, int anotherSectionNumber) {
+        this.nameOfTheWork = nameOfTheWork;
+        this.deadlines = deadlines;
+        this.informationOnImplementation = informationOnImplementation;
+        this.results = results;
+        this.comments = comments;
+        this.pdfFile = pdfFile;
+        this.percentage = percentage;
+        this.authorsNumber = authorsNumber;
+        this.pdfFileName = pdfFileName;
+        this.anotherSectionNumber = anotherSectionNumber;
+    }
+
     public KPI(String nameOfTheWork, String deadlines, String informationOnImplementation, String results, String comments, String pdfFile, String pdfFileName, float percentage, int authorsNumber) {
         this.nameOfTheWork = nameOfTheWork;
         this.deadlines = deadlines;
