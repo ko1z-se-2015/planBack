@@ -5,7 +5,11 @@ import com.auth0.jwt.JWT;
 
 import com.auth0.jwt.algorithms.Algorithm;
 
+import com.example.volunteer.entities.Degree;
+import com.example.volunteer.entities.Position;
 import com.example.volunteer.entities.User;
+import com.example.volunteer.services.DegreeService;
+import com.example.volunteer.services.PositionService;
 import com.example.volunteer.services.UserService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -24,9 +28,13 @@ import java.util.stream.Collectors;
 @RequestMapping("/user")
 public class UserController {
     private final UserService userService;
+    private final PositionService positionService;
+    private final DegreeService degreeService;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService, PositionService positionService, DegreeService degreeService) {
         this.userService = userService;
+        this.positionService = positionService;
+        this.degreeService = degreeService;
     }
 
     @PostMapping("/createTeacher")
@@ -112,6 +120,17 @@ public class UserController {
         return ResponseEntity.ok(user);
     }
 
+    @GetMapping("/getPositions")
+    public ResponseEntity<List<Position>> getAllPositions(){
+        List<Position> positions = positionService.getAllPositions();
+        return ResponseEntity.ok(positions);
+    }
+
+    @GetMapping("/getDegrees")
+    public ResponseEntity<List<Degree>> getAllDegrees(){
+        List<Degree> degrees = degreeService.getAllDegrees();
+        return ResponseEntity.ok(degrees);
+    }
 
     @GetMapping("/getUserEmail")
     public ResponseEntity getUserEmail(@RequestHeader(value = "Authorization") String authorization) {
