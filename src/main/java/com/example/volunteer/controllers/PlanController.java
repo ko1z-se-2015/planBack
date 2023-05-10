@@ -95,4 +95,11 @@ public class PlanController {
         Plan plan = planService.getPlanById(Long.valueOf(id));
         return ResponseEntity.ok(plan);
     }
+
+    @PostMapping("/change-year")
+    public ResponseEntity changeYear(@RequestHeader(value="Authorization") String authorization, @RequestBody ChangeYearModule changeYearModule){
+        Plan plan = planService.getPlanById(changeYearModule.getPlan().getId());
+        planService.changeYear(plan, changeYearModule.getYear());
+        return new ResponseEntity("year changed", HttpStatus.OK);
+    }
 }

@@ -107,4 +107,9 @@ public class PlanService {
         return myPlan;
     }
 
+    public void changeYear(Plan plan, String year){
+        plan.setYear(year);
+        planRepo.save(plan);
+    }
+
 }
