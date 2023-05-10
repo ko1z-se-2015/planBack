@@ -36,7 +36,13 @@ public class KpiService {
     public void deleteById(Long id){
         KPI kpi = getKpiById(id);
         Plan plan = planRepo.findByKpisContaining(kpi);
+        for (KPI planKpi: plan.getKpis()) {
+            if (planKpi.getId().equals(kpi.getId())) {
+                planKpi.setKpiSection(null);
+            }
+        }
         plan.getKpis().remove(kpi);
+        kpi.setKpiSection(null);
         planRepo.save(plan);
         kpiRepo.delete(kpi);
     }
