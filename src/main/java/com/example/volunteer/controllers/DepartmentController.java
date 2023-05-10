@@ -1,6 +1,7 @@
 package com.example.volunteer.controllers;
 
 import com.example.volunteer.entities.Department;
+import com.example.volunteer.entities.User;
 import com.example.volunteer.services.DepartmentService;
 import com.example.volunteer.services.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -31,5 +32,14 @@ public class DepartmentController {
     public ResponseEntity getDepartmentByTeacher(@RequestHeader(value = "Authorization") String authorization){
         Department department = departmentService.getDepartmentByTeacher(userService.getByToken(authorization));
         return ResponseEntity.ok(department);
+    }
+
+    @PostMapping("/transfer-teacher")
+    public ResponseEntity transferTeacher(@RequestHeader(value = "Authorization") String authorization, @RequestBody Department d){
+        Department department = departmentService.getDepartmentByTeacher(userService.getByToken(authorization));
+        User user = userService.getByToken(authorization);
+        departmentService.removeTeacher(department, user);
+        departmentService.addTeacher(d, user);
+        return ResponseEntity.ok("teacher transferred");
     }
 }

@@ -40,6 +40,11 @@ public class DepartmentService {
         departmentRepo.save(d);
     }
 
+    public void removeTeacher(Department department, User user) {
+        department.getTeachers().remove(user);
+        departmentRepo.save(department);
+    }
+
     public Department findByName(String name) {
         return departmentRepo.findByName(name);
     }
