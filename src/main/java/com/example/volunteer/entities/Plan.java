@@ -23,6 +23,7 @@ public class Plan {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String year;
+    private String status; // SENT / CANCELED / APPROVED
     @OneToMany
     private List<AcademicWork> academicWorks;
     @OneToMany

@@ -1,6 +1,7 @@
 package com.example.volunteer.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.Type;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -49,7 +50,7 @@ public class User {
     @JoinColumn(name = "degree_id")
     private Degree degree;
 
-    @NotNull(message = "это поле должно быть заполнена") //TODO написать ставку - она может быть 1 / 0.5 / 0.25
+    @NotNull(message = "это поле должно быть заполнена")
     @NotEmpty(message = "это поле должно быть заполнена")
     private String rate;
 
@@ -70,7 +71,10 @@ public class User {
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Collection<Role> roles = new ArrayList<>();
 
-//    public User(String firstName, String lastName, String middleName, Position position, Degree degree, String rate, String email, String password) {
+    @JsonIgnore
+    @OneToMany(mappedBy = "sendTo", cascade = CascadeType.ALL)
+    private List<Notification> notifications = new ArrayList<>();
+
     public User(String firstName, String lastName, String middleName, String rate, String email, String password) {
     this.firstName = firstName;
         this.lastName = lastName;
