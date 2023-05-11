@@ -67,12 +67,12 @@ public class PlanService {
     public void addResearchWork(AddReseachWork addReseachWork) {
         Plan myPlan = planRepo.getById(addReseachWork.getIdPlan());
         List<ResearchWork> myResearchWork = myPlan.getResearchWorks();
-        ResearchWork newResearchWork;
-        if (addReseachWork.getTypeOfTheWork() == 1 || addReseachWork.getTypeOfTheWork() == 2 || addReseachWork.getTypeOfTheWork() == 3) {
-            newResearchWork = researchWorkRepo.save(new ResearchWork((addReseachWork.getTypeOfTheWork()), addReseachWork.getText1(), addReseachWork.getText2(), addReseachWork.getText3(), addReseachWork.getDeadlines(), addReseachWork.getInformationOnImplementation(), addReseachWork.getResults(), addReseachWork.getComments()));
-        } else {
-            newResearchWork = researchWorkRepo.save(new ResearchWork(addReseachWork.getTypeOfTheWork(), addReseachWork.getText1(), addReseachWork.getDeadlines(), addReseachWork.getInformationOnImplementation(), addReseachWork.getResults(), addReseachWork.getComments()));
-        }
+        ResearchWork newResearchWork =researchWorkRepo.save(new ResearchWork(addReseachWork.getNameOfTheWork(),addReseachWork.getDeadlines(), addReseachWork.getInfoImplementation(), addReseachWork.getResults(), addReseachWork.getComments()));
+//        if (addReseachWork.getTypeOfTheWork() == 1 || addReseachWork.getTypeOfTheWork() == 2 || addReseachWork.getTypeOfTheWork() == 3) {
+//            newResearchWork = researchWorkRepo.save(new ResearchWork((addReseachWork.getTypeOfTheWork()), addReseachWork.getText1(), addReseachWork.getText2(), addReseachWork.getText3(), addReseachWork.getDeadlines(), addReseachWork.getInformationOnImplementation(), addReseachWork.getResults(), addReseachWork.getComments()));
+//        } else {
+//            newResearchWork = researchWorkRepo.save(new ResearchWork(addReseachWork.getTypeOfTheWork(), addReseachWork.getText1(), addReseachWork.getDeadlines(), addReseachWork.getInformationOnImplementation(), addReseachWork.getResults(), addReseachWork.getComments()));
+//        }
         myResearchWork.add(newResearchWork);
         myPlan.setResearchWorks(myResearchWork);
         planRepo.save(myPlan);
