@@ -35,9 +35,15 @@ public class NotificationService {
         return notificationRepo.getNotificationsBySendBy(sendBy);
     }
 
-    public void createNotification(User sendBy, Long planId, Notification notification) {
+    public void createNotification(User sendBy, Long planId, boolean byTeacher, Notification notification) {
         Plan plan = planRepo.getById(planId);
-        User sendTo = plan.getCreatedBy();
+        User sendTo;
+
+        if (byTeacher){
+            sendTo = plan.getCreatedFor();
+        } else {
+            sendTo = plan.getCreatedBy();
+        }
 
         LocalDateTime now = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");

@@ -28,9 +28,10 @@ public class NotificationController {
     @PostMapping("/send")
     public ResponseEntity sendNotification(@RequestHeader(value="Authorization") String authorization,
                                            @RequestParam Long planId,
+                                           @RequestParam(defaultValue = "true") boolean byTeacher,
                                            @RequestBody Notification notification) {
         User user = userService.getByToken(authorization);
-        notificationService.createNotification(user, planId, notification);
+        notificationService.createNotification(user, planId, byTeacher, notification);
         return new ResponseEntity("notification was added", HttpStatus.CREATED);
     }
 
