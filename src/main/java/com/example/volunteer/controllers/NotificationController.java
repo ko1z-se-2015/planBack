@@ -7,7 +7,10 @@ import com.example.volunteer.services.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @Slf4j
@@ -23,21 +26,31 @@ public class NotificationController {
     }
 
     @PostMapping("/send")
-    public ResponseEntity sendNotification(@RequestBody Notification Notification) {
-        notificationService.createNotification(Notification);
+    public ResponseEntity sendNotification(@RequestHeader(value="Authorization") String authorization,
+                                           @RequestParam Long planId,
+                                           @RequestBody Notification notification) {
+        User user = userService.getByToken(authorization);
+        notificationService.createNotification(user, planId, notification);
         return new ResponseEntity("notification was added", HttpStatus.CREATED);
-
     }
+
     @GetMapping("/get-by-me")
-    public ResponseEntity getSendBeMeNotification(@RequestHeader(value="Authorization") String authorization){
+    public ResponseEntity<List<Notification>> getSendBeMeNotification(@RequestHeader(value="Authorization") String authorization){
         User user = userService.getByToken(authorization);
         return ResponseEntity.ok(notificationService.getNotificationsBySender(user));
     }
 
     @GetMapping("/get-to-me")
-    public ResponseEntity getSendToMeNotification(@RequestHeader(value="Authorization") String authorization){
+    public ResponseEntity<List<Notification>> getSendToMeNotification(@RequestHeader(value="Authorization") String authorization){
         User user = userService.getByToken(authorization);
         return ResponseEntity.ok(notificationService.getNotificationsBySendTo(user));
+    }
+
+    @GetMapping("/get-to-me-by-status")
+    public ResponseEntity<List<Notification>> getSendToMeNotificationByStatus(@RequestHeader(value="Authorization") String authorization,
+                                                          @RequestParam String status){
+        User user = userService.getByToken(authorization);
+        return ResponseEntity.ok(notificationService.getNotificationsBySendToAndStatus(user, status));
     }
 
 }

@@ -18,4 +18,6 @@ public interface PlanRepo extends JpaRepository<Plan,Long> {
     Plan findByEducationalWorksContaining(EducationalWork educationalWork);
     Plan findBySocialWorksContaining(SocialWork socialWork);
     Plan findByKpisContaining(KPI kpi);
+
+    List<Plan> getPlansByCreatedForAndStatusEquals(User user, String status);
 }

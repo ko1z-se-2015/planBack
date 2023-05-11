@@ -8,8 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface NotificationRepo extends JpaRepository<Notification,Long> {
-
-    List<Notification> findAllBySendBy(User user);
-    List<Notification> findAllBySendTo(User user);
-
+    List<Notification> getNotificationsBySendTo(User sendTo);
+    List<Notification> getNotificationsBySendToAndStatus(User sendTo, String status);
+    List<Notification> getNotificationsBySendBy(User sendBy);
 }

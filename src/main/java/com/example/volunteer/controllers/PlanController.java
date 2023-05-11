@@ -54,6 +54,15 @@ public class PlanController {
         return ResponseEntity.ok(planService.getPlanByCreatedFor(user));
     }
 
+    @GetMapping("/get-plans-to-me-by-status")
+    public ResponseEntity<List<Plan>> getPlansToMeByStatus(@RequestHeader(value="Authorization") String authorization,
+                                                           @RequestParam String status) {
+        User user = userService.getByToken(authorization);
+        List<Plan> plans = planService.getPlansByCreatedForAndStatus(user, status);
+
+        return ResponseEntity.ok(plans);
+    }
+
     @PostMapping("/add-academic-work")
     public ResponseEntity addAcademicWork(@RequestHeader(value="Authorization") String authorization, @RequestBody AddAcademicWork addAcademicWork){
         planService.addAcademicWorks(addAcademicWork);

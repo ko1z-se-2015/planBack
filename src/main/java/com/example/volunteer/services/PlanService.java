@@ -36,6 +36,10 @@ public class PlanService {
         return planRepo.findAllByCreatedFor(user);
     }
 
+    public List<Plan> getPlansByCreatedForAndStatus(User director, String status) {
+        return planRepo.getPlansByCreatedForAndStatusEquals(director, status);
+    }
+
     public void addAcademicWorks(AddAcademicWork addAcademicWork) {
         Plan myPlan = planRepo.getById(addAcademicWork.getIdPlan());
         List<AcademicWork> myAcademicWork = myPlan.getAcademicWorks();
