@@ -34,6 +34,12 @@ public class DepartmentController {
         return ResponseEntity.ok(department);
     }
 
+    @GetMapping("/get-by-director")
+    public ResponseEntity getDepartmentByDirector(@RequestHeader(value = "Authorization") String authorization){
+        Department department = departmentService.getDepartmentByDirector(userService.getByToken(authorization));
+        return ResponseEntity.ok(department);
+    }
+
     @PostMapping("/transfer-teacher")
     public ResponseEntity transferTeacher(@RequestHeader(value = "Authorization") String authorization, @RequestBody Department d){
         Department department = departmentService.getDepartmentByTeacher(userService.getByToken(authorization));
