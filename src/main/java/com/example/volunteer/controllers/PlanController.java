@@ -27,10 +27,20 @@ public class PlanController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity createPlan(@RequestHeader(value="Authorization") String authorization, @RequestBody Plan bodyPlan){
+    public ResponseEntity createPlan(@RequestHeader(value="Authorization") String authorization, @RequestBody Plan bodyPlan, @RequestParam Long idDirector){
         Plan plan = bodyPlan;
         User user = userService.getByToken(authorization);
+        User director = userService.getById(idDirector);
         plan.setCreatedBy(user);
+        plan.setCreatedFor(director);
+        planService.createPlan(plan);
+        return new ResponseEntity("plan created", HttpStatus.CREATED);
+    }
+
+    @PostMapping("/send")
+    public ResponseEntity sendPlan(@RequestHeader(value="Authorization") String authorization, @RequestParam Long id){
+        Plan plan = planService.getPlanById(id);
+        plan.setStatus("AWAITING");
         planService.createPlan(plan);
         return new ResponseEntity("plan created", HttpStatus.CREATED);
     }

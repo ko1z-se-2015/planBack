@@ -133,7 +133,13 @@ public class UserService implements UserDetailsService {
         return user;
     }
 
-
+    public User getById(Long id) {
+        User user = userRepo.getById(id);
+        if (user == null) {
+            return null;
+        }
+        return user;
+    }
 
     public boolean deleteUser(String token) {
         String email = JWT.decode(token).getSubject();
