@@ -40,6 +40,10 @@ public class PlanService {
         return planRepo.getPlansByCreatedForAndStatusEquals(director, status);
     }
 
+    public void save(Plan plan) {
+        planRepo.save(plan);
+    }
+
     public void addAcademicWorks(AddAcademicWork addAcademicWork) {
         Plan myPlan = planRepo.getById(addAcademicWork.getIdPlan());
         List<AcademicWork> myAcademicWork = myPlan.getAcademicWorks();
