@@ -126,24 +126,24 @@ public class PlanController {
         return new ResponseEntity("year changed", HttpStatus.OK);
     }
 
-    @PostMapping("/create-excel")
-    public ResponseEntity<String> createExcel(@RequestParam Long planId) throws IOException {
-        Plan plan = planService.getPlanById(planId);
-        planService.createExcel(plan);
-        return ResponseEntity.ok("Excel created");
-    }
-
-//    @PostMapping("/create-excel")
-//    public ResponseEntity<byte[]> createExcel(@RequestParam Long planId) throws IOException {
+//    @GetMapping("/create-excel")
+//    public ResponseEntity<String> createExcel(@RequestParam Long planId) throws IOException {
 //        Plan plan = planService.getPlanById(planId);
-//
-//        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-//        planService.createExcel(plan, outputStream);
-//
-//        HttpHeaders headers = new HttpHeaders();
-//        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
-//        headers.setContentDispositionFormData("attachment", "plan.xlsx");
-//
-//        return new ResponseEntity<>(outputStream.toByteArray(), headers, HttpStatus.OK);
+//        planService.createExcel(plan);
+//        return ResponseEntity.ok("Excel created");
 //    }
+
+    @GetMapping("/create-excel")
+    public ResponseEntity<byte[]> createExcel(@RequestParam Long planId) throws IOException {
+        Plan plan = planService.getPlanById(planId);
+
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        planService.createExcel(outputStream,plan);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+        headers.setContentDispositionFormData("attachment", "plan.xlsx");
+
+        return new ResponseEntity<>(outputStream.toByteArray(), headers, HttpStatus.OK);
+    }
 }

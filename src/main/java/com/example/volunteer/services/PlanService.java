@@ -131,8 +131,8 @@ public class PlanService {
         planRepo.save(plan);
     }
 
-//    public void createExcel(OutputStream outputStream, Plan plan) throws IOException {
-    public void createExcel(Plan plan) throws IOException {
+    public void createExcel(OutputStream outputStream, Plan plan) throws IOException {
+//    public void createExcel(Plan plan) throws IOException {
         Workbook workbook = new XSSFWorkbook();
 
         List<String> tableSheets = Arrays.asList("1 УЧЕБНАЯ РАБОТА " + plan.getYear(), "2 УЧЕБНО-МЕТОДИЧЕСКАЯ РАБОТА",
@@ -182,7 +182,7 @@ public class PlanService {
                     }
                 }
 
-                int rowIndex = 1;
+                int rowIndex = 2;
                 if (!plan.getAcademicWorks().isEmpty()){
                     int sumLecturesPlan = 0, sumLecturesFact = 0, sumPractiePlan = 0, sumPracticeFact = 0,
                             sumHoursPlan = 0, sumHoursFact = 0, sumTotalPlan = 0, sumTotalFact = 0;
@@ -375,12 +375,12 @@ public class PlanService {
 
         //TODO: РАСКОММЕНЬТЕ И ЗАКОМЕНТИТЕ СОЗДАНИЕ ФАЙЛА. НАСТРОЙТЕ ПРЯМОЕ СКАЧИВАНИЕ
         //Я ОСТАВИЛА ЭТО КАК ДЛЯ ПРОВЕРКИ
-        FileOutputStream out = new FileOutputStream("plan.xlsx");
-        workbook.write(out);
-        out.close();
+//        FileOutputStream out = new FileOutputStream("plan.xlsx");
+//        workbook.write(out);
+//        out.close();
 
-//        workbook.write(outputStream);
-//        outputStream.flush();
+        workbook.write(outputStream);
+        outputStream.flush();
 
     }
 
