@@ -131,6 +131,11 @@ public class PlanService {
         planRepo.save(plan);
     }
 
+    public void deletePlanById(Long id){
+        Plan plan = getPlanById(id);
+        planRepo.delete(plan);
+    }
+
     public void createExcel(OutputStream outputStream, Plan plan) throws IOException {
 //    public void createExcel(Plan plan) throws IOException {
         Workbook workbook = new XSSFWorkbook();

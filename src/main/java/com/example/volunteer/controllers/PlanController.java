@@ -126,6 +126,14 @@ public class PlanController {
         return new ResponseEntity("year changed", HttpStatus.OK);
     }
 
+    @PostMapping("/delete")
+    public ResponseEntity deletePlan(@RequestHeader(value="Authorization") String authorization, @RequestBody PlansToDelete plansToDelete){
+        for(Plan plan: plansToDelete.getItems()){
+            planService.deletePlanById(plan.getId());
+        }
+        return new ResponseEntity("plans are deleted", HttpStatus.OK);
+    }
+
 //    @GetMapping("/create-excel")
 //    public ResponseEntity<String> createExcel(@RequestParam Long planId) throws IOException {
 //        Plan plan = planService.getPlanById(planId);
