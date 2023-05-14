@@ -145,6 +145,8 @@ public class PlanService {
 
         for (String tableName: tableSheets) {
             Sheet sheet = workbook.createSheet(tableName);
+            CellStyle wrapTextStyle = sheet.getWorkbook().createCellStyle();
+            wrapTextStyle.setWrapText(true);
 
             Row headerRow = sheet.createRow(0);
 
@@ -161,7 +163,10 @@ public class PlanService {
                         sheet.setColumnWidth(i, 8 * 256);
                     }
                     sheet.autoSizeColumn(i);
+
                     Cell cell = headerRow.createCell(i);
+                    cell.setCellStyle(wrapTextStyle);
+
                     if (i >= 4){
                         if (i % 2 == 0){
                             cell.setCellValue(headerCellValue.get(k));
@@ -298,8 +303,11 @@ public class PlanService {
                 for (int i = 0; i < headerCellValue.size(); i++) {
                     Cell cell = headerRow.createCell(i);
                     cell.setCellValue(headerCellValue.get(i));
+                    cell.setCellStyle(wrapTextStyle);
+
                     sheet.setColumnWidth(i, 12 * 256);
                     sheet.autoSizeColumn(i);
+
                 }
 
                 int rowIndex = 1;
@@ -337,6 +345,8 @@ public class PlanService {
                 for (int i = 0; i < headerCellValue.size(); i++) {
                     Cell cell = headerRow.createCell(i);
                     cell.setCellValue(headerCellValue.get(i));
+                    cell.setCellStyle(wrapTextStyle);
+
                     sheet.setColumnWidth(i, 12 * 256);
                     sheet.autoSizeColumn(i);
                 }
