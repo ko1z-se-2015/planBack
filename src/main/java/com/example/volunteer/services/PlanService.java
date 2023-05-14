@@ -153,8 +153,6 @@ public class PlanService {
             wrapTextStyle.setFont(font);
             wrapTextStyle.setWrapText(true);
 
-            workbook.getCellStyleAt(0).cloneStyleFrom(wrapTextStyle);
-
             Row headerRow = sheet.createRow(0);
 
             if (tableName.contains("УЧЕБНАЯ РАБОТА")) {
@@ -166,11 +164,15 @@ public class PlanService {
 
                 int k = 4;
                 for (int i = 0; i < 12; i++) {
+
                     if (i >= 1){
                         sheet.setColumnWidth(i, 8 * 256);
                     }
                     sheet.autoSizeColumn(i);
+
                     Cell cell = headerRow.createCell(i);
+                    cell.setCellStyle(wrapTextStyle);
+
                     if (i >= 4){
                         if (i % 2 == 0){
                             cell.setCellValue(headerCellValue.get(k));
@@ -212,6 +214,7 @@ public class PlanService {
 
                         Cell name = dataRow.createCell(0);
                         name.setCellValue(academicWork.getNameOfDiscipline());
+                        name.setCellStyle(wrapTextStyle);
 
                         Cell course = dataRow.createCell(1);
                         course.setCellValue(academicWork.getCourse());
@@ -307,6 +310,8 @@ public class PlanService {
                 for (int i = 0; i < headerCellValue.size(); i++) {
                     Cell cell = headerRow.createCell(i);
                     cell.setCellValue(headerCellValue.get(i));
+                    cell.setCellStyle(wrapTextStyle);
+
                     sheet.setColumnWidth(i, 12 * 256);
                     sheet.autoSizeColumn(i);
                 }
@@ -322,18 +327,23 @@ public class PlanService {
 
                         Cell discipline = dataRow.createCell(1);
                         discipline.setCellValue(academicMethod.getDiscipline());
+                        discipline.setCellStyle(wrapTextStyle);
 
                         Cell nameWork = dataRow.createCell(2);
                         nameWork.setCellValue(academicMethod.getNameWork());
+                        nameWork.setCellStyle(wrapTextStyle);
 
                         Cell deadlines = dataRow.createCell(3);
                         deadlines.setCellValue(academicMethod.getDeadlines());
+                        deadlines.setCellStyle(wrapTextStyle);
 
                         Cell infoImpl = dataRow.createCell(4);
                         infoImpl.setCellValue(academicMethod.getInfoImplementation());
+                        infoImpl.setCellStyle(wrapTextStyle);
 
                         Cell comment = dataRow.createCell(5);
                         comment.setCellValue(academicMethod.getComment());
+                        comment.setCellStyle(wrapTextStyle);
                     }
                 }
             }
@@ -346,6 +356,8 @@ public class PlanService {
                 for (int i = 0; i < headerCellValue.size(); i++) {
                     Cell cell = headerRow.createCell(i);
                     cell.setCellValue(headerCellValue.get(i));
+                    cell.setCellStyle(wrapTextStyle);
+
                     sheet.setColumnWidth(i, 12 * 256);
                     sheet.autoSizeColumn(i);
                 }
@@ -416,23 +428,35 @@ public class PlanService {
                                String name, String deadlines, String results, String infoImpl, String comment){
         
         Row dataRow = sheet.createRow(rowIndex);
+        CellStyle wrapTextStyle = sheet.getWorkbook().createCellStyle();
+        Font font = sheet.getWorkbook().createFont();
+        font.setFontName("Times New Roman");
+        font.setFontHeightInPoints((short) 11);
+        wrapTextStyle.setFont(font);
+        wrapTextStyle.setWrapText(true);
 
         Cell num = dataRow.createCell(0);
         num.setCellValue(++workNum);
+        num.setCellStyle(wrapTextStyle);
 
         Cell nameOfWork = dataRow.createCell(1);
         nameOfWork.setCellValue(name);
+        nameOfWork.setCellStyle(wrapTextStyle);
 
         Cell ddl = dataRow.createCell(2);
         ddl.setCellValue(deadlines);
+        ddl.setCellStyle(wrapTextStyle);
 
         Cell res = dataRow.createCell(3);
         res.setCellValue(results);
+        res.setCellStyle(wrapTextStyle);
 
         Cell info = dataRow.createCell(4);
         info.setCellValue(infoImpl);
+        info.setCellStyle(wrapTextStyle);
 
         Cell comm = dataRow.createCell(5);
         comm.setCellValue(comment);
+        comm.setCellStyle(wrapTextStyle);
     }
 }
