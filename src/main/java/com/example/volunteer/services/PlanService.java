@@ -10,16 +10,15 @@ import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.IndexedColorMap;
 import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.poi.xwpf.usermodel.*;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTShd;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTTc;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.io.*;
+import java.time.LocalDate;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -35,6 +34,8 @@ public class PlanService {
     private final SocialWorkRepo socialWorkRepo;
     private final KpiRepo kpiRepo;
     private final KpiSectionRepo kpiSectionRepo;
+
+    private final DepartmentService departmentService;
 
     public void createPlan(Plan plan){
         planRepo.save(plan);
@@ -134,6 +135,187 @@ public class PlanService {
     public void deletePlanById(Long id){
         Plan plan = getPlanById(id);
         planRepo.delete(plan);
+    }
+
+
+    public void createDocx(OutputStream outputStream, Plan plan) throws IOException {
+        File templateFile = new File("template.docx");
+        FileInputStream templateStream = new FileInputStream(templateFile);
+
+        XWPFDocument document = new XWPFDocument(templateStream);
+
+        int year = LocalDate.now().getYear();
+        User teacher = plan.getCreatedBy();
+        User director = plan.getCreatedFor();
+
+
+        Map<String, String> placeholderMap = new HashMap<>();
+        placeholderMap.put("{{currentYear}}", Integer.toString(year));
+        placeholderMap.put("{{teacherFullName}} ", String.format("%s %s %s", teacher.getLastName(), teacher.getFirstName(), teacher.getMiddleName()));
+        placeholderMap.put("{{planYear}}", plan.getYear());
+        placeholderMap.put("{{teacherSurnameNF}}", String.format("%s %s.%s.",
+                teacher.getLastName(), teacher.getFirstName().charAt(0), teacher.getMiddleName().charAt(0)));
+        placeholderMap.put("{{departmentName}}", departmentService.getDepartmentByTeacher(teacher).getName());
+        placeholderMap.put("{{directorSurnameNF}}", String.format("%s %s.%s.",
+                director.getLastName(), director.getFirstName().charAt(0), director.getMiddleName().charAt(0)));
+
+        for (XWPFParagraph paragraph : document.getParagraphs()) {
+            for (XWPFRun run : paragraph.getRuns()) {
+                String text = run.getText(0);
+                if (text != null) {
+                    for (Map.Entry<String, String> entry : placeholderMap.entrySet()) {
+                        if (text.contains(entry.getKey())) {
+                            text = text.replace(entry.getKey(), entry.getValue());
+                            run.setText(text, 0);
+                        }
+                    }
+                }
+            }
+        }
+
+        List<XWPFTable> tables = document.getTables();
+
+        for (int i = 0; i < tables.size(); i++) {
+            switch (i){
+                case 0:
+                    int lecturesP = 0, lecturesF = 0, practiceP = 0, practiceF = 0,
+                            hoursP = 0, hoursF = 0, totalP = 0, totalF = 0;
+
+                    for (AcademicWork academicWork: plan.getAcademicWorks()) {
+                        XWPFTableRow row = tables.get(i).createRow();
+
+                        row.getCell(0).setText(academicWork.getNameOfDiscipline());
+                        row.getCell(1).setText(academicWork.getCourse());
+                        row.getCell(2).setText(academicWork.getTrimester());
+                        row.getCell(3).setText(academicWork.getGroups());
+
+                        row.getCell(4).setText(academicWork.getLecturesPlan());
+                        row.getCell(5).setText(academicWork.getLecturesFact());
+                        lecturesP += Integer.parseInt(academicWork.getLecturesPlan());
+                        lecturesF += Integer.parseInt(academicWork.getLecturesFact());
+
+                        row.getCell(6).setText(academicWork.getPracticesPlan());
+                        row.getCell(7).setText(academicWork.getPracticesFact());
+                        practiceP += Integer.parseInt(academicWork.getPracticesPlan());
+                        practiceF += Integer.parseInt(academicWork.getPracticesFact());
+
+                        row.getCell(8).setText(academicWork.getHoursPlan());
+                        row.getCell(9).setText(academicWork.getHoursFact());
+                        hoursP += Integer.parseInt(academicWork.getHoursPlan());
+                        hoursF += Integer.parseInt(academicWork.getHoursFact());
+
+                        row.getCell(10).setText(academicWork.getTotalPlan());
+                        row.getCell(11).setText(academicWork.getTotalFact());
+                        totalP += Integer.parseInt(academicWork.getTotalPlan());
+                        totalF += Integer.parseInt(academicWork.getTotalFact());
+
+                        setBckgColorTableDocx(row);
+                    }
+
+                    XWPFTableRow rowSum = tables.get(i).createRow();
+
+                    rowSum.getCell(0).setText("ИТОГО");
+
+                    rowSum.getCell(4).setText(String.valueOf(lecturesP));
+                    rowSum.getCell(5).setText(String.valueOf(lecturesF));
+
+                    rowSum.getCell(6).setText(String.valueOf(practiceP));
+                    rowSum.getCell(7).setText(String.valueOf(practiceF));
+
+                    rowSum.getCell(8).setText(String.valueOf(hoursP));
+                    rowSum.getCell(9).setText(String.valueOf(hoursF));
+
+                    rowSum.getCell(10).setText(String.valueOf(totalP));
+                    rowSum.getCell(11).setText(String.valueOf(totalF));
+
+                    setBckgColorTableDocx(rowSum);
+
+                    break;
+
+                case 1:
+                    int rowNumberAcademic = 0;
+
+                    for (AcademicMethod academicMethod: plan.getAcademicMethods()) {
+                        XWPFTableRow row = tables.get(i).createRow();
+
+                        row.getCell(0).setText(String.valueOf(++rowNumberAcademic));
+                        row.getCell(1).setText(academicMethod.getDiscipline());
+                        row.getCell(2).setText(academicMethod.getNameWork());
+                        row.getCell(3).setText(academicMethod.getDeadlines());
+                        row.getCell(4).setText(academicMethod.getInfoImplementation());
+                        row.getCell(5).setText(academicMethod.getComment());
+
+                    }
+                    break;
+
+                case 2:
+                    int rowNumberResearch = 0;
+
+                    for (ResearchWork researchWork: plan.getResearchWorks()) {
+                        XWPFTableRow row = tables.get(i).createRow();
+                        outputSectionsDocx(row, ++rowNumberResearch,
+                                researchWork.getNameOfTheWork(), researchWork.getDeadlines(), researchWork.getResults(),
+                                researchWork.getInfoImplementation(), researchWork.getComments());
+                    }
+                    break;
+                case 3:
+                    int rowNumberEducation = 0;
+
+                    for (EducationalWork educationalWork: plan.getEducationalWorks()) {
+                        XWPFTableRow row = tables.get(i).createRow();
+                        outputSectionsDocx(row, ++rowNumberEducation,
+                                educationalWork.getNameOfTheWork(), educationalWork.getDeadlines(), educationalWork.getResults(),
+                                educationalWork.getInfoImplementation(), educationalWork.getComments());
+                    }
+                    break;
+                case 4:
+                    int rowNumberSocial = 0;
+
+                    for (SocialWork socialWork: plan.getSocialWorks()) {
+                        XWPFTableRow row = tables.get(i).createRow();
+                        outputSectionsDocx(row, ++rowNumberSocial,
+                                socialWork.getNameOfTheWork(), socialWork.getDeadlines(), socialWork.getResults(),
+                                socialWork.getInfoImplementation(), socialWork.getComments());
+                    }
+                    break;
+                case 5:
+                    int rowNumberKpi = 0;
+
+                    for (KPI kpi: plan.getKpis()) {
+                        XWPFTableRow row = tables.get(i).createRow();
+                        outputSectionsDocx(row, ++rowNumberKpi,
+                                kpi.getNameOfTheWork(), kpi.getDeadlines(), kpi.getResults(),
+                                kpi.getInformationOnImplementation(), kpi.getComments());
+                    }
+                    break;
+            }
+        }
+
+//        FileOutputStream out = new FileOutputStream("PPS.docx");
+        document.write(outputStream);
+        outputStream.close();
+    }
+
+    private void setBckgColorTableDocx(XWPFTableRow row) {
+        for (int colIndex = 5; colIndex < row.getTableCells().size(); colIndex++) {
+            XWPFTableCell cell = row.getCell(colIndex);
+            if (colIndex % 2 != 0) {
+                CTTc ctTc = cell.getCTTc();
+                CTShd ctShd = ctTc.addNewTcPr().addNewShd();
+                ctShd.setFill("#C1D5EC");
+            }
+        }
+    }
+
+    private void outputSectionsDocx(XWPFTableRow row, int workNum,
+                                    String name, String deadlines, String results, String infoImpl, String comment ) {
+        
+        row.getCell(0).setText(String.valueOf(workNum));
+        row.getCell(1).setText(name);
+        row.getCell(2).setText(deadlines);
+        row.getCell(3).setText(results);
+        row.getCell(4).setText(infoImpl);
+        row.getCell(5).setText(comment);
     }
 
     public void createExcel(OutputStream outputStream, Plan plan) throws IOException {
@@ -413,8 +595,6 @@ public class PlanService {
             }
         }
 
-        //TODO: РАСКОММЕНЬТЕ И ЗАКОМЕНТИТЕ СОЗДАНИЕ ФАЙЛА. НАСТРОЙТЕ ПРЯМОЕ СКАЧИВАНИЕ
-        //Я ОСТАВИЛА ЭТО КАК ДЛЯ ПРОВЕРКИ
 //        FileOutputStream out = new FileOutputStream("plan.xlsx");
 //        workbook.write(out);
 //        out.close();

@@ -141,6 +141,21 @@ public class PlanController {
 //        return ResponseEntity.ok("Excel created");
 //    }
 
+    @GetMapping("/create-docx")
+    public ResponseEntity<byte[]> createDocx(@RequestParam Long planId) throws IOException {
+        Plan plan = planService.getPlanById(planId);
+        User teacher = plan.getCreatedBy();
+
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        planService.createDocx(outputStream, plan);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+        headers.setContentDispositionFormData("attachment", String.format("IPP_%s.docx", teacher.getLastName()));
+
+        return new ResponseEntity<>(outputStream.toByteArray(), headers, HttpStatus.OK);
+    }
+
     @GetMapping("/create-excel")
     public ResponseEntity<byte[]> createExcel(@RequestParam Long planId) throws IOException {
         Plan plan = planService.getPlanById(planId);
