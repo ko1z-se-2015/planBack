@@ -145,8 +145,15 @@ public class PlanService {
 
         for (String tableName: tableSheets) {
             Sheet sheet = workbook.createSheet(tableName);
-            CellStyle wrapTextStyle = sheet.getWorkbook().createCellStyle();
+
+            CellStyle wrapTextStyle = workbook.createCellStyle();
+            Font font = workbook.createFont();
+            font.setFontName("Times New Roman");
+            font.setFontHeightInPoints((short) 11);
+            wrapTextStyle.setFont(font);
             wrapTextStyle.setWrapText(true);
+
+            workbook.getCellStyleAt(0).cloneStyleFrom(wrapTextStyle);
 
             Row headerRow = sheet.createRow(0);
 
@@ -163,10 +170,7 @@ public class PlanService {
                         sheet.setColumnWidth(i, 8 * 256);
                     }
                     sheet.autoSizeColumn(i);
-
                     Cell cell = headerRow.createCell(i);
-                    cell.setCellStyle(wrapTextStyle);
-
                     if (i >= 4){
                         if (i % 2 == 0){
                             cell.setCellValue(headerCellValue.get(k));
@@ -184,9 +188,9 @@ public class PlanService {
                     sheet.addMergedRegion(new CellRangeAddress(0, 1, i, i));
                 }
 
-                CellStyle cellStyle = sheet.getWorkbook().createCellStyle();
-                cellStyle.setFillForegroundColor(IndexedColors.PALE_BLUE.getIndex());
-                cellStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+                CellStyle blueBackgroundCellStyle = sheet.getWorkbook().createCellStyle();
+                blueBackgroundCellStyle.setFillForegroundColor(IndexedColors.PALE_BLUE.getIndex());
+                blueBackgroundCellStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
 
                 for (int i = 4; i < 12; i++) {
                     Cell cell = secondHeaderRow.createCell(i);
@@ -194,7 +198,7 @@ public class PlanService {
                         cell.setCellValue("План");
                     } else {
                         cell.setCellValue("Факт");
-                        cell.setCellStyle(cellStyle);
+                        cell.setCellStyle(blueBackgroundCellStyle);
                     }
                 }
 
@@ -224,7 +228,7 @@ public class PlanService {
 
                         Cell lecturesFact = dataRow.createCell(5);
                         lecturesFact.setCellValue(academicWork.getLecturesFact());
-                        lecturesFact.setCellStyle(cellStyle);
+                        lecturesFact.setCellStyle(blueBackgroundCellStyle);
                         sumLecturesFact += Integer.parseInt(academicWork.getLecturesFact());
 
                         Cell practicePlan = dataRow.createCell(6);
@@ -234,7 +238,7 @@ public class PlanService {
 
                         Cell practiceFact = dataRow.createCell(7);
                         practiceFact.setCellValue(academicWork.getPracticesFact());
-                        practiceFact.setCellStyle(cellStyle);
+                        practiceFact.setCellStyle(blueBackgroundCellStyle);
                         sumPracticeFact += Integer.parseInt(academicWork.getPracticesFact());
 
                         Cell officePlan = dataRow.createCell(8);
@@ -244,7 +248,7 @@ public class PlanService {
 
                         Cell officeFact = dataRow.createCell(9);
                         officeFact.setCellValue(academicWork.getHoursFact());
-                        officeFact.setCellStyle(cellStyle);
+                        officeFact.setCellStyle(blueBackgroundCellStyle);
                         sumHoursFact += Integer.parseInt(academicWork.getHoursFact());
 
                         Cell totalPlan = dataRow.createCell(10);
@@ -253,7 +257,7 @@ public class PlanService {
 
                         Cell totalFact = dataRow.createCell(11);
                         totalFact.setCellValue(academicWork.getTotalFact());
-                        totalFact.setCellStyle(cellStyle);
+                        totalFact.setCellStyle(blueBackgroundCellStyle);
                         sumTotalFact += Integer.parseInt(academicWork.getTotalFact());
 
                     }
@@ -268,28 +272,28 @@ public class PlanService {
 
                     Cell lecturesFact = dataRow.createCell(5);
                     lecturesFact.setCellValue(sumLecturesFact);
-                    lecturesFact.setCellStyle(cellStyle);
+                    lecturesFact.setCellStyle(blueBackgroundCellStyle);
 
                     Cell practicePlan = dataRow.createCell(6);
                     practicePlan.setCellValue(sumPractiePlan);
 
                     Cell practiceFact = dataRow.createCell(7);
                     practiceFact.setCellValue(sumPracticeFact);
-                    practiceFact.setCellStyle(cellStyle);
+                    practiceFact.setCellStyle(blueBackgroundCellStyle);
 
                     Cell officePlan = dataRow.createCell(8);
                     officePlan.setCellValue(sumHoursPlan);
 
                     Cell officeFact = dataRow.createCell(9);
                     officeFact.setCellValue(sumHoursFact);
-                    officeFact.setCellStyle(cellStyle);
+                    officeFact.setCellStyle(blueBackgroundCellStyle);
 
                     Cell totalPlan = dataRow.createCell(10);
                     totalPlan.setCellValue(sumTotalPlan);
 
                     Cell totalFact = dataRow.createCell(11);
                     totalFact.setCellValue(sumTotalFact);
-                    totalFact.setCellStyle(cellStyle);
+                    totalFact.setCellStyle(blueBackgroundCellStyle);
 
                 }
 
@@ -303,11 +307,8 @@ public class PlanService {
                 for (int i = 0; i < headerCellValue.size(); i++) {
                     Cell cell = headerRow.createCell(i);
                     cell.setCellValue(headerCellValue.get(i));
-                    cell.setCellStyle(wrapTextStyle);
-
                     sheet.setColumnWidth(i, 12 * 256);
                     sheet.autoSizeColumn(i);
-
                 }
 
                 int rowIndex = 1;
@@ -345,8 +346,6 @@ public class PlanService {
                 for (int i = 0; i < headerCellValue.size(); i++) {
                     Cell cell = headerRow.createCell(i);
                     cell.setCellValue(headerCellValue.get(i));
-                    cell.setCellStyle(wrapTextStyle);
-
                     sheet.setColumnWidth(i, 12 * 256);
                     sheet.autoSizeColumn(i);
                 }
