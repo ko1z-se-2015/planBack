@@ -149,12 +149,18 @@ public class PlanService {
             Row headerRow = sheet.createRow(0);
 
             if (tableName.contains("УЧЕБНАЯ РАБОТА")) {
+                sheet.setColumnWidth(0, 15 * 256);
+
                 List<String> headerCellValue = Arrays.asList(
                         "Наименование дисциплины", "Курс", "Трим-тр", "Группа", "Лекция", "Практика", "Офис. часы", "Всего часов"
                 );
 
                 int k = 4;
                 for (int i = 0; i < 12; i++) {
+                    if (i >= 1){
+                        sheet.setColumnWidth(i, 8 * 256);
+                    }
+                    sheet.autoSizeColumn(i);
                     Cell cell = headerRow.createCell(i);
                     if (i >= 4){
                         if (i % 2 == 0){
@@ -223,7 +229,7 @@ public class PlanService {
 
                         Cell practiceFact = dataRow.createCell(7);
                         practiceFact.setCellValue(academicWork.getPracticesFact());
-                        lecturesFact.setCellStyle(cellStyle);
+                        practiceFact.setCellStyle(cellStyle);
                         sumPracticeFact += Integer.parseInt(academicWork.getPracticesFact());
 
                         Cell officePlan = dataRow.createCell(8);
@@ -233,7 +239,7 @@ public class PlanService {
 
                         Cell officeFact = dataRow.createCell(9);
                         officeFact.setCellValue(academicWork.getHoursFact());
-                        lecturesFact.setCellStyle(cellStyle);
+                        officeFact.setCellStyle(cellStyle);
                         sumHoursFact += Integer.parseInt(academicWork.getHoursFact());
 
                         Cell totalPlan = dataRow.createCell(10);
@@ -242,7 +248,7 @@ public class PlanService {
 
                         Cell totalFact = dataRow.createCell(11);
                         totalFact.setCellValue(academicWork.getTotalFact());
-                        lecturesFact.setCellStyle(cellStyle);
+                        totalFact.setCellStyle(cellStyle);
                         sumTotalFact += Integer.parseInt(academicWork.getTotalFact());
 
                     }
@@ -257,24 +263,28 @@ public class PlanService {
 
                     Cell lecturesFact = dataRow.createCell(5);
                     lecturesFact.setCellValue(sumLecturesFact);
+                    lecturesFact.setCellStyle(cellStyle);
 
                     Cell practicePlan = dataRow.createCell(6);
                     practicePlan.setCellValue(sumPractiePlan);
 
                     Cell practiceFact = dataRow.createCell(7);
                     practiceFact.setCellValue(sumPracticeFact);
+                    practiceFact.setCellStyle(cellStyle);
 
                     Cell officePlan = dataRow.createCell(8);
                     officePlan.setCellValue(sumHoursPlan);
 
                     Cell officeFact = dataRow.createCell(9);
                     officeFact.setCellValue(sumHoursFact);
+                    officeFact.setCellStyle(cellStyle);
 
                     Cell totalPlan = dataRow.createCell(10);
                     totalPlan.setCellValue(sumTotalPlan);
 
                     Cell totalFact = dataRow.createCell(11);
                     totalFact.setCellValue(sumTotalFact);
+                    totalFact.setCellStyle(cellStyle);
 
                 }
 
@@ -288,6 +298,8 @@ public class PlanService {
                 for (int i = 0; i < headerCellValue.size(); i++) {
                     Cell cell = headerRow.createCell(i);
                     cell.setCellValue(headerCellValue.get(i));
+                    sheet.setColumnWidth(i, 12 * 256);
+                    sheet.autoSizeColumn(i);
                 }
 
                 int rowIndex = 1;
@@ -325,6 +337,8 @@ public class PlanService {
                 for (int i = 0; i < headerCellValue.size(); i++) {
                     Cell cell = headerRow.createCell(i);
                     cell.setCellValue(headerCellValue.get(i));
+                    sheet.setColumnWidth(i, 12 * 256);
+                    sheet.autoSizeColumn(i);
                 }
 
                 int rowIndex = 1;
