@@ -21,6 +21,7 @@ import java.util.List;
 public class NotificationService {
 
     private final NotificationRepo notificationRepo;
+    private final EmailNotificationService emailNotificationService;
     private final PlanRepo planRepo;
 
     public List<Notification> getNotificationsBySendTo(User sendTo) {
@@ -59,5 +60,35 @@ public class NotificationService {
         log.info(notification.toString());
 
         notificationRepo.save(notification);
+
+        String subject = "";
+        String textMessage = "";
+
+        switch (notification.getStatus()){
+            case "AWAITING":
+                textMessage = String.format("The plan of %s academic year has been sent by %s %s for approval",
+                        notification.getPlanName(), sendBy.getFirstName(), sendBy.getLastName());
+                subject = String.format("%s %s's individual plan is %s",
+                        sendBy.getFirstName(), sendBy.getLastName(), notification.getStatus());
+                break;
+            case "APPROVED":
+                textMessage = String.format(
+                        "The plan of %s academic year has been returned for revision by %s %s" +
+                                "\nParts to improve:" +
+                                "\n%s" +
+                                "\nComment:" +
+                                "\n%s",
+                        notification.getPlanName(), sendBy.getFirstName(), sendBy.getLastName(),
+                        notification.getParts(), notification.getDescription());
+                subject = String.format("Your individual plan is %s", notification.getStatus());
+                break;
+            case "DENIED":
+                textMessage = String.format("The plan of %s academic year has been approved by %s %s",
+                        notification.getPlanName(), sendBy.getFirstName(), sendBy.getLastName());
+                subject = String.format("Your individual plan is %s", notification.getStatus());
+                break;
+        }
+        emailNotificationService.sendSimpleMessage(
+                sendTo.getEmail(), subject, textMessage);
     }
 }

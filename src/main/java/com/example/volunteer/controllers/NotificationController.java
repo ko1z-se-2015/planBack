@@ -2,12 +2,12 @@ package com.example.volunteer.controllers;
 
 import com.example.volunteer.entities.Notification;
 import com.example.volunteer.entities.User;
+import com.example.volunteer.services.EmailNotificationService;
 import com.example.volunteer.services.NotificationService;
 import com.example.volunteer.services.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
