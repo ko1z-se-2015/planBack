@@ -71,7 +71,7 @@ public class NotificationService {
                 subject = String.format("%s %s's individual plan is %s",
                         sendBy.getFirstName(), sendBy.getLastName(), notification.getStatus());
                 break;
-            case "APPROVED":
+            case "DENIED":
                 textMessage = String.format(
                         "The plan of %s academic year has been returned for revision by %s %s" +
                                 "\nParts to improve:" +
@@ -82,7 +82,7 @@ public class NotificationService {
                         notification.getParts(), notification.getDescription());
                 subject = String.format("Your individual plan is %s", notification.getStatus());
                 break;
-            case "DENIED":
+            case "APPROVED":
                 textMessage = String.format("The plan of %s academic year has been approved by %s %s",
                         notification.getPlanName(), sendBy.getFirstName(), sendBy.getLastName());
                 subject = String.format("Your individual plan is %s", notification.getStatus());
