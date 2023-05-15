@@ -400,8 +400,8 @@ public class VolunteerApplication {
                     80, 80, 80, 30, false, false)
     ));
 
-    User teacher = new User("Kanat", "Berkinbayev", "Galymuly", "0.5", "asd@asd.ru",  "qwerty");
-    User director = new User("Daniyar", "Myrzasary", "Timuruly", "1", "kk@kk.kz", "qwerty");
+    User teacher = new User("Kanat", "Berkinbayev", "Galymuly", "0.5", "clashofkanat@gmail.com",  "qwerty");
+    User director = new User("Daniyar", "Myrzasary", "Timuruly", "1", "myrzasary05012003@mail.ru", "qwerty");
 
     User olzhas = new User("Олжас", "Тұрар", "Нұрқонысұлы", "1", "olzhas.turar@astanait.edu.kz", "olzhas");
     User assel = new User("Асель", "Смайыл", "Маралбайқызы", "1", "assel.smaiyl@astanait.edu.kz", "assel");
@@ -449,10 +449,10 @@ public class VolunteerApplication {
 
             directors.forEach(userService::createDirector);
 
-            userService.assignPositionByEmailAndName("asd@asd.ru", "ASSOCIATE PROFESSOR");
-            userService.assignDegreeByEmailAndName("asd@asd.ru", "RESEARCH TEACHER");
-            userService.assignDegreeByEmailAndName("kk@kk.kz", "RESEARCH TEACHER");
-            userService.assignPositionByEmailAndName("kk@kk.kz", "ASSOCIATE PROFESSOR");
+            userService.assignPositionByEmailAndName("clashofkanat@gmail.com", "ASSOCIATE PROFESSOR");
+            userService.assignDegreeByEmailAndName("clashofkanat@gmail.com", "RESEARCH TEACHER");
+            userService.assignDegreeByEmailAndName("myrzasary05012003@mail.ru", "RESEARCH TEACHER");
+            userService.assignPositionByEmailAndName("myrzasary05012003@mail.ru", "ASSOCIATE PROFESSOR");
 
             departmentService.createDepartment(department);
             departmentService.addTeacher(department, teacher);
