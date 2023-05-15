@@ -11,8 +11,10 @@ import org.apache.poi.xssf.usermodel.IndexedColorMap;
 import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.apache.poi.xwpf.usermodel.*;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTFonts;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTShd;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTTc;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.STShd;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -146,43 +148,42 @@ public class PlanService {
 
         int year = LocalDate.now().getYear();
         User teacher = plan.getCreatedBy();
+        String teacherFullName = String.format("%s %s %s", teacher.getLastName(), teacher.getFirstName(), teacher.getMiddleName());
+        String teacherSurname = String.format("%s %s.%s.",
+                teacher.getLastName(), teacher.getFirstName().charAt(0), teacher.getMiddleName().charAt(0));
+
         User director = plan.getCreatedFor();
+        String directorSurname = String.format("%s %s.%s.",
+                director.getLastName(), director.getFirstName().charAt(0), director.getMiddleName().charAt(0));
+
+        String departmentName = departmentService.getDepartmentByTeacher(teacher).getName();
 
 
         Map<String, String> placeholderMap = new HashMap<>();
         placeholderMap.put("{{currentYear}}", Integer.toString(year));
-        placeholderMap.put("{{teacherFullName}} ", String.format("%s %s %s", teacher.getLastName(), teacher.getFirstName(), teacher.getMiddleName()));
+        placeholderMap.put("{{teacherFullName}}", teacherFullName);
         placeholderMap.put("{{planYear}}", plan.getYear());
-        placeholderMap.put("{{teacherSurnameNF}}", String.format("%s %s.%s.",
-                teacher.getLastName(), teacher.getFirstName().charAt(0), teacher.getMiddleName().charAt(0)));
-        placeholderMap.put("{{departmentName}}", departmentService.getDepartmentByTeacher(teacher).getName());
-        placeholderMap.put("{{directorSurnameNF}}", String.format("%s %s.%s.",
-                director.getLastName(), director.getFirstName().charAt(0), director.getMiddleName().charAt(0)));
-
-        for (XWPFParagraph paragraph : document.getParagraphs()) {
-            for (XWPFRun run : paragraph.getRuns()) {
-                String text = run.getText(0);
-                if (text != null) {
-                    for (Map.Entry<String, String> entry : placeholderMap.entrySet()) {
-                        if (text.contains(entry.getKey())) {
-                            text = text.replace(entry.getKey(), entry.getValue());
-                            run.setText(text, 0);
-                        }
-                    }
-                }
-            }
-        }
+        placeholderMap.put("teacherInitials", teacherSurname);
+        placeholderMap.put("departmentName", departmentName);
+        placeholderMap.put("directorInitials", directorSurname);
 
         List<XWPFTable> tables = document.getTables();
 
-        for (int i = 0; i < tables.size(); i++) {
+        for (int i = 1; i < tables.size(); i++) {
+
             switch (i){
-                case 0:
+                case 1:
                     int lecturesP = 0, lecturesF = 0, practiceP = 0, practiceF = 0,
                             hoursP = 0, hoursF = 0, totalP = 0, totalF = 0;
 
                     for (AcademicWork academicWork: plan.getAcademicWorks()) {
-                        XWPFTableRow row = tables.get(i).createRow();
+                        XWPFTable table = tables.get(i);
+                        XWPFTableRow row = table.createRow();
+
+                        row.createCell();
+                        row.createCell();
+                        row.createCell();
+                        row.createCell();
 
                         row.getCell(0).setText(academicWork.getNameOfDiscipline());
                         row.getCell(1).setText(academicWork.getCourse());
@@ -214,6 +215,11 @@ public class PlanService {
 
                     XWPFTableRow rowSum = tables.get(i).createRow();
 
+                    rowSum.createCell();
+                    rowSum.createCell();
+                    rowSum.createCell();
+                    rowSum.createCell();
+
                     rowSum.getCell(0).setText("ИТОГО");
 
                     rowSum.getCell(4).setText(String.valueOf(lecturesP));
@@ -232,7 +238,7 @@ public class PlanService {
 
                     break;
 
-                case 1:
+                case 2:
                     int rowNumberAcademic = 0;
 
                     for (AcademicMethod academicMethod: plan.getAcademicMethods()) {
@@ -248,7 +254,7 @@ public class PlanService {
                     }
                     break;
 
-                case 2:
+                case 3:
                     int rowNumberResearch = 0;
 
                     for (ResearchWork researchWork: plan.getResearchWorks()) {
@@ -258,7 +264,7 @@ public class PlanService {
                                 researchWork.getInfoImplementation(), researchWork.getComments());
                     }
                     break;
-                case 3:
+                case 4:
                     int rowNumberEducation = 0;
 
                     for (EducationalWork educationalWork: plan.getEducationalWorks()) {
@@ -268,7 +274,7 @@ public class PlanService {
                                 educationalWork.getInfoImplementation(), educationalWork.getComments());
                     }
                     break;
-                case 4:
+                case 5:
                     int rowNumberSocial = 0;
 
                     for (SocialWork socialWork: plan.getSocialWorks()) {
@@ -278,7 +284,7 @@ public class PlanService {
                                 socialWork.getInfoImplementation(), socialWork.getComments());
                     }
                     break;
-                case 5:
+                case 6:
                     int rowNumberKpi = 0;
 
                     for (KPI kpi: plan.getKpis()) {
@@ -291,7 +297,21 @@ public class PlanService {
             }
         }
 
-//        FileOutputStream out = new FileOutputStream("PPS.docx");
+        for (XWPFParagraph paragraph : document.getParagraphs()) {
+            for (XWPFRun run : paragraph.getRuns()) {
+                String text = run.getText(0);
+                if (text != null) {
+                    for (Map.Entry<String, String> entry : placeholderMap.entrySet()) {
+                        if (text.contains(entry.getKey())) {
+                            text = text.replace(entry.getKey(), entry.getValue());
+                            run.setText(text, 0);
+                        }
+                    }
+                    run.setFontFamily("Times New Roman");
+                }
+            }
+        }
+
         document.write(outputStream);
         outputStream.close();
     }
@@ -302,14 +322,14 @@ public class PlanService {
             if (colIndex % 2 != 0) {
                 CTTc ctTc = cell.getCTTc();
                 CTShd ctShd = ctTc.addNewTcPr().addNewShd();
-                ctShd.setFill("#C1D5EC");
+                ctShd.setFill("C1D5EC");
             }
         }
     }
 
     private void outputSectionsDocx(XWPFTableRow row, int workNum,
                                     String name, String deadlines, String results, String infoImpl, String comment ) {
-        
+
         row.getCell(0).setText(String.valueOf(workNum));
         row.getCell(1).setText(name);
         row.getCell(2).setText(deadlines);

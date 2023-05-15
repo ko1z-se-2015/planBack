@@ -134,10 +134,12 @@ public class PlanController {
         return new ResponseEntity("plans are deleted", HttpStatus.OK);
     }
 
-//    @GetMapping("/create-excel")
-//    public ResponseEntity<String> createExcel(@RequestParam Long planId) throws IOException {
+//    @GetMapping("/create-docx")
+//    public ResponseEntity<String> createDocx(@RequestParam Long planId) throws IOException {
 //        Plan plan = planService.getPlanById(planId);
-//        planService.createExcel(plan);
+//
+//        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+//        planService.createDocx(outputStream, plan);
 //        return ResponseEntity.ok("Excel created");
 //    }
 
