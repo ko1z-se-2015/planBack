@@ -1,18 +1,13 @@
 package com.example.volunteer.controllers;
 
 import com.example.volunteer.entities.KPI;
-import com.example.volunteer.entities.PdfFile;
 import com.example.volunteer.modules.KPIsToDelete;
 import com.example.volunteer.services.KpiService;
-import com.example.volunteer.services.PdfFileService;
 import com.example.volunteer.services.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 @RestController
 @Slf4j
@@ -21,12 +16,10 @@ public class KpiController {
 
     private final KpiService kpiService;
     private final UserService userService;
-    private final PdfFileService pdfFileService;
 
-    public KpiController(KpiService kpiService, UserService userService, PdfFileService pdfFileService) {
+    public KpiController(KpiService kpiService, UserService userService ) {
         this.kpiService = kpiService;
         this.userService = userService;
-        this.pdfFileService = pdfFileService;
     }
 
     @PostMapping("/save")
@@ -57,23 +50,4 @@ public class KpiController {
         return new ResponseEntity("kpi is updated", HttpStatus.OK);
     }
 
-    @GetMapping("/download-supporting-document")
-    public ResponseEntity<String> downloadPdfFile(HttpServletResponse response,
-                                                  @RequestParam Long kpiId){
-        PdfFile pdfFile = pdfFileService.getByKpiId(kpiId);
-        byte[] data = pdfFile.getData();
-        String fileName = pdfFile.getFileName();
-
-        try {
-            response.setContentType("application/pdf");
-            response.setHeader("Content-disposition", "attachment; filename=\"" + fileName + "\"");
-            response.setContentLength(data.length);
-            response.getOutputStream().write(data);
-            response.flushBuffer();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return ResponseEntity.ok("PDF file downloaded successfully.");
-    }
 }

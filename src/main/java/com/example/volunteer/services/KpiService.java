@@ -1,11 +1,9 @@
 package com.example.volunteer.services;
 
 import com.example.volunteer.entities.KPI;
-import com.example.volunteer.entities.PdfFile;
 import com.example.volunteer.entities.Plan;
 import com.example.volunteer.repositories.KpiRepo;
 import com.example.volunteer.repositories.KpiSectionRepo;
-import com.example.volunteer.repositories.PdfFileRepo;
 import com.example.volunteer.repositories.PlanRepo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
