@@ -19,7 +19,6 @@ public class KpiService {
 
     private final KpiRepo kpiRepo;
     private final KpiSectionRepo kpiSectionRepo;
-    private final PdfFileRepo pdfFileRepo;
     private final PlanRepo planRepo;
 
     public KPI getKpiById(Long id){
