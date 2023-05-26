@@ -7,6 +7,12 @@ import com.example.volunteer.entities.Position;
 import com.example.volunteer.entities.User;
 import com.example.volunteer.repositories.RoleRepo;
 import com.example.volunteer.repositories.UserRepo;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtBuilder;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -32,22 +38,18 @@ public class UserService implements UserDetailsService {
     private final PositionService positionService;
     private final DegreeService degreeService;
 
+    private final DepartmentService departmentService;
+
     public final PasswordEncoder passwordEncoder;
 
-    private final EmailNotificationService emailNotificationService;
+    public boolean verify(User user) {
+        if (!createTeacher(user)) return false;
 
-    public void register(User user) {
-        user.setVerified(false);
-        createTeacher(user);
-    }
+        assignPositionByEmailAndName(user.getEmail(), "INSTRUCTOR");
+        assignDegreeByEmailAndName(user.getEmail(), "TEACHER");
 
-    public void verify(User user) {
-        user.setVerified(true);
-        userRepo.save(user);
-    }
-
-    public void deny(User user) {
-        userRepo.delete(user);
+        departmentService.addTeacher(departmentService.findByName("Department of Computer Engineering"), user);
+        return true;
     }
 
     public boolean createTeacher(User user) {
@@ -116,7 +118,6 @@ public class UserService implements UserDetailsService {
     public boolean loginUser(User data) {
         User user = userRepo.findByEmail(data.getEmail());
         if (user == null) return false;
-        if (!user.isVerified()) return false;
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         if (!encoder.matches(data.getPassword(), user.getPassword())) return false;
         return true;
@@ -169,6 +170,29 @@ public class UserService implements UserDetailsService {
         return true;
     }
 
+    public String generateToken(User user) throws JsonProcessingException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        String userJson = objectMapper.writeValueAsString(user);
+
+        JwtBuilder jwtBuilder = Jwts.builder()
+                .setSubject(userJson)
+                .setExpiration(new Date(System.currentTimeMillis() + 15 * 60 * 1000))
+                .signWith(SignatureAlgorithm.HS256, "xfty7ygp");
+
+        return jwtBuilder.compact();
+    }
+
+    public User decodeToken(String token) throws JsonProcessingException {
+        Claims claims = Jwts.parser()
+                .setSigningKey("xfty7ygp")
+                .parseClaimsJws(token)
+                .getBody();
+
+        String userJson = claims.getSubject();
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        return objectMapper.readValue(userJson, User.class);
+    }
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {

@@ -13,6 +13,7 @@ import com.example.volunteer.services.EmailNotificationService;
 import com.example.volunteer.services.PositionService;
 import com.example.volunteer.services.UserService;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -98,36 +99,33 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody User user) {
+    public ResponseEntity<?> register(@RequestBody User user) throws JsonProcessingException {
 
-        if(userService.getByEmail(user.getEmail()) != null){
-            return new ResponseEntity<>("found", HttpStatus.BAD_REQUEST);
+        if (userService.getUsers().contains(user)){
+            return new ResponseEntity<>("User is already exist", HttpStatus.BAD_REQUEST);
         }
 
-        userService.register(user);
+        String token = userService.generateToken(user);
 
         String subject = "Email Verification";
-        String text = "Please click the following link to verify your email: http://localhost:8080/user/verify?email=" + user.getEmail();
-        text += "\nIf it wasn't you, please follow this link: http://localhost:8080/user/deny?email=" + user.getEmail();
+        String text = "Please click the following link to verify your email: http://localhost:8080/user/verify?token=" + token;
         emailNotificationService.sendSimpleMessage(user.getEmail(), subject, text);
 
         return new ResponseEntity<>("Verification mail has been sent", HttpStatus.OK);
     }
 
     @GetMapping("/verify")
-    public ResponseEntity<?> verify(@RequestParam String email) {
-        User user = userService.getByEmail(email);
-        userService.verify(user);
+    public ResponseEntity<?> verify(@RequestParam String token) throws JsonProcessingException {
+        User user = userService.decodeToken(token);
 
-        return new ResponseEntity<>("User has been verified", HttpStatus.OK);
-    }
-
-    @GetMapping("/deny")
-    public ResponseEntity<?> deny(@RequestParam String email) {
-        User user = userService.getByEmail(email);
-        userService.deny(user);
-
-        return new ResponseEntity<>("User has been deleted", HttpStatus.OK);
+        if (user != null) {
+            if (userService.verify(user))
+                return new ResponseEntity<>("User has been verified", HttpStatus.OK);
+            else
+                return new ResponseEntity<>("User is already exist", HttpStatus.BAD_REQUEST);
+        } else {
+            return new ResponseEntity<>("Invalid token", HttpStatus.BAD_REQUEST);
+        }
     }
 
     //
