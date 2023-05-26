@@ -400,7 +400,7 @@ public class VolunteerApplication {
                     80, 80, 80, 30, false, false)
     ));
 
-    User teacher = new User("Kanat", "Berkinbayev", "Galymuly", "0.5", "clashofkanat@gmail.com",  "qwerty");
+    User teacher = new User("Kanat", "Berkinbayev", "Galymuly", "0.5", true, "clashofkanat@gmail.com",  "qwerty");
     User director = new User("Daniyar", "Myrzasary", "Timuruly", "1", "myrzasary05012003@mail.ru", "qwerty");
 
     User olzhas = new User("Олжас", "Тұрар", "Нұрқонысұлы", "1", "olzhas.turar@astanait.edu.kz", "olzhas");

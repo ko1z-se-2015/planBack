@@ -9,6 +9,7 @@ import com.example.volunteer.entities.Degree;
 import com.example.volunteer.entities.Position;
 import com.example.volunteer.entities.User;
 import com.example.volunteer.services.DegreeService;
+import com.example.volunteer.services.EmailNotificationService;
 import com.example.volunteer.services.PositionService;
 import com.example.volunteer.services.UserService;
 
@@ -30,11 +31,13 @@ public class UserController {
     private final UserService userService;
     private final PositionService positionService;
     private final DegreeService degreeService;
+    private final EmailNotificationService emailNotificationService;
 
-    public UserController(UserService userService, PositionService positionService, DegreeService degreeService) {
+    public UserController(UserService userService, PositionService positionService, DegreeService degreeService, EmailNotificationService emailNotificationService) {
         this.userService = userService;
         this.positionService = positionService;
         this.degreeService = degreeService;
+        this.emailNotificationService = emailNotificationService;
     }
 
     @PostMapping("/createTeacher")
@@ -92,6 +95,34 @@ public class UserController {
             return ResponseEntity.ok().body(access_token);
         } else
             return ResponseEntity.badRequest().body("incorrect email or password");
+    }
+
+    @PostMapping("/register")
+    public ResponseEntity<?> register(@RequestBody User user) {
+        userService.register(user);
+
+        String subject = "Email Verification";
+        String text = "Please click the following link to verify your email: http://localhost:8080/user/verify?email=" + user.getEmail();
+        text += "\nIf it wasn't you, please follow this link: http://localhost:8080/user/deny?email=" + user.getEmail();
+        emailNotificationService.sendSimpleMessage(user.getEmail(), subject, text);
+
+        return new ResponseEntity<>("Verification mail has been sent", HttpStatus.OK);
+    }
+
+    @GetMapping("/verify")
+    public ResponseEntity<?> verify(@RequestParam String email) {
+        User user = userService.getByEmail(email);
+        userService.verify(user);
+
+        return new ResponseEntity<>("User has been verified", HttpStatus.OK);
+    }
+
+    @GetMapping("/deny")
+    public ResponseEntity<?> deny(@RequestParam String email) {
+        User user = userService.getByEmail(email);
+        userService.deny(user);
+
+        return new ResponseEntity<>("User has been deleted", HttpStatus.OK);
     }
 
     //

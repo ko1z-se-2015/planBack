@@ -34,12 +34,29 @@ public class UserService implements UserDetailsService {
 
     public final PasswordEncoder passwordEncoder;
 
+    private final EmailNotificationService emailNotificationService;
+
+    public void register(User user) {
+        user.setVerified(false);
+        createTeacher(user);
+    }
+
+    public void verify(User user) {
+        user.setVerified(true);
+        userRepo.save(user);
+    }
+
+    public void deny(User user) {
+        userRepo.delete(user);
+    }
+
     public boolean createTeacher(User user) {
         if (userRepo.findByEmail(user.getEmail()) != null) {
             return false;
         }
         user.getRoles().add(roleRepo.findByRoleName("TEACHER"));
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+
         userRepo.save(user);
 
         return true;
@@ -99,6 +116,7 @@ public class UserService implements UserDetailsService {
     public boolean loginUser(User data) {
         User user = userRepo.findByEmail(data.getEmail());
         if (user == null) return false;
+        if (!user.isVerified()) return false;
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         if (!encoder.matches(data.getPassword(), user.getPassword())) return false;
         return true;

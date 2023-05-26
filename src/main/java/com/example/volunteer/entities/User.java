@@ -26,6 +26,8 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
+    private boolean verified;
     
     @NotNull(message = "'это поле должно быть заполнена")
     @NotEmpty(message = "это поле должно быть заполнена")
@@ -50,8 +52,6 @@ public class User {
     @JoinColumn(name = "degree_id")
     private Degree degree;
 
-    @NotNull(message = "это поле должно быть заполнена")
-    @NotEmpty(message = "это поле должно быть заполнена")
     private String rate;
 
     @NotNull(message = "это поле должно быть заполнена")
@@ -75,11 +75,29 @@ public class User {
     @OneToMany(mappedBy = "sendTo", cascade = CascadeType.ALL)
     private List<Notification> notifications = new ArrayList<>();
 
+    public User(String firstName, String lastName, String middleName, String email, String password) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.middleName = middleName;
+        this.email = email;
+        this.password = password;
+    }
+
     public User(String firstName, String lastName, String middleName, String rate, String email, String password) {
     this.firstName = firstName;
         this.lastName = lastName;
         this.middleName = middleName;
         this.rate = rate;
+        this.email = email;
+        this.password = password;
+    }
+
+    public User(String firstName, String lastName, String middleName, String rate, boolean verified, String email, String password) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.middleName = middleName;
+        this.rate = rate;
+        this.verified = verified;
         this.email = email;
         this.password = password;
     }
