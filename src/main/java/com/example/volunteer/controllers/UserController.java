@@ -99,6 +99,11 @@ public class UserController {
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody User user) {
+
+        if(userService.getByEmail(user.getEmail()) != null){
+            return new ResponseEntity<>("found", HttpStatus.BAD_REQUEST);
+        }
+
         userService.register(user);
 
         String subject = "Email Verification";
