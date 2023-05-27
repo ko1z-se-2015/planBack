@@ -108,7 +108,7 @@ public class UserController {
         String token = userService.generateToken(user);
 
         String subject = "Email Verification";
-        String text = "Please click the following link to verify your email: http://localhost:8080/user/verify?token=" + token;
+        String text = "Please click the following link to verify your email: http://aitu-plan.herokuapp.com/user/verify?token=" + token;
         emailNotificationService.sendSimpleMessage(user.getEmail(), subject, text);
 
         return new ResponseEntity<>("Verification mail has been sent", HttpStatus.OK);
