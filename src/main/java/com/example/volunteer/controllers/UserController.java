@@ -101,7 +101,7 @@ public class UserController {
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody User user) throws JsonProcessingException {
 
-        if (userService.getUsers().contains(user)){
+        if (userService.getByEmail(user.getEmail()) != null){
             return new ResponseEntity<>("User is already exist", HttpStatus.BAD_REQUEST);
         }
 
