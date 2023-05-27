@@ -101,14 +101,14 @@ public class UserController {
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody User user) throws JsonProcessingException {
 
-        if (userService.getUsers().contains(user)){
+        if (userService.getByEmail(user.getEmail()) != null){
             return new ResponseEntity<>("User is already exist", HttpStatus.BAD_REQUEST);
         }
 
         String token = userService.generateToken(user);
 
         String subject = "Email Verification";
-        String text = "Please click the following link to verify your email: http://localhost:8080/user/verify?token=" + token;
+        String text = "Please click the following link to verify your email: http://aitu-plan.herokuapp.com/user/verify?token=" + token;
         emailNotificationService.sendSimpleMessage(user.getEmail(), subject, text);
 
         return new ResponseEntity<>("Verification mail has been sent", HttpStatus.OK);
