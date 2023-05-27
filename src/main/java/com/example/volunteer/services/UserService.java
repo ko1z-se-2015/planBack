@@ -47,6 +47,7 @@ public class UserService implements UserDetailsService {
 
         assignPositionByEmailAndName(user.getEmail(), "INSTRUCTOR");
         assignDegreeByEmailAndName(user.getEmail(), "TEACHER");
+        user.setRate("1");
 
         departmentService.addTeacher(departmentService.findByName("Department of Computer Engineering"), user);
         return true;
