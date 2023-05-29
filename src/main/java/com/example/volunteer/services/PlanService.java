@@ -680,18 +680,29 @@ public class PlanService {
         List<KPI> kpis = new ArrayList<>();
         Department department = departmentService.getDepartmentByTeacher(user);
         User director = department.getDirector();
+        boolean found = false;
 
-        for (XWPFParagraph paragraph : document.getParagraphs()) {
-            for (XWPFRun run : paragraph.getRuns()) {
-                String text = run.text();
-                if (text != null) {
-                    if (text.contains("учебный год")){
-                        year = text.replace("учебный год", "");
-                        break;
-                    }
+        for (int i = 1; i < document.getParagraphs().size(); i++) {
+            XWPFParagraph paragraph = document.getParagraphs().get(i);
+            String text = paragraph.getText();
+
+            if (text != null && text.contains("учебный год")) {
+                found = true;
+                continue;
+            }
+
+            if (found) {
+                XWPFParagraph previousParagraph = document.getParagraphs().get(i - 1);
+                String previousText = previousParagraph.getText();
+
+                if (previousText != null) {
+                    year = previousText.trim();
+                    year = year.replace(" учебный год", "");
+                    break;
                 }
             }
         }
+
 
         int startAtRow;
         for (int i = 1; i < tables.size(); i++){
@@ -702,24 +713,29 @@ public class PlanService {
 
             for (int j = startAtRow; j < table.getRows().size(); j++) {
                 XWPFTableRow row = table.getRow(j);
-                switch (i){
+                if (row == null) {
+                    continue;
+                }
+                switch (i) {
                     case 1: {
-                        if (row.getCell(0).getText().toLowerCase().contains("итого")) continue;
+                        XWPFTableCell cell0 = row.getCell(0);
+                        if (cell0 == null || cell0.getText() == null || cell0.getText().toLowerCase().contains("итого")) {
+                            continue;
+                        }
 
                         AcademicWork academicWork = new AcademicWork();
-                        if (row.getCell(0).getText() == null) continue;
-                        academicWork.setNameOfDiscipline(row.getCell(0).getText());
-                        academicWork.setCourse(row.getCell(1).getText());
-                        academicWork.setTrimester(row.getCell(2).getText());
-                        academicWork.setGroups(row.getCell(3).getText());
-                        academicWork.setLecturesPlan(row.getCell(4).getText());
-                        academicWork.setLecturesFact(row.getCell(5).getText());
-                        academicWork.setPracticesPlan(row.getCell(6).getText());
-                        academicWork.setPracticesFact(row.getCell(7).getText());
-                        academicWork.setHoursPlan(row.getCell(8).getText());
-                        academicWork.setHoursFact(row.getCell(9).getText());
-                        academicWork.setTotalPlan(row.getCell(10).getText());
-                        academicWork.setTotalFact(row.getCell(11).getText());
+                        academicWork.setNameOfDiscipline(cell0.getText());
+                        academicWork.setCourse(getCellText(row, 1));
+                        academicWork.setTrimester(getCellText(row, 2));
+                        academicWork.setGroups(getCellText(row, 3));
+                        academicWork.setLecturesPlan(getCellText(row, 4));
+                        academicWork.setLecturesFact(getCellText(row, 5));
+                        academicWork.setPracticesPlan(getCellText(row, 6));
+                        academicWork.setPracticesFact(getCellText(row, 7));
+                        academicWork.setHoursPlan(getCellText(row, 8));
+                        academicWork.setHoursFact(getCellText(row, 9));
+                        academicWork.setTotalPlan(getCellText(row, 10));
+                        academicWork.setTotalFact(getCellText(row, 11));
 
                         academicWorkRepo.save(academicWork);
                         academicWorks.add(academicWork);
@@ -727,12 +743,11 @@ public class PlanService {
                     }
                     case 2: {
                         AcademicMethod academicMethod = new AcademicMethod();
-                        if (row.getCell(1).getText() == null) continue;
-                        academicMethod.setDiscipline(row.getCell(1).getText());
-                        academicMethod.setNameWork(row.getCell(2).getText());
-                        academicMethod.setDeadlines(row.getCell(3).getText());
-                        academicMethod.setInfoImplementation(row.getCell(4).getText());
-                        academicMethod.setComment(row.getCell(5).getText());
+                        academicMethod.setDiscipline(getCellText(row, 1));
+                        academicMethod.setNameWork(getCellText(row, 2));
+                        academicMethod.setDeadlines(getCellText(row, 3));
+                        academicMethod.setInfoImplementation(getCellText(row, 4));
+                        academicMethod.setComment(getCellText(row, 5));
 
                         academicMethodRepo.save(academicMethod);
                         academicMethods.add(academicMethod);
@@ -740,12 +755,11 @@ public class PlanService {
                     }
                     case 3: {
                         ResearchWork researchWork = new ResearchWork();
-                        if (row.getCell(1).getText() == null) continue;
-                        researchWork.setNameOfTheWork(row.getCell(1).getText());
-                        researchWork.setDeadlines(row.getCell(2).getText());
-                        researchWork.setResults(row.getCell(3).getText());
-                        researchWork.setInfoImplementation(row.getCell(4).getText());
-                        researchWork.setComments(row.getCell(5).getText());
+                        researchWork.setNameOfTheWork(getCellText(row, 1));
+                        researchWork.setDeadlines(getCellText(row, 2));
+                        researchWork.setResults(getCellText(row, 3));
+                        researchWork.setInfoImplementation(getCellText(row, 4));
+                        researchWork.setComments(getCellText(row, 5));
 
                         researchWorkRepo.save(researchWork);
                         researchWorks.add(researchWork);
@@ -753,12 +767,11 @@ public class PlanService {
                     }
                     case 4: {
                         EducationalWork educationalWork = new EducationalWork();
-                        if (row.getCell(1).getText() == null) continue;
-                        educationalWork.setNameOfTheWork(row.getCell(1).getText());
-                        educationalWork.setDeadlines(row.getCell(2).getText());
-                        educationalWork.setResults(row.getCell(3).getText());
-                        educationalWork.setInfoImplementation(row.getCell(4).getText());
-                        educationalWork.setComments(row.getCell(5).getText());
+                        educationalWork.setNameOfTheWork(getCellText(row, 1));
+                        educationalWork.setDeadlines(getCellText(row, 2));
+                        educationalWork.setResults(getCellText(row, 3));
+                        educationalWork.setInfoImplementation(getCellText(row, 4));
+                        educationalWork.setComments(getCellText(row, 5));
 
                         educationalWorkRepo.save(educationalWork);
                         educationalWorks.add(educationalWork);
@@ -766,12 +779,11 @@ public class PlanService {
                     }
                     case 5: {
                         SocialWork socialWork = new SocialWork();
-                        if (row.getCell(1).getText() == null) continue;
-                        socialWork.setNameOfTheWork(row.getCell(1).getText());
-                        socialWork.setDeadlines(row.getCell(2).getText());
-                        socialWork.setResults(row.getCell(3).getText());
-                        socialWork.setInfoImplementation(row.getCell(4).getText());
-                        socialWork.setComments(row.getCell(5).getText());
+                        socialWork.setNameOfTheWork(getCellText(row, 1));
+                        socialWork.setDeadlines(getCellText(row, 2));
+                        socialWork.setResults(getCellText(row, 3));
+                        socialWork.setInfoImplementation(getCellText(row, 4));
+                        socialWork.setComments(getCellText(row, 5));
 
                         socialWorkRepo.save(socialWork);
                         socialWorks.add(socialWork);
@@ -779,16 +791,17 @@ public class PlanService {
                     }
                     case 6: {
                         KPI kpi = new KPI();
-                        if (row.getCell(1).getText() == null) continue;
-                        kpi.setNameOfTheWork(row.getCell(1).getText());
-                        kpi.setDeadlines(row.getCell(2).getText());
-                        kpi.setResults(row.getCell(3).getText());
-                        kpi.setInformationOnImplementation(row.getCell(4).getText());
-                        kpi.setComments(row.getCell(5).getText());
+                        kpi.setNameOfTheWork(getCellText(row, 1));
+                        kpi.setDeadlines(getCellText(row, 2));
+                        kpi.setResults(getCellText(row, 3));
+                        kpi.setInformationOnImplementation(getCellText(row, 4));
+                        kpi.setComments(getCellText(row, 5));
 
                         KpiSection kpiSection = kpiSectionRepo.getByPositionAndDegreeAndOptionsContains(
                                 user.getPosition(), user.getDegree(), kpi.getNameOfTheWork());
-                        if (kpiSection == null) continue;
+                        if (kpiSection == null) {
+                            continue;
+                        }
 
                         kpi.setKpiSection(kpiSection);
                         kpiRepo.save(kpi);
@@ -804,5 +817,13 @@ public class PlanService {
                 educationalWorks, socialWorks, kpis, user, director));
 
         inputStream.close();
+    }
+
+    private String getCellText(XWPFTableRow row, int cellIndex) {
+        XWPFTableCell cell = row.getCell(cellIndex);
+        if (cell == null || cell.getText() == null) {
+            return null;
+        }
+        return cell.getText();
     }
 }

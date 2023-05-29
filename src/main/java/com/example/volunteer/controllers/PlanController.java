@@ -153,7 +153,8 @@ public class PlanController {
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
-        headers.setContentDispositionFormData("attachment", String.format("IPP_%s.docx", teacher.getLastName()));
+        String s = String.format("IPP_%s.docx", teacher.getLastName());
+        headers.setContentDispositionFormData("attachment", s);
 
         return new ResponseEntity<>(outputStream.toByteArray(), headers, HttpStatus.OK);
     }
