@@ -683,7 +683,7 @@ public class PlanService {
 
         for (XWPFParagraph paragraph : document.getParagraphs()) {
             for (XWPFRun run : paragraph.getRuns()) {
-                String text = run.getText(0);
+                String text = run.text();
                 if (text != null) {
                     if (text.contains("учебный год")){
                         year = text.replace("учебный год", "");
@@ -707,6 +707,7 @@ public class PlanService {
                         if (row.getCell(0).getText().toLowerCase().contains("итого")) continue;
 
                         AcademicWork academicWork = new AcademicWork();
+                        if (row.getCell(0).getText() == null) continue;
                         academicWork.setNameOfDiscipline(row.getCell(0).getText());
                         academicWork.setCourse(row.getCell(1).getText());
                         academicWork.setTrimester(row.getCell(2).getText());
@@ -726,6 +727,7 @@ public class PlanService {
                     }
                     case 2: {
                         AcademicMethod academicMethod = new AcademicMethod();
+                        if (row.getCell(1).getText() == null) continue;
                         academicMethod.setDiscipline(row.getCell(1).getText());
                         academicMethod.setNameWork(row.getCell(2).getText());
                         academicMethod.setDeadlines(row.getCell(3).getText());
@@ -738,6 +740,7 @@ public class PlanService {
                     }
                     case 3: {
                         ResearchWork researchWork = new ResearchWork();
+                        if (row.getCell(1).getText() == null) continue;
                         researchWork.setNameOfTheWork(row.getCell(1).getText());
                         researchWork.setDeadlines(row.getCell(2).getText());
                         researchWork.setResults(row.getCell(3).getText());
@@ -750,6 +753,7 @@ public class PlanService {
                     }
                     case 4: {
                         EducationalWork educationalWork = new EducationalWork();
+                        if (row.getCell(1).getText() == null) continue;
                         educationalWork.setNameOfTheWork(row.getCell(1).getText());
                         educationalWork.setDeadlines(row.getCell(2).getText());
                         educationalWork.setResults(row.getCell(3).getText());
@@ -758,9 +762,11 @@ public class PlanService {
 
                         educationalWorkRepo.save(educationalWork);
                         educationalWorks.add(educationalWork);
+                        break;
                     }
                     case 5: {
                         SocialWork socialWork = new SocialWork();
+                        if (row.getCell(1).getText() == null) continue;
                         socialWork.setNameOfTheWork(row.getCell(1).getText());
                         socialWork.setDeadlines(row.getCell(2).getText());
                         socialWork.setResults(row.getCell(3).getText());
@@ -769,9 +775,11 @@ public class PlanService {
 
                         socialWorkRepo.save(socialWork);
                         socialWorks.add(socialWork);
+                        break;
                     }
                     case 6: {
                         KPI kpi = new KPI();
+                        if (row.getCell(1).getText() == null) continue;
                         kpi.setNameOfTheWork(row.getCell(1).getText());
                         kpi.setDeadlines(row.getCell(2).getText());
                         kpi.setResults(row.getCell(3).getText());
@@ -785,6 +793,7 @@ public class PlanService {
                         kpi.setKpiSection(kpiSection);
                         kpiRepo.save(kpi);
                         kpis.add(kpi);
+                        break;
                     }
                 }
             }
