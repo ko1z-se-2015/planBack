@@ -174,9 +174,9 @@ public class PlanController {
 
     @PostMapping("/upload-docx")
     public ResponseEntity<?> uploadDocx(@RequestHeader(value="Authorization") String authorization,
-                                        @RequestBody String fileBase64) throws IOException {
+                                        @RequestBody FileDto file) throws IOException {
         User user = userService.getByToken(authorization);
-        planService.insertFromDocx(user, fileBase64);
+        planService.insertFromDocx(user, file.getFileBase64());
         return new ResponseEntity<>("Plan has been successfully created based on uploaded document", HttpStatus.CREATED);
     }
 }
