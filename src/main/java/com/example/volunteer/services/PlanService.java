@@ -195,23 +195,23 @@ public class PlanService {
 
                         row.getCell(4).setText(academicWork.getLecturesPlan());
                         row.getCell(5).setText(academicWork.getLecturesFact());
-                        lecturesP += Integer.parseInt(academicWork.getLecturesPlan());
-                        lecturesF += Integer.parseInt(academicWork.getLecturesFact());
+                        lecturesP += academicWork.getLecturesPlan() == null ? 0 : Integer.parseInt(academicWork.getLecturesPlan());
+                        lecturesF += academicWork.getLecturesFact() == null ? 0 : Integer.parseInt(academicWork.getLecturesFact());
 
                         row.getCell(6).setText(academicWork.getPracticesPlan());
                         row.getCell(7).setText(academicWork.getPracticesFact());
-                        practiceP += Integer.parseInt(academicWork.getPracticesPlan());
-                        practiceF += Integer.parseInt(academicWork.getPracticesFact());
+                        practiceP += academicWork.getPracticesPlan() == null ? 0 : Integer.parseInt(academicWork.getPracticesPlan());
+                        practiceF += academicWork.getPracticesFact() == null ? 0 : Integer.parseInt(academicWork.getPracticesFact());
 
                         row.getCell(8).setText(academicWork.getHoursPlan());
                         row.getCell(9).setText(academicWork.getHoursFact());
-                        hoursP += Integer.parseInt(academicWork.getHoursPlan());
-                        hoursF += Integer.parseInt(academicWork.getHoursFact());
+                        hoursP += academicWork.getHoursPlan() == null ? 0 : Integer.parseInt(academicWork.getHoursPlan());
+                        hoursF += academicWork.getHoursFact() == null ? 0 : Integer.parseInt(academicWork.getHoursFact());
 
                         row.getCell(10).setText(academicWork.getTotalPlan());
                         row.getCell(11).setText(academicWork.getTotalFact());
-                        totalP += Integer.parseInt(academicWork.getTotalPlan());
-                        totalF += Integer.parseInt(academicWork.getTotalFact());
+                        totalP += academicWork.getTotalPlan() == null ? 0 : Integer.parseInt(academicWork.getTotalPlan());
+                        totalF += academicWork.getTotalFact() == null ? 0 : Integer.parseInt(academicWork.getTotalFact());
 
                         setBckgColorTableDocx(row);
                     }
@@ -432,41 +432,41 @@ public class PlanService {
 
                         Cell lecturesPlan = dataRow.createCell(4);
                         lecturesPlan.setCellValue(academicWork.getLecturesPlan());
-                        sumLecturesPlan += Integer.parseInt(academicWork.getLecturesPlan());
+                        sumLecturesPlan += academicWork.getLecturesPlan() == null ? 0 : Integer.parseInt(academicWork.getLecturesPlan());
 
                         Cell lecturesFact = dataRow.createCell(5);
                         lecturesFact.setCellValue(academicWork.getLecturesFact());
                         lecturesFact.setCellStyle(blueBackgroundCellStyle);
-                        sumLecturesFact += Integer.parseInt(academicWork.getLecturesFact());
+                        sumLecturesFact += academicWork.getLecturesFact() == null ? 0 : Integer.parseInt(academicWork.getLecturesFact());
 
                         Cell practicePlan = dataRow.createCell(6);
                         practicePlan.setCellValue(academicWork.getPracticesPlan());
-                        sumPractiePlan += Integer.parseInt(academicWork.getPracticesPlan());
+                        sumPractiePlan += academicWork.getPracticesPlan() == null ? 0 : Integer.parseInt(academicWork.getPracticesPlan());
 
 
                         Cell practiceFact = dataRow.createCell(7);
                         practiceFact.setCellValue(academicWork.getPracticesFact());
                         practiceFact.setCellStyle(blueBackgroundCellStyle);
-                        sumPracticeFact += Integer.parseInt(academicWork.getPracticesFact());
+                        sumPracticeFact += academicWork.getPracticesFact() == null ? 0 :  Integer.parseInt(academicWork.getPracticesFact());
 
                         Cell officePlan = dataRow.createCell(8);
                         officePlan.setCellValue(academicWork.getHoursPlan());
-                        sumHoursPlan += Integer.parseInt(academicWork.getHoursPlan());
+                        sumHoursPlan += academicWork.getHoursPlan() == null ? 0 : Integer.parseInt(academicWork.getHoursPlan());
 
 
                         Cell officeFact = dataRow.createCell(9);
                         officeFact.setCellValue(academicWork.getHoursFact());
                         officeFact.setCellStyle(blueBackgroundCellStyle);
-                        sumHoursFact += Integer.parseInt(academicWork.getHoursFact());
+                        sumHoursFact += academicWork.getHoursFact() == null ? 0 : Integer.parseInt(academicWork.getHoursFact());
 
                         Cell totalPlan = dataRow.createCell(10);
                         totalPlan.setCellValue(academicWork.getTotalPlan());
-                        sumTotalPlan += Integer.parseInt(academicWork.getTotalPlan());
+                        sumTotalPlan += academicWork.getTotalPlan() == null ? 0 : Integer.parseInt(academicWork.getTotalPlan());
 
                         Cell totalFact = dataRow.createCell(11);
                         totalFact.setCellValue(academicWork.getTotalFact());
                         totalFact.setCellStyle(blueBackgroundCellStyle);
-                        sumTotalFact += Integer.parseInt(academicWork.getTotalFact());
+                        sumTotalFact += academicWork.getTotalFact() == null ? 0 : Integer.parseInt(academicWork.getTotalFact());
 
                     }
 
