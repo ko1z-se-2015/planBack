@@ -782,6 +782,7 @@ public class PlanService {
                                 user.getPosition(), user.getDegree(), kpi.getNameOfTheWork());
                         if (kpiSection == null) continue;
 
+                        kpi.setKpiSection(kpiSection);
                         kpiRepo.save(kpi);
                         kpis.add(kpi);
                     }
