@@ -726,11 +726,11 @@ public class PlanService {
                     }
                     case 2: {
                         AcademicMethod academicMethod = new AcademicMethod();
-                        academicMethod.setDiscipline(row.getCell(0).getText());
-                        academicMethod.setNameWork(row.getCell(1).getText());
-                        academicMethod.setDeadlines(row.getCell(2).getText());
-                        academicMethod.setInfoImplementation(row.getCell(3).getText());
-                        academicMethod.setComment(row.getCell(4).getText());
+                        academicMethod.setDiscipline(row.getCell(1).getText());
+                        academicMethod.setNameWork(row.getCell(2).getText());
+                        academicMethod.setDeadlines(row.getCell(3).getText());
+                        academicMethod.setInfoImplementation(row.getCell(4).getText());
+                        academicMethod.setComment(row.getCell(5).getText());
 
                         academicMethodRepo.save(academicMethod);
                         academicMethods.add(academicMethod);
@@ -738,11 +738,11 @@ public class PlanService {
                     }
                     case 3: {
                         ResearchWork researchWork = new ResearchWork();
-                        researchWork.setNameOfTheWork(row.getCell(0).getText());
-                        researchWork.setDeadlines(row.getCell(1).getText());
-                        researchWork.setResults(row.getCell(2).getText());
-                        researchWork.setInfoImplementation(row.getCell(3).getText());
-                        researchWork.setComments(row.getCell(4).getText());
+                        researchWork.setNameOfTheWork(row.getCell(1).getText());
+                        researchWork.setDeadlines(row.getCell(2).getText());
+                        researchWork.setResults(row.getCell(3).getText());
+                        researchWork.setInfoImplementation(row.getCell(4).getText());
+                        researchWork.setComments(row.getCell(5).getText());
 
                         researchWorkRepo.save(researchWork);
                         researchWorks.add(researchWork);
@@ -750,33 +750,33 @@ public class PlanService {
                     }
                     case 4: {
                         EducationalWork educationalWork = new EducationalWork();
-                        educationalWork.setNameOfTheWork(row.getCell(0).getText());
-                        educationalWork.setDeadlines(row.getCell(1).getText());
-                        educationalWork.setResults(row.getCell(2).getText());
-                        educationalWork.setInfoImplementation(row.getCell(3).getText());
-                        educationalWork.setComments(row.getCell(4).getText());
+                        educationalWork.setNameOfTheWork(row.getCell(1).getText());
+                        educationalWork.setDeadlines(row.getCell(2).getText());
+                        educationalWork.setResults(row.getCell(3).getText());
+                        educationalWork.setInfoImplementation(row.getCell(4).getText());
+                        educationalWork.setComments(row.getCell(5).getText());
 
                         educationalWorkRepo.save(educationalWork);
                         educationalWorks.add(educationalWork);
                     }
                     case 5: {
                         SocialWork socialWork = new SocialWork();
-                        socialWork.setNameOfTheWork(row.getCell(0).getText());
-                        socialWork.setDeadlines(row.getCell(1).getText());
-                        socialWork.setResults(row.getCell(2).getText());
-                        socialWork.setInfoImplementation(row.getCell(3).getText());
-                        socialWork.setComments(row.getCell(4).getText());
+                        socialWork.setNameOfTheWork(row.getCell(1).getText());
+                        socialWork.setDeadlines(row.getCell(2).getText());
+                        socialWork.setResults(row.getCell(3).getText());
+                        socialWork.setInfoImplementation(row.getCell(4).getText());
+                        socialWork.setComments(row.getCell(5).getText());
 
                         socialWorkRepo.save(socialWork);
                         socialWorks.add(socialWork);
                     }
                     case 6: {
                         KPI kpi = new KPI();
-                        kpi.setNameOfTheWork(row.getCell(0).getText());
-                        kpi.setDeadlines(row.getCell(1).getText());
-                        kpi.setResults(row.getCell(2).getText());
-                        kpi.setInformationOnImplementation(row.getCell(3).getText());
-                        kpi.setComments(row.getCell(4).getText());
+                        kpi.setNameOfTheWork(row.getCell(1).getText());
+                        kpi.setDeadlines(row.getCell(2).getText());
+                        kpi.setResults(row.getCell(3).getText());
+                        kpi.setInformationOnImplementation(row.getCell(4).getText());
+                        kpi.setComments(row.getCell(5).getText());
 
                         KpiSection kpiSection = kpiSectionRepo.getByPositionAndDegreeAndOptionsContains(
                                 user.getPosition(), user.getDegree(), kpi.getNameOfTheWork());
