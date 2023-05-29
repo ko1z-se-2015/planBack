@@ -5,6 +5,7 @@ import com.auth0.jwt.JWT;
 import com.example.volunteer.entities.Degree;
 import com.example.volunteer.entities.Position;
 import com.example.volunteer.entities.User;
+import com.example.volunteer.modules.ResetPassword;
 import com.example.volunteer.repositories.RoleRepo;
 import com.example.volunteer.repositories.UserRepo;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -41,6 +42,22 @@ public class UserService implements UserDetailsService {
     private final DepartmentService departmentService;
 
     public final PasswordEncoder passwordEncoder;
+
+    public String resetPassword(User user, ResetPassword resetPassword){
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        if (!encoder.matches(resetPassword.getOldPassword(), user.getPassword())) return "Incorrect password";
+
+        if (!resetPassword.getNewPassword().equals(resetPassword.getConfirmNewPassword())) return "New passwords do not match";
+
+        user.setPassword(passwordEncoder.encode(resetPassword.getNewPassword()));
+        userRepo.save(user);
+        return "New password has been saved";
+    }
+
+    public void setNewPassword(User user, String password){
+        user.setPassword(passwordEncoder.encode(password));
+        userRepo.save(user);
+    }
 
     public boolean verify(User user) {
         if (!createTeacher(user)) return false;
@@ -171,7 +188,7 @@ public class UserService implements UserDetailsService {
         return true;
     }
 
-    public String generateToken(User user) throws JsonProcessingException {
+    public String generateUserToken(User user) throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
         String userJson = objectMapper.writeValueAsString(user);
 
@@ -183,7 +200,7 @@ public class UserService implements UserDetailsService {
         return jwtBuilder.compact();
     }
 
-    public User decodeToken(String token) throws JsonProcessingException {
+    public User decodeUserToken(String token) throws JsonProcessingException {
         Claims claims = Jwts.parser()
                 .setSigningKey("xfty7ygp")
                 .parseClaimsJws(token)

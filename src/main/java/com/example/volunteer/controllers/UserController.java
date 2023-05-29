@@ -8,6 +8,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.example.volunteer.entities.Degree;
 import com.example.volunteer.entities.Position;
 import com.example.volunteer.entities.User;
+import com.example.volunteer.modules.ResetPassword;
 import com.example.volunteer.services.DegreeService;
 import com.example.volunteer.services.EmailNotificationService;
 import com.example.volunteer.services.PositionService;
@@ -105,7 +106,7 @@ public class UserController {
             return new ResponseEntity<>("User is already exist", HttpStatus.BAD_REQUEST);
         }
 
-        String token = userService.generateToken(user);
+        String token = userService.generateUserToken(user);
 
         String subject = "Email Verification";
         String text = "Please click the following link to verify your email: http://aitu-plan.herokuapp.com/user/verify?token=" + token;
@@ -116,13 +117,61 @@ public class UserController {
 
     @GetMapping("/verify")
     public ResponseEntity<?> verify(@RequestParam String token) throws JsonProcessingException {
-        User user = userService.decodeToken(token);
+        User user = userService.decodeUserToken(token);
 
         if (user != null) {
             if (userService.verify(user))
                 return new ResponseEntity<>("User has been verified", HttpStatus.OK);
             else
                 return new ResponseEntity<>("User is already exist", HttpStatus.BAD_REQUEST);
+        } else {
+            return new ResponseEntity<>("Invalid token", HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PostMapping("/resetPassword")
+    public ResponseEntity<?> resetPassword(@RequestHeader(value = "Authorization") String authorization,
+                                           @RequestBody ResetPassword resetPassword){
+        User user = userService.getByToken(authorization);
+
+        String response = userService.resetPassword(user, resetPassword);
+        if (response.equals("New password has been saved"))
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        else return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
+    @PostMapping("/forgotPassword")
+    public ResponseEntity<?> forgotPassword(@RequestParam String email,
+                                            @RequestBody ResetPassword resetPassword) throws JsonProcessingException {
+        User user = userService.getByEmail(email);
+        if (user == null) return new ResponseEntity<>("User has not found", HttpStatus.BAD_REQUEST);
+
+        if (!resetPassword.getNewPassword().equals(resetPassword.getConfirmNewPassword())) {
+            return new ResponseEntity<>("New passwords do not match", HttpStatus.BAD_REQUEST);
+        }
+
+        User temp = new User();
+        temp.setEmail(user.getEmail());
+        temp.setPassword(resetPassword.getNewPassword());
+
+        String token = userService.generateUserToken(temp);
+
+        String subject = "Resetting the password";
+        String text = "Please click the following link to reset your password: http://aitu-plan.herokuapp.com/user/verifyReset?token=" + token;
+        emailNotificationService.sendSimpleMessage(user.getEmail(), subject, text);
+
+        return new ResponseEntity<>("Password reset mail has been sent", HttpStatus.OK);
+    }
+
+    @GetMapping("/verifyReset")
+    public ResponseEntity<?> forgotPasswordVerify(@RequestParam String token) throws JsonProcessingException {
+        User temp = userService.decodeUserToken(token);
+        User user = userService.getByEmail(temp.getEmail());
+        String password = temp.getPassword();
+
+        if (user != null) {
+            userService.setNewPassword(user, password);
+            return new ResponseEntity<>("New password has been saved", HttpStatus.OK);
         } else {
             return new ResponseEntity<>("Invalid token", HttpStatus.BAD_REQUEST);
         }
