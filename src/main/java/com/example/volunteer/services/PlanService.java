@@ -1,6 +1,7 @@
 package com.example.volunteer.services;
 
 import com.example.volunteer.entities.*;
+import com.example.volunteer.entities.kpi_sections.KpiSection;
 import com.example.volunteer.modules.*;
 import com.example.volunteer.repositories.*;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +19,8 @@ import org.openxmlformats.schemas.wordprocessingml.x2006.main.STShd;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import java.io.*;
 import java.time.LocalDate;
 import java.util.*;
@@ -624,7 +627,7 @@ public class PlanService {
 
     }
 
-    public void outputSections(Sheet sheet, int rowIndex, int workNum, 
+    private void outputSections(Sheet sheet, int rowIndex, int workNum,
                                String name, String deadlines, String results, String infoImpl, String comment){
         
         Row dataRow = sheet.createRow(rowIndex);
@@ -658,5 +661,138 @@ public class PlanService {
         Cell comm = dataRow.createCell(5);
         comm.setCellValue(comment);
         comm.setCellStyle(wrapTextStyle);
+    }
+
+    public void insertFromDocx(User user, String fileBase64) throws IOException {
+        byte[] fileBytes = Base64.getDecoder().decode(fileBase64);
+        InputStream inputStream = new ByteArrayInputStream(fileBytes);
+
+        XWPFDocument document = new XWPFDocument(inputStream);
+
+        List<XWPFTable> tables = document.getTables();
+
+        String year = "";
+        List<AcademicWork> academicWorks = new ArrayList<>();
+        List<AcademicMethod> academicMethods = new ArrayList<>();
+        List<ResearchWork> researchWorks = new ArrayList<>();
+        List<EducationalWork> educationalWorks = new ArrayList<>();
+        List<SocialWork> socialWorks = new ArrayList<>();
+        List<KPI> kpis = new ArrayList<>();
+        Department department = departmentService.getDepartmentByTeacher(user);
+        User director = department.getDirector();
+
+        for (XWPFParagraph paragraph : document.getParagraphs()) {
+            for (XWPFRun run : paragraph.getRuns()) {
+                String text = run.getText(0);
+                if (text != null) {
+                    if (text.contains("учебный год")){
+                        year = text.replace("учебный год", "");
+                        break;
+                    }
+                }
+            }
+        }
+
+        int startAtRow;
+        for (int i = 1; i < tables.size(); i++){
+            XWPFTable table = tables.get(i);
+            if (i == 1) {
+                startAtRow = 2;
+            } else startAtRow = 1;
+
+            for (int j = startAtRow; j < table.getRows().size(); j++) {
+                XWPFTableRow row = table.getRow(i);
+                switch (i){
+                    case 1: {
+                        if (row.getCell(0).getText().toLowerCase().contains("итого")) continue;
+
+                        AcademicWork academicWork = new AcademicWork();
+                        academicWork.setNameOfDiscipline(row.getCell(0).getText());
+                        academicWork.setCourse(row.getCell(1).getText());
+                        academicWork.setTrimester(row.getCell(2).getText());
+                        academicWork.setGroups(row.getCell(3).getText());
+                        academicWork.setLecturesPlan(row.getCell(4).getText());
+                        academicWork.setLecturesFact(row.getCell(5).getText());
+                        academicWork.setPracticesPlan(row.getCell(6).getText());
+                        academicWork.setPracticesFact(row.getCell(7).getText());
+                        academicWork.setHoursPlan(row.getCell(8).getText());
+                        academicWork.setHoursFact(row.getCell(9).getText());
+                        academicWork.setTotalPlan(row.getCell(10).getText());
+                        academicWork.setTotalFact(row.getCell(11).getText());
+
+                        academicWorkRepo.save(academicWork);
+                        academicWorks.add(academicWork);
+                        break;
+                    }
+                    case 2: {
+                        AcademicMethod academicMethod = new AcademicMethod();
+                        academicMethod.setDiscipline(row.getCell(0).getText());
+                        academicMethod.setNameWork(row.getCell(1).getText());
+                        academicMethod.setDeadlines(row.getCell(2).getText());
+                        academicMethod.setInfoImplementation(row.getCell(3).getText());
+                        academicMethod.setComment(row.getCell(4).getText());
+
+                        academicMethodRepo.save(academicMethod);
+                        academicMethods.add(academicMethod);
+                        break;
+                    }
+                    case 3: {
+                        ResearchWork researchWork = new ResearchWork();
+                        researchWork.setNameOfTheWork(row.getCell(0).getText());
+                        researchWork.setDeadlines(row.getCell(1).getText());
+                        researchWork.setResults(row.getCell(2).getText());
+                        researchWork.setInfoImplementation(row.getCell(3).getText());
+                        researchWork.setComments(row.getCell(4).getText());
+
+                        researchWorkRepo.save(researchWork);
+                        researchWorks.add(researchWork);
+                        break;
+                    }
+                    case 4: {
+                        EducationalWork educationalWork = new EducationalWork();
+                        educationalWork.setNameOfTheWork(row.getCell(0).getText());
+                        educationalWork.setDeadlines(row.getCell(1).getText());
+                        educationalWork.setResults(row.getCell(2).getText());
+                        educationalWork.setInfoImplementation(row.getCell(3).getText());
+                        educationalWork.setComments(row.getCell(4).getText());
+
+                        educationalWorkRepo.save(educationalWork);
+                        educationalWorks.add(educationalWork);
+                    }
+                    case 5: {
+                        SocialWork socialWork = new SocialWork();
+                        socialWork.setNameOfTheWork(row.getCell(0).getText());
+                        socialWork.setDeadlines(row.getCell(1).getText());
+                        socialWork.setResults(row.getCell(2).getText());
+                        socialWork.setInfoImplementation(row.getCell(3).getText());
+                        socialWork.setComments(row.getCell(4).getText());
+
+                        socialWorkRepo.save(socialWork);
+                        socialWorks.add(socialWork);
+                    }
+                    case 6: {
+                        KPI kpi = new KPI();
+                        kpi.setNameOfTheWork(row.getCell(0).getText());
+                        kpi.setDeadlines(row.getCell(1).getText());
+                        kpi.setResults(row.getCell(2).getText());
+                        kpi.setInformationOnImplementation(row.getCell(3).getText());
+                        kpi.setComments(row.getCell(4).getText());
+
+                        KpiSection kpiSection = kpiSectionRepo.getByPositionAndDegreeAndOptionsContains(
+                                user.getPosition(), user.getDegree(), kpi.getNameOfTheWork());
+                        if (kpiSection == null) continue;
+
+                        kpiRepo.save(kpi);
+                        kpis.add(kpi);
+                    }
+                }
+            }
+        }
+
+        planRepo.save(new Plan(
+                year, academicWorks, academicMethods, researchWorks,
+                educationalWorks, socialWorks, kpis, user, director));
+
+        inputStream.close();
     }
 }

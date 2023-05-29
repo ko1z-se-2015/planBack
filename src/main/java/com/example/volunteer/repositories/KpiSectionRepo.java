@@ -9,5 +9,6 @@ import java.util.List;
 
 public interface KpiSectionRepo extends JpaRepository<KpiSection, Long> {
     List<KpiSection> findByPositionAndDegree(Position position, Degree degree);
-    KpiSection findByPositionAndDegreeAndSectionNumber (Position position, Degree degree, int sectionNumber);
+    KpiSection findByPositionAndDegreeAndSectionNumber(Position position, Degree degree, int sectionNumber);
+    KpiSection getByPositionAndDegreeAndOptionsContains(Position position, Degree degree, String option);
 }

@@ -44,4 +44,16 @@ public class Plan {
     public Plan(Long id) {
         this.id = id;
     }
+
+    public Plan(String year, List<AcademicWork> academicWorks, List<AcademicMethod> academicMethods, List<ResearchWork> researchWorks, List<EducationalWork> educationalWorks, List<SocialWork> socialWorks, List<KPI> kpis, User createdBy, User createdFor) {
+        this.year = year;
+        this.academicWorks = academicWorks;
+        this.academicMethods = academicMethods;
+        this.researchWorks = researchWorks;
+        this.educationalWorks = educationalWorks;
+        this.socialWorks = socialWorks;
+        this.kpis = kpis;
+        this.createdBy = createdBy;
+        this.createdFor = createdFor;
+    }
 }

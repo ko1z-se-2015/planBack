@@ -34,6 +34,13 @@ public class KpiSectionService {
         return kpiSectionRepo.findByPositionAndDegree(position, degree);
     }
 
+    public KpiSection getByPositionNameAndDegreeNameAndOptionsContains(String positionName, String degreeName, String option) {
+        Position position = positionRepo.findByName(positionName);
+        Degree degree = degreeRepo.findByName(degreeName);
+
+        return kpiSectionRepo.getByPositionAndDegreeAndOptionsContains(position, degree, option);
+    }
+
     public KpiSection getByPositionNameAndDegreeNameAndSectionNumber (String positionName, String degreeName, int sectionNumber) {
         Position position = positionRepo.findByName(positionName);
         Degree degree = degreeRepo.findByName(degreeName);
