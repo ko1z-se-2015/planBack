@@ -701,7 +701,7 @@ public class PlanService {
             } else startAtRow = 1;
 
             for (int j = startAtRow; j < table.getRows().size(); j++) {
-                XWPFTableRow row = table.getRow(i);
+                XWPFTableRow row = table.getRow(j);
                 switch (i){
                     case 1: {
                         if (row.getCell(0).getText().toLowerCase().contains("итого")) continue;
