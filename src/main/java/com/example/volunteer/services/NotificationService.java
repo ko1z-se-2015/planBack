@@ -22,7 +22,7 @@ public class NotificationService {
 
     private final NotificationRepo notificationRepo;
     private final EmailNotificationService emailNotificationService;
-    private final PlanRepo planRepo;
+    private final PlanService planService;
 
     public List<Notification> getNotificationsBySendTo(User sendTo) {
         return notificationRepo.getNotificationsBySendTo(sendTo);
@@ -37,7 +37,7 @@ public class NotificationService {
     }
 
     public void createNotification(User sendBy, Long planId, boolean byTeacher, Notification notification) {
-        Plan plan = planRepo.getById(planId);
+        Plan plan = planService.getPlanById(planId);
         User sendTo;
 
         if (byTeacher){
@@ -86,6 +86,17 @@ public class NotificationService {
                 textMessage = String.format("The plan of %s academic year has been approved by %s %s",
                         notification.getPlanName(), sendBy.getFirstName(), sendBy.getLastName());
                 subject = String.format("Your individual plan is %s", notification.getStatus());
+
+                plan.setId(null);
+                plan.getAcademicWorks().forEach(academicWork -> academicWork.setId(null));
+                plan.getAcademicMethods().forEach(academicMethod -> academicMethod.setId(null));
+                plan.getResearchWorks().forEach(researchWork -> researchWork.setId(null));
+                plan.getEducationalWorks().forEach(educationalWork -> educationalWork.setId(null));
+                plan.getSocialWorks().forEach(socialWork -> socialWork.setId(null));
+                plan.getKpis().forEach(kpi -> kpi.setId(null));
+                plan.setReport(true);
+                planService.createPlan(plan);
+
                 break;
         }
         emailNotificationService.sendSimpleMessage(

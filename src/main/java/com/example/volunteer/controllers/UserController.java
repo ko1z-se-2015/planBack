@@ -21,6 +21,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.GrantedAuthority;
 
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -120,8 +121,12 @@ public class UserController {
         User user = userService.decodeUserToken(token);
 
         if (user != null) {
-            if (userService.verify(user))
-                return new ResponseEntity<>("User has been verified", HttpStatus.OK);
+            if (userService.verify(user)) {
+                return ResponseEntity.status(HttpStatus.FOUND)
+                        .location(UriComponentsBuilder.fromUriString("https://diploma-kappa.vercel.app/login")
+                                .build().toUri())
+                        .build();
+            }
             else
                 return new ResponseEntity<>("User is already exist", HttpStatus.BAD_REQUEST);
         } else {
@@ -171,7 +176,10 @@ public class UserController {
 
         if (user != null) {
             userService.setNewPassword(user, password);
-            return new ResponseEntity<>("New password has been saved", HttpStatus.OK);
+            return ResponseEntity.status(HttpStatus.FOUND)
+                    .location(UriComponentsBuilder.fromUriString("https://diploma-kappa.vercel.app/login")
+                            .build().toUri())
+                    .build();
         } else {
             return new ResponseEntity<>("Invalid token", HttpStatus.BAD_REQUEST);
         }

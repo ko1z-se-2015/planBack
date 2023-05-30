@@ -41,6 +41,8 @@ public class Plan {
     @OneToOne
     private User createdFor;
 
+    private boolean isReport = false;
+
     public Plan(Long id) {
         this.id = id;
     }

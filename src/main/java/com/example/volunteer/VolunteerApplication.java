@@ -417,14 +417,6 @@ public class VolunteerApplication {
             new Department("Department of General Educational Disciplines", zhibek)
     ));
 
-    List<Plan> plans = new ArrayList<>(Arrays.asList(
-            new Plan(100L, "2021-2022", "APPROVED", null, null, null, null, null, null, teacher, director),
-            new Plan(101L, "2022-2023", "DENIED", null, null, null, null, null, null, teacher, director),
-            new Plan(102L, "2023-2024", "AWAITING", null, null, null, null, null, null, teacher, director),
-            new Plan(103L, "2024-2025", "AWAITING", null, null, null, null, null, null, teacher, director),
-            new Plan(104L, "2025-2026", "APPROVED", null, null, null, null, null, null, teacher, director)
-            ));
-
     Department department = new Department("IT department", director);
 //    Plan plan = new Plan("as", "das", "das", "das", "das", "da", "ds", "aa", "aa", "aa", "aa", "aa", "aa", "aa", "aa", "aa", "aa", "aa", "aa", "aa", "aa", "aa", "aa");
 
@@ -461,8 +453,6 @@ public class VolunteerApplication {
 //            plan.setCreatedBy(userService.getByEmail("asd@asd.ru"));
 //            plan.setCreatedFor(userService.getByEmail("kk@kk.kz"));
 //            planService.createPlan(plan);
-
-            plans.forEach(planService::save);
 
             //SAVE KPI SECTIONS
             //PROFESSOR

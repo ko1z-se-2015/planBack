@@ -147,13 +147,21 @@ public class PlanController {
     public ResponseEntity<byte[]> createDocx(@RequestParam Long planId) throws IOException {
         Plan plan = planService.getPlanById(planId);
         User teacher = plan.getCreatedBy();
+        String s;
 
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        planService.createDocx(outputStream, plan);
+
+        if (plan.isReport()) {
+            planService.createReportDocx(outputStream, plan);
+            s = String.format("ReportIPP_%s.docx", teacher.getLastName());
+
+        } else {
+            planService.createPlanDocx(outputStream, plan);
+            s = String.format("IPP_%s.docx", teacher.getLastName());
+        }
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
-        String s = String.format("IPP_%s.docx", teacher.getLastName());
         headers.setContentDispositionFormData("attachment", s);
 
         return new ResponseEntity<>(outputStream.toByteArray(), headers, HttpStatus.OK);
