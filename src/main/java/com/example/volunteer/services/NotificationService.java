@@ -87,16 +87,21 @@ public class NotificationService {
                         notification.getPlanName(), sendBy.getFirstName(), sendBy.getLastName());
                 subject = String.format("Your individual plan is %s", notification.getStatus());
 
-                plan.setId(null);
                 plan.getAcademicWorks().forEach(academicWork -> academicWork.setId(null));
                 plan.getAcademicMethods().forEach(academicMethod -> academicMethod.setId(null));
                 plan.getResearchWorks().forEach(researchWork -> researchWork.setId(null));
                 plan.getEducationalWorks().forEach(educationalWork -> educationalWork.setId(null));
                 plan.getSocialWorks().forEach(socialWork -> socialWork.setId(null));
                 plan.getKpis().forEach(kpi -> kpi.setId(null));
-                plan.setReport(true);
-                planService.createPlan(plan);
 
+                Plan newPlan = new Plan(plan.getYear(), plan.getAcademicWorks(),
+                        plan.getAcademicMethods(), plan.getResearchWorks(),
+                        plan.getEducationalWorks(), plan.getSocialWorks(),
+                        plan.getKpis(), plan.getCreatedBy(), plan.getCreatedFor());
+
+                newPlan.setReport(true);
+
+                planService.createPlan(newPlan);
                 break;
         }
         emailNotificationService.sendSimpleMessage(
