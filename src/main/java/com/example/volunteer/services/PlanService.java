@@ -142,120 +142,120 @@ public class PlanService {
         planRepo.delete(plan);
     }
 
-    public void createReportDocx(OutputStream outputStream, Plan plan) throws IOException {
-        File templateFile = new File("templateReport.docx");
-        FileInputStream templateStream = new FileInputStream(templateFile);
-
-        XWPFDocument document = new XWPFDocument(templateStream);
-
-        int year = LocalDate.now().getYear();
-        User teacher = plan.getCreatedBy();
-        String teacherFullName = String.format("%s %s %s", teacher.getLastName(), teacher.getFirstName(), teacher.getMiddleName());
-        String teacherSurname = String.format("%s %s.%s.",
-                teacher.getLastName(), teacher.getFirstName().charAt(0), teacher.getMiddleName().charAt(0));
-
-
-        Map<String, String> placeholderMap = new HashMap<>();
-        placeholderMap.put("{{currentYear}}", Integer.toString(year));
-        placeholderMap.put("{{teacherFullName}}", teacherFullName);
-        placeholderMap.put("{{planYear}}", plan.getYear());
-        placeholderMap.put("teacherInitials", teacherSurname);
-
-        List<XWPFTable> tables = document.getTables();
-
-        for (int i = 0; i < tables.size(); i++) {
-
-            switch (i){
-                case 0:
-                    for (AcademicWork academicWork: plan.getAcademicWorks()) {
-                        XWPFTable table = tables.get(i);
-                        XWPFTableRow row = table.createRow();
-
-                        row.getCell(0).setText(academicWork.getNameOfDiscipline());
-                        row.getCell(1).setText(academicWork.getCourse());
-                        row.getCell(2).setText(academicWork.getTrimester());
-                        row.getCell(3).setText(academicWork.getGroups());
-
-                        row.getCell(4).setText(academicWork.getLecturesPlan() + "/" + academicWork.getLecturesFact());
-                        row.getCell(5).setText(academicWork.getPracticesPlan() + "/" + academicWork.getPracticesFact());
-                        row.getCell(6).setText(academicWork.getHoursPlan() + "/" + academicWork.getHoursFact());
-                        row.getCell(7).setText(academicWork.getTotalPlan() + "/" + academicWork.getTotalFact());
-                    }
-
-                    break;
-
-                case 1:
-                    int rowNumberAcademic = 0;
-
-                    for (AcademicMethod academicMethod: plan.getAcademicMethods()) {
-                        XWPFTableRow row = tables.get(i).createRow();
-
-                        row.getCell(0).setText(String.valueOf(++rowNumberAcademic));
-                        row.getCell(1).setText(academicMethod.getDiscipline());
-                        row.getCell(2).setText(academicMethod.getNameWork());
-                        row.getCell(3).setText(academicMethod.getDeadlines());
-                        row.getCell(4).setText(academicMethod.getComment());
-
-                    }
-                    break;
-
-                case 2:
-                    int rowNumberResearch = 0;
-
-                    for (ResearchWork researchWork: plan.getResearchWorks()) {
-                        XWPFTableRow row = tables.get(i).createRow();
-                        row.getCell(0).setText(String.valueOf(++rowNumberResearch));
-                        row.getCell(1).setText(researchWork.getNameOfTheWork());
-                        row.getCell(2).setText(researchWork.getDeadlines());
-                        row.getCell(3).setText(researchWork.getResults());
-                        row.getCell(4).setText(researchWork.getComments());
-                    }
-                    break;
-                case 3:
-                    int rowNumberEducation = 0;
-
-                    for (EducationalWork educationalWork: plan.getEducationalWorks()) {
-                        XWPFTableRow row = tables.get(i).createRow();
-                        row.getCell(0).setText(String.valueOf(++rowNumberEducation));
-                        row.getCell(1).setText(educationalWork.getNameOfTheWork());
-                        row.getCell(2).setText(educationalWork.getDeadlines());
-                        row.getCell(3).setText(educationalWork.getResults());
-                        row.getCell(4).setText(educationalWork.getComments());
-                    }
-                    break;
-                case 4:
-                    int rowNumberSocial = 0;
-
-                    for (SocialWork socialWork: plan.getSocialWorks()) {
-                        XWPFTableRow row = tables.get(i).createRow();
-                        row.getCell(0).setText(String.valueOf(++rowNumberSocial));
-                        row.getCell(1).setText(socialWork.getNameOfTheWork());
-                        row.getCell(2).setText(socialWork.getDeadlines());
-                        row.getCell(3).setText(socialWork.getResults());
-                        row.getCell(4).setText(socialWork.getComments());
-                    }
-                    break;
-            }
-        }
-
-        for (XWPFParagraph paragraph : document.getParagraphs()) {
-            for (XWPFRun run : paragraph.getRuns()) {
-                String text = run.getText(0);
-                if (text != null) {
-                    for (Map.Entry<String, String> entry : placeholderMap.entrySet()) {
-                        if (text.contains(entry.getKey())) {
-                            text = text.replace(entry.getKey(), entry.getValue());
-                            run.setText(text, 0);
-                        }
-                    }
-                    run.setFontFamily("Times New Roman");
-                }
-            }
-        }
-
-        document.write(outputStream);
-        outputStream.close();
-    }
+//    public void createReportDocx(OutputStream outputStream, Plan plan) throws IOException {
+//        File templateFile = new File("templateReport.docx");
+//        FileInputStream templateStream = new FileInputStream(templateFile);
+//
+//        XWPFDocument document = new XWPFDocument(templateStream);
+//
+//        int year = LocalDate.now().getYear();
+//        User teacher = plan.getCreatedBy();
+//        String teacherFullName = String.format("%s %s %s", teacher.getLastName(), teacher.getFirstName(), teacher.getMiddleName());
+//        String teacherSurname = String.format("%s %s.%s.",
+//                teacher.getLastName(), teacher.getFirstName().charAt(0), teacher.getMiddleName().charAt(0));
+//
+//
+//        Map<String, String> placeholderMap = new HashMap<>();
+//        placeholderMap.put("{{currentYear}}", Integer.toString(year));
+//        placeholderMap.put("{{teacherFullName}}", teacherFullName);
+//        placeholderMap.put("{{planYear}}", plan.getYear());
+//        placeholderMap.put("teacherInitials", teacherSurname);
+//
+//        List<XWPFTable> tables = document.getTables();
+//
+//        for (int i = 0; i < tables.size(); i++) {
+//
+//            switch (i){
+//                case 0:
+//                    for (AcademicWork academicWork: plan.getAcademicWorks()) {
+//                        XWPFTable table = tables.get(i);
+//                        XWPFTableRow row = table.createRow();
+//
+//                        row.getCell(0).setText(academicWork.getNameOfDiscipline());
+//                        row.getCell(1).setText(academicWork.getCourse());
+//                        row.getCell(2).setText(academicWork.getTrimester());
+//                        row.getCell(3).setText(academicWork.getGroups());
+//
+//                        row.getCell(4).setText(academicWork.getLecturesPlan() + "/" + academicWork.getLecturesFact());
+//                        row.getCell(5).setText(academicWork.getPracticesPlan() + "/" + academicWork.getPracticesFact());
+//                        row.getCell(6).setText(academicWork.getHoursPlan() + "/" + academicWork.getHoursFact());
+//                        row.getCell(7).setText(academicWork.getTotalPlan() + "/" + academicWork.getTotalFact());
+//                    }
+//
+//                    break;
+//
+//                case 1:
+//                    int rowNumberAcademic = 0;
+//
+//                    for (AcademicMethod academicMethod: plan.getAcademicMethods()) {
+//                        XWPFTableRow row = tables.get(i).createRow();
+//
+//                        row.getCell(0).setText(String.valueOf(++rowNumberAcademic));
+//                        row.getCell(1).setText(academicMethod.getDiscipline());
+//                        row.getCell(2).setText(academicMethod.getNameWork());
+//                        row.getCell(3).setText(academicMethod.getDeadlines());
+//                        row.getCell(4).setText(academicMethod.getComment());
+//
+//                    }
+//                    break;
+//
+//                case 2:
+//                    int rowNumberResearch = 0;
+//
+//                    for (ResearchWork researchWork: plan.getResearchWorks()) {
+//                        XWPFTableRow row = tables.get(i).createRow();
+//                        row.getCell(0).setText(String.valueOf(++rowNumberResearch));
+//                        row.getCell(1).setText(researchWork.getNameOfTheWork());
+//                        row.getCell(2).setText(researchWork.getDeadlines());
+//                        row.getCell(3).setText(researchWork.getResults());
+//                        row.getCell(4).setText(researchWork.getComments());
+//                    }
+//                    break;
+//                case 3:
+//                    int rowNumberEducation = 0;
+//
+//                    for (EducationalWork educationalWork: plan.getEducationalWorks()) {
+//                        XWPFTableRow row = tables.get(i).createRow();
+//                        row.getCell(0).setText(String.valueOf(++rowNumberEducation));
+//                        row.getCell(1).setText(educationalWork.getNameOfTheWork());
+//                        row.getCell(2).setText(educationalWork.getDeadlines());
+//                        row.getCell(3).setText(educationalWork.getResults());
+//                        row.getCell(4).setText(educationalWork.getComments());
+//                    }
+//                    break;
+//                case 4:
+//                    int rowNumberSocial = 0;
+//
+//                    for (SocialWork socialWork: plan.getSocialWorks()) {
+//                        XWPFTableRow row = tables.get(i).createRow();
+//                        row.getCell(0).setText(String.valueOf(++rowNumberSocial));
+//                        row.getCell(1).setText(socialWork.getNameOfTheWork());
+//                        row.getCell(2).setText(socialWork.getDeadlines());
+//                        row.getCell(3).setText(socialWork.getResults());
+//                        row.getCell(4).setText(socialWork.getComments());
+//                    }
+//                    break;
+//            }
+//        }
+//
+//        for (XWPFParagraph paragraph : document.getParagraphs()) {
+//            for (XWPFRun run : paragraph.getRuns()) {
+//                String text = run.getText(0);
+//                if (text != null) {
+//                    for (Map.Entry<String, String> entry : placeholderMap.entrySet()) {
+//                        if (text.contains(entry.getKey())) {
+//                            text = text.replace(entry.getKey(), entry.getValue());
+//                            run.setText(text, 0);
+//                        }
+//                    }
+//                    run.setFontFamily("Times New Roman");
+//                }
+//            }
+//        }
+//
+//        document.write(outputStream);
+//        outputStream.close();
+//    }
 
     public void createPlanDocx(OutputStream outputStream, Plan plan) throws IOException {
         File templateFile = new File("templatePlan.docx");
@@ -274,7 +274,8 @@ public class PlanService {
                 director.getLastName(), director.getFirstName().charAt(0), director.getMiddleName().charAt(0));
 
         String departmentName = departmentService.getDepartmentByTeacher(teacher).getName();
-
+        String docxName = plan.isReport() ?
+                "ОТЧЕТ О ВЫПОЛНЕНИИ ИНДИВИДУАЛЬНОГО ПЛАНА РАБОТЫ ПРЕПОДАВАТЕЛЯ" : "ИНДИВИДУАЛЬНЫЙ ПЛАН РАБОТЫ ПРЕПОДАВАТЕЛЯ";
 
         Map<String, String> placeholderMap = new HashMap<>();
         placeholderMap.put("{{currentYear}}", Integer.toString(year));
@@ -283,6 +284,7 @@ public class PlanService {
         placeholderMap.put("teacherInitials", teacherSurname);
         placeholderMap.put("departmentName", departmentName);
         placeholderMap.put("directorInitials", directorSurname);
+        placeholderMap.put("{{name}}", docxName);
 
         List<XWPFTable> tables = document.getTables();
 
@@ -309,23 +311,24 @@ public class PlanService {
 
                         row.getCell(4).setText(academicWork.getLecturesPlan());
                         row.getCell(5).setText(academicWork.getLecturesFact());
-                        lecturesP += academicWork.getLecturesPlan() == null ? 0 : Integer.parseInt(academicWork.getLecturesPlan());
-                        lecturesF += academicWork.getLecturesFact() == null ? 0 : Integer.parseInt(academicWork.getLecturesFact());
+                        lecturesP += isEmptyOrWhitespace(academicWork.getLecturesPlan()) ? 0 : Integer.parseInt(academicWork.getLecturesPlan());
+                        lecturesF += isEmptyOrWhitespace(academicWork.getLecturesFact()) ? 0 : Integer.parseInt(academicWork.getLecturesFact());
 
                         row.getCell(6).setText(academicWork.getPracticesPlan());
                         row.getCell(7).setText(academicWork.getPracticesFact());
-                        practiceP += academicWork.getPracticesPlan() == null ? 0 : Integer.parseInt(academicWork.getPracticesPlan());
-                        practiceF += academicWork.getPracticesFact() == null ? 0 : Integer.parseInt(academicWork.getPracticesFact());
+                        practiceP += isEmptyOrWhitespace(academicWork.getPracticesPlan()) ? 0 : Integer.parseInt(academicWork.getPracticesPlan());
+                        practiceF += isEmptyOrWhitespace(academicWork.getPracticesFact()) ? 0 : Integer.parseInt(academicWork.getPracticesFact());
 
                         row.getCell(8).setText(academicWork.getHoursPlan());
                         row.getCell(9).setText(academicWork.getHoursFact());
-                        hoursP += academicWork.getHoursPlan() == null ? 0 : Integer.parseInt(academicWork.getHoursPlan());
-                        hoursF += academicWork.getHoursFact() == null ? 0 : Integer.parseInt(academicWork.getHoursFact());
+                        hoursP += isEmptyOrWhitespace(academicWork.getHoursPlan()) ? 0 : Integer.parseInt(academicWork.getHoursPlan());
+                        hoursF += isEmptyOrWhitespace(academicWork.getHoursFact()) ? 0 : Integer.parseInt(academicWork.getHoursFact());
 
                         row.getCell(10).setText(academicWork.getTotalPlan());
                         row.getCell(11).setText(academicWork.getTotalFact());
-                        totalP += academicWork.getTotalPlan() == null ? 0 : Integer.parseInt(academicWork.getTotalPlan());
-                        totalF += academicWork.getTotalFact() == null ? 0 : Integer.parseInt(academicWork.getTotalFact());
+                        totalP += isEmptyOrWhitespace(academicWork.getTotalPlan()) ? 0 : Integer.parseInt(academicWork.getTotalPlan());
+                        totalF += isEmptyOrWhitespace(academicWork.getTotalFact()) ? 0 : Integer.parseInt(academicWork.getTotalFact());
+
 
                         setBckgColorTableDocx(row);
                     }
@@ -431,6 +434,10 @@ public class PlanService {
 
         document.write(outputStream);
         outputStream.close();
+    }
+
+    private boolean isEmptyOrWhitespace(String str) {
+        return str == null || str.trim().isEmpty();
     }
 
     private void setBckgColorTableDocx(XWPFTableRow row) {

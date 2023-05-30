@@ -151,18 +151,20 @@ public class PlanController {
 
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
-        if (plan.isReport()) {
-            planService.createReportDocx(outputStream, plan);
-            s = String.format("ReportIPP_%s.docx", teacher.getLastName());
+        planService.createPlanDocx(outputStream, plan);
 
-        } else {
-            planService.createPlanDocx(outputStream, plan);
-            s = String.format("IPP_%s.docx", teacher.getLastName());
-        }
+//        if (plan.isReport()) {
+//            planService.createReportDocx(outputStream, plan);
+//            s = String.format("ReportIPP_%s.docx", teacher.getLastName());
+//
+//        } else {
+//            planService.createPlanDocx(outputStream, plan);
+//            s = String.format("IPP_%s.docx", teacher.getLastName());
+//        }
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
-        headers.setContentDispositionFormData("attachment", s);
+        headers.setContentDispositionFormData("attachment", String.format("IPP_%s.docx", teacher.getLastName()));
 
         return new ResponseEntity<>(outputStream.toByteArray(), headers, HttpStatus.OK);
     }
