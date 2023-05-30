@@ -22,6 +22,12 @@ public class NotificationService {
     private final NotificationRepo notificationRepo;
     private final EmailNotificationService emailNotificationService;
     private final PlanService planService;
+    private final AcademicWorkService academicWorkService;
+    private final AcademicMethodService academicMethodService;
+    private final ResearchWorkService researchWorkService;
+    private final EducationalWorkService educationalWorkService;
+    private final SocialWorkService socialWorkService;
+    private final KpiService kpiService;
 
     public List<Notification> getNotificationsBySendTo(User sendTo) {
         return notificationRepo.getNotificationsBySendTo(sendTo);
@@ -100,43 +106,44 @@ public class NotificationService {
                             academicWork.getPracticesPlan(), academicWork.getPracticesFact(),
                             academicWork.getHoursPlan(), academicWork.getHoursFact(),
                             academicWork.getTotalPlan(), academicWork.getTotalFact());
+                    academicWorkService.saveAcademicWork(newAcademicWork);
                     academicWorks.add(newAcademicWork);
                 }
 
                 for (AcademicMethod academicMethod : plan.getAcademicMethods()) {
                     AcademicMethod newAcademicMethod = new AcademicMethod(academicMethod.getDiscipline(), academicMethod.getNameWork(),
                             academicMethod.getDeadlines(), academicMethod.getInfoImplementation(), academicMethod.getComment());
-                    newAcademicMethod.setId(null);
+                    academicMethodService.saveAcademicMethod(newAcademicMethod);
                     academicMethods.add(newAcademicMethod);
                 }
 
                 for (ResearchWork researchWork : plan.getResearchWorks()) {
                     ResearchWork newResearchWork = new ResearchWork(researchWork.getNameOfTheWork(), researchWork.getDeadlines(),
                             researchWork.getInfoImplementation(), researchWork.getResults(), researchWork.getComments());
-                    newResearchWork.setId(null);
+                    researchWorkService.saveResearchWork(newResearchWork);
                     researchWorks.add(newResearchWork);
                 }
 
                 for (EducationalWork educationalWork : plan.getEducationalWorks()) {
                     EducationalWork newEducationalWork = new EducationalWork(educationalWork.getNameOfTheWork(), educationalWork.getDeadlines(),
                             educationalWork.getInfoImplementation(), educationalWork.getResults(), educationalWork.getComments());
-                    newEducationalWork.setId(null);
+                    educationalWorkService.saveEducationalWork(newEducationalWork);
                     educationalWorks.add(newEducationalWork);
                 }
 
                 for (SocialWork socialWork : plan.getSocialWorks()) {
                     SocialWork newSocialWork = new SocialWork(socialWork.getNameOfTheWork(), socialWork.getDeadlines(),
                             socialWork.getInfoImplementation(), socialWork.getResults(), socialWork.getComments());
-                    newSocialWork.setId(null);
+                    socialWorkService.saveSocialWork(newSocialWork);
                     socialWorks.add(newSocialWork);
                 }
 
                 for (KPI kpi : plan.getKpis()) {
                     KPI newKPI = new KPI(kpi.getNameOfTheWork(), kpi.getDeadlines(),
                             kpi.getInformationOnImplementation(), kpi.getResults(), kpi.getComments(),
-                            kpi.getPdfFile(), kpi.getPdfFileName(), kpi.getPercentage(), kpi.getAuthorsNumber(),
-                            kpi.getKpiSection(), kpi.getAnotherSectionNumber());
-                    newKPI.setId(null);
+                            kpi.getPdfFile(), kpi.getPdfFileName(), kpi.getPercentage(),
+                            kpi.getAuthorsNumber(), kpi.getAnotherSectionNumber());
+                    kpiService.saveKpi(kpi.getKpiSection().getId(), newKPI);
                     kpis.add(newKPI);
                 }
 
