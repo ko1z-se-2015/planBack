@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -94,10 +95,10 @@ public class NotificationService {
                 plan.getSocialWorks().forEach(socialWork -> socialWork.setId(null));
                 plan.getKpis().forEach(kpi -> kpi.setId(null));
 
-                Plan newPlan = new Plan(plan.getYear(), plan.getAcademicWorks(),
-                        plan.getAcademicMethods(), plan.getResearchWorks(),
-                        plan.getEducationalWorks(), plan.getSocialWorks(),
-                        plan.getKpis(), plan.getCreatedBy(), plan.getCreatedFor());
+                Plan newPlan = new Plan(plan.getYear(), new ArrayList<>(plan.getAcademicWorks()),
+                        new ArrayList<>(plan.getAcademicMethods()), new ArrayList<>(plan.getResearchWorks()),
+                        new ArrayList<>(plan.getEducationalWorks()), new ArrayList<>(plan.getSocialWorks()),
+                        new ArrayList<>(plan.getKpis()), plan.getCreatedBy(), plan.getCreatedFor());
 
                 newPlan.setReport(true);
 
