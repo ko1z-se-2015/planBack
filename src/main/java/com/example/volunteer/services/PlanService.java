@@ -258,7 +258,7 @@ public class PlanService {
 //    }
 
     public void createPlanDocx(OutputStream outputStream, Plan plan) throws IOException {
-        File templateFile = new File("templatePlan.docx");
+        File templateFile = new File("templateAll.docx");
         FileInputStream templateStream = new FileInputStream(templateFile);
 
         XWPFDocument document = new XWPFDocument(templateStream);
