@@ -1,8 +1,6 @@
 package com.example.volunteer.services;
 
-import com.example.volunteer.entities.Notification;
-import com.example.volunteer.entities.Plan;
-import com.example.volunteer.entities.User;
+import com.example.volunteer.entities.*;
 import com.example.volunteer.repositories.NotificationRepo;
 import com.example.volunteer.repositories.PlanRepo;
 import lombok.RequiredArgsConstructor;
@@ -88,18 +86,54 @@ public class NotificationService {
                         notification.getPlanName(), sendBy.getFirstName(), sendBy.getLastName());
                 subject = String.format("Your individual plan is %s", notification.getStatus());
 
-                plan.getAcademicWorks().forEach(academicWork -> academicWork.setId(null));
-                plan.getAcademicMethods().forEach(academicMethod -> academicMethod.setId(null));
-                plan.getResearchWorks().forEach(researchWork -> researchWork.setId(null));
-                plan.getEducationalWorks().forEach(educationalWork -> educationalWork.setId(null));
-                plan.getSocialWorks().forEach(socialWork -> socialWork.setId(null));
-                plan.getKpis().forEach(kpi -> kpi.setId(null));
+                List<AcademicWork> academicWorks = new ArrayList<>();
+                List<AcademicMethod> academicMethods = new ArrayList<>();
+                List<ResearchWork> researchWorks = new ArrayList<>();
+                List<EducationalWork> educationalWorks = new ArrayList<>();
+                List<SocialWork> socialWorks = new ArrayList<>();
+                List<KPI> kpis = new ArrayList<>();
 
-                Plan newPlan = new Plan(plan.getYear(), new ArrayList<>(plan.getAcademicWorks()),
-                        new ArrayList<>(plan.getAcademicMethods()), new ArrayList<>(plan.getResearchWorks()),
-                        new ArrayList<>(plan.getEducationalWorks()), new ArrayList<>(plan.getSocialWorks()),
-                        new ArrayList<>(plan.getKpis()), plan.getCreatedBy(), plan.getCreatedFor());
 
+                plan.getAcademicWorks().forEach(academicWork -> academicWorks.add(
+                        new AcademicWork(academicWork.getNameOfDiscipline(), academicWork.getCourse(),
+                                academicWork.getTrimester(), academicWork.getGroups(),
+                                academicWork.getLecturesPlan(), academicWork.getLecturesFact(),
+                                academicWork.getPracticesPlan(), academicWork.getPracticesFact(),
+                                academicWork.getHoursPlan(), academicWork.getHoursFact(),
+                                academicWork.getTotalPlan(), academicWork.getTotalFact())));
+                plan.getAcademicMethods().forEach(academicMethod -> academicMethods.add(
+                        new AcademicMethod(academicMethod.getDiscipline(), academicMethod.getNameWork(),
+                                academicMethod.getDeadlines(), academicMethod.getInfoImplementation(), academicMethod.getComment())
+                ));
+                plan.getResearchWorks().forEach(researchWork -> researchWorks.add(
+                        new ResearchWork(researchWork.getNameOfTheWork(), researchWork.getDeadlines(),
+                                researchWork.getInfoImplementation(), researchWork.getResults(), researchWork.getComments())
+                ));
+                plan.getEducationalWorks().forEach(educationalWork -> educationalWorks.add(
+                        new EducationalWork(educationalWork.getNameOfTheWork(), educationalWork.getDeadlines(),
+                                educationalWork.getInfoImplementation(), educationalWork.getResults(), educationalWork.getComments())
+                ));
+                plan.getSocialWorks().forEach(socialWork -> socialWorks.add(
+                        new SocialWork(socialWork.getNameOfTheWork(), socialWork.getDeadlines(),
+                                socialWork.getInfoImplementation(), socialWork.getResults(), socialWork.getComments())
+                ));
+                plan.getKpis().forEach(kpi -> kpis.add(
+                        new KPI(kpi.getNameOfTheWork(), kpi.getDeadlines(),
+                                kpi.getInformationOnImplementation(), kpi.getResults(), kpi.getComments(),
+                                kpi.getPdfFile(), kpi.getPdfFileName(), kpi.getPercentage(), kpi.getAuthorsNumber(),
+                                kpi.getKpiSection(), kpi.getAnotherSectionNumber())
+                ));
+
+                Plan newPlan = new Plan();
+                newPlan.setYear(plan.getYear());
+                newPlan.setCreatedBy(plan.getCreatedBy());
+                newPlan.setCreatedFor(plan.getCreatedFor());
+                newPlan.setAcademicWorks(academicWorks);
+                newPlan.setAcademicMethods(academicMethods);
+                newPlan.setResearchWorks(researchWorks);
+                newPlan.setEducationalWorks(educationalWorks);
+                newPlan.setSocialWorks(socialWorks);
+                newPlan.setKpis(kpis);
                 newPlan.setReport(true);
 
                 planService.createPlan(newPlan);

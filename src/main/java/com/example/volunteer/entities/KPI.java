@@ -72,4 +72,17 @@ public class KPI {
         this.pdfFileName = pdfFileName;
     }
 
+    public KPI(String nameOfTheWork, String deadlines, String informationOnImplementation, String results, String comments, String pdfFile, String pdfFileName, float percentage, int authorsNumber, KpiSection kpiSection, int anotherSectionNumber) {
+        this.nameOfTheWork = nameOfTheWork;
+        this.deadlines = deadlines;
+        this.informationOnImplementation = informationOnImplementation;
+        this.results = results;
+        this.comments = comments;
+        this.pdfFile = pdfFile;
+        this.pdfFileName = pdfFileName;
+        this.percentage = percentage;
+        this.authorsNumber = authorsNumber;
+        this.kpiSection = kpiSection;
+        this.anotherSectionNumber = anotherSectionNumber;
+    }
 }
