@@ -93,36 +93,47 @@ public class NotificationService {
                 List<SocialWork> socialWorks = new ArrayList<>();
                 List<KPI> kpis = new ArrayList<>();
 
+                for (AcademicWork academicWork : plan.getAcademicWorks()) {
+                    AcademicWork newAcademicWork = new AcademicWork(academicWork.getNameOfDiscipline(), academicWork.getCourse(),
+                            academicWork.getTrimester(), academicWork.getGroups(),
+                            academicWork.getLecturesPlan(), academicWork.getLecturesFact(),
+                            academicWork.getPracticesPlan(), academicWork.getPracticesFact(),
+                            academicWork.getHoursPlan(), academicWork.getHoursFact(),
+                            academicWork.getTotalPlan(), academicWork.getTotalFact());
+                    academicWorks.add(newAcademicWork);
+                }
 
-                plan.getAcademicWorks().forEach(academicWork -> academicWorks.add(
-                        new AcademicWork(academicWork.getNameOfDiscipline(), academicWork.getCourse(),
-                                academicWork.getTrimester(), academicWork.getGroups(),
-                                academicWork.getLecturesPlan(), academicWork.getLecturesFact(),
-                                academicWork.getPracticesPlan(), academicWork.getPracticesFact(),
-                                academicWork.getHoursPlan(), academicWork.getHoursFact(),
-                                academicWork.getTotalPlan(), academicWork.getTotalFact())));
-                plan.getAcademicMethods().forEach(academicMethod -> academicMethods.add(
-                        new AcademicMethod(academicMethod.getDiscipline(), academicMethod.getNameWork(),
-                                academicMethod.getDeadlines(), academicMethod.getInfoImplementation(), academicMethod.getComment())
-                ));
-                plan.getResearchWorks().forEach(researchWork -> researchWorks.add(
-                        new ResearchWork(researchWork.getNameOfTheWork(), researchWork.getDeadlines(),
-                                researchWork.getInfoImplementation(), researchWork.getResults(), researchWork.getComments())
-                ));
-                plan.getEducationalWorks().forEach(educationalWork -> educationalWorks.add(
-                        new EducationalWork(educationalWork.getNameOfTheWork(), educationalWork.getDeadlines(),
-                                educationalWork.getInfoImplementation(), educationalWork.getResults(), educationalWork.getComments())
-                ));
-                plan.getSocialWorks().forEach(socialWork -> socialWorks.add(
-                        new SocialWork(socialWork.getNameOfTheWork(), socialWork.getDeadlines(),
-                                socialWork.getInfoImplementation(), socialWork.getResults(), socialWork.getComments())
-                ));
-                plan.getKpis().forEach(kpi -> kpis.add(
-                        new KPI(kpi.getNameOfTheWork(), kpi.getDeadlines(),
-                                kpi.getInformationOnImplementation(), kpi.getResults(), kpi.getComments(),
-                                kpi.getPdfFile(), kpi.getPdfFileName(), kpi.getPercentage(), kpi.getAuthorsNumber(),
-                                kpi.getKpiSection(), kpi.getAnotherSectionNumber())
-                ));
+                for (AcademicMethod academicMethod : plan.getAcademicMethods()) {
+                    AcademicMethod newAcademicMethod = new AcademicMethod(academicMethod.getDiscipline(), academicMethod.getNameWork(),
+                            academicMethod.getDeadlines(), academicMethod.getInfoImplementation(), academicMethod.getComment());
+                    academicMethods.add(newAcademicMethod);
+                }
+
+                for (ResearchWork researchWork : plan.getResearchWorks()) {
+                    ResearchWork newResearchWork = new ResearchWork(researchWork.getNameOfTheWork(), researchWork.getDeadlines(),
+                            researchWork.getInfoImplementation(), researchWork.getResults(), researchWork.getComments());
+                    researchWorks.add(newResearchWork);
+                }
+
+                for (EducationalWork educationalWork : plan.getEducationalWorks()) {
+                    EducationalWork newEducationalWork = new EducationalWork(educationalWork.getNameOfTheWork(), educationalWork.getDeadlines(),
+                            educationalWork.getInfoImplementation(), educationalWork.getResults(), educationalWork.getComments());
+                    educationalWorks.add(newEducationalWork);
+                }
+
+                for (SocialWork socialWork : plan.getSocialWorks()) {
+                    SocialWork newSocialWork = new SocialWork(socialWork.getNameOfTheWork(), socialWork.getDeadlines(),
+                            socialWork.getInfoImplementation(), socialWork.getResults(), socialWork.getComments());
+                    socialWorks.add(newSocialWork);
+                }
+
+                for (KPI kpi : plan.getKpis()) {
+                    KPI newKPI = new KPI(kpi.getNameOfTheWork(), kpi.getDeadlines(),
+                            kpi.getInformationOnImplementation(), kpi.getResults(), kpi.getComments(),
+                            kpi.getPdfFile(), kpi.getPdfFileName(), kpi.getPercentage(), kpi.getAuthorsNumber(),
+                            kpi.getKpiSection(), kpi.getAnotherSectionNumber());
+                    kpis.add(newKPI);
+                }
 
                 Plan newPlan = new Plan();
                 newPlan.setYear(plan.getYear());
@@ -138,6 +149,7 @@ public class NotificationService {
 
                 planService.createPlan(newPlan);
                 break;
+
         }
         emailNotificationService.sendSimpleMessage(
                 sendTo.getEmail(), subject, textMessage);
