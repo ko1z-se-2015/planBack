@@ -171,11 +171,6 @@ public class PlanService {
                         XWPFTable table = tables.get(i);
                         XWPFTableRow row = table.createRow();
 
-                        row.createCell();
-                        row.createCell();
-                        row.createCell();
-                        row.createCell();
-
                         row.getCell(0).setText(academicWork.getNameOfDiscipline());
                         row.getCell(1).setText(academicWork.getCourse());
                         row.getCell(2).setText(academicWork.getTrimester());
@@ -199,8 +194,7 @@ public class PlanService {
                         row.getCell(1).setText(academicMethod.getDiscipline());
                         row.getCell(2).setText(academicMethod.getNameWork());
                         row.getCell(3).setText(academicMethod.getDeadlines());
-                        row.getCell(4).setText(academicMethod.getInfoImplementation());
-                        row.getCell(5).setText(academicMethod.getComment());
+                        row.getCell(4).setText(academicMethod.getComment());
 
                     }
                     break;
@@ -210,9 +204,11 @@ public class PlanService {
 
                     for (ResearchWork researchWork: plan.getResearchWorks()) {
                         XWPFTableRow row = tables.get(i).createRow();
-                        outputSectionsDocx(row, ++rowNumberResearch,
-                                researchWork.getNameOfTheWork(), researchWork.getDeadlines(), researchWork.getResults(),
-                                researchWork.getInfoImplementation(), researchWork.getComments());
+                        row.getCell(0).setText(String.valueOf(++rowNumberResearch));
+                        row.getCell(1).setText(researchWork.getNameOfTheWork());
+                        row.getCell(2).setText(researchWork.getDeadlines());
+                        row.getCell(3).setText(researchWork.getResults());
+                        row.getCell(4).setText(researchWork.getComments());
                     }
                     break;
                 case 3:
@@ -220,9 +216,11 @@ public class PlanService {
 
                     for (EducationalWork educationalWork: plan.getEducationalWorks()) {
                         XWPFTableRow row = tables.get(i).createRow();
-                        outputSectionsDocx(row, ++rowNumberEducation,
-                                educationalWork.getNameOfTheWork(), educationalWork.getDeadlines(), educationalWork.getResults(),
-                                educationalWork.getInfoImplementation(), educationalWork.getComments());
+                        row.getCell(0).setText(String.valueOf(++rowNumberEducation));
+                        row.getCell(1).setText(educationalWork.getNameOfTheWork());
+                        row.getCell(2).setText(educationalWork.getDeadlines());
+                        row.getCell(3).setText(educationalWork.getResults());
+                        row.getCell(4).setText(educationalWork.getComments());
                     }
                     break;
                 case 4:
@@ -230,9 +228,11 @@ public class PlanService {
 
                     for (SocialWork socialWork: plan.getSocialWorks()) {
                         XWPFTableRow row = tables.get(i).createRow();
-                        outputSectionsDocx(row, ++rowNumberSocial,
-                                socialWork.getNameOfTheWork(), socialWork.getDeadlines(), socialWork.getResults(),
-                                socialWork.getInfoImplementation(), socialWork.getComments());
+                        row.getCell(0).setText(String.valueOf(++rowNumberSocial));
+                        row.getCell(1).setText(socialWork.getNameOfTheWork());
+                        row.getCell(2).setText(socialWork.getDeadlines());
+                        row.getCell(3).setText(socialWork.getResults());
+                        row.getCell(4).setText(socialWork.getComments());
                     }
                     break;
             }
