@@ -106,24 +106,28 @@ public class NotificationService {
                 for (AcademicMethod academicMethod : plan.getAcademicMethods()) {
                     AcademicMethod newAcademicMethod = new AcademicMethod(academicMethod.getDiscipline(), academicMethod.getNameWork(),
                             academicMethod.getDeadlines(), academicMethod.getInfoImplementation(), academicMethod.getComment());
+                    newAcademicMethod.setId(null);
                     academicMethods.add(newAcademicMethod);
                 }
 
                 for (ResearchWork researchWork : plan.getResearchWorks()) {
                     ResearchWork newResearchWork = new ResearchWork(researchWork.getNameOfTheWork(), researchWork.getDeadlines(),
                             researchWork.getInfoImplementation(), researchWork.getResults(), researchWork.getComments());
+                    newResearchWork.setId(null);
                     researchWorks.add(newResearchWork);
                 }
 
                 for (EducationalWork educationalWork : plan.getEducationalWorks()) {
                     EducationalWork newEducationalWork = new EducationalWork(educationalWork.getNameOfTheWork(), educationalWork.getDeadlines(),
                             educationalWork.getInfoImplementation(), educationalWork.getResults(), educationalWork.getComments());
+                    newEducationalWork.setId(null);
                     educationalWorks.add(newEducationalWork);
                 }
 
                 for (SocialWork socialWork : plan.getSocialWorks()) {
                     SocialWork newSocialWork = new SocialWork(socialWork.getNameOfTheWork(), socialWork.getDeadlines(),
                             socialWork.getInfoImplementation(), socialWork.getResults(), socialWork.getComments());
+                    newSocialWork.setId(null);
                     socialWorks.add(newSocialWork);
                 }
 
@@ -132,6 +136,7 @@ public class NotificationService {
                             kpi.getInformationOnImplementation(), kpi.getResults(), kpi.getComments(),
                             kpi.getPdfFile(), kpi.getPdfFileName(), kpi.getPercentage(), kpi.getAuthorsNumber(),
                             kpi.getKpiSection(), kpi.getAnotherSectionNumber());
+                    newKPI.setId(null);
                     kpis.add(newKPI);
                 }
 
@@ -149,6 +154,7 @@ public class NotificationService {
 
                 planService.createPlan(newPlan);
                 break;
+
 
         }
         emailNotificationService.sendSimpleMessage(
