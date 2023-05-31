@@ -31,12 +31,8 @@ public class User {
     @NotEmpty(message = "это поле должно быть заполнена")
     private String firstName;
 
-    @NotNull(message = "это поле должно быть заполнена")
-    @NotEmpty(message = "это поле должно быть заполнена")
     private String lastName;
 
-    @NotNull(message = "это поле должно быть заполнена")
-    @NotEmpty(message = "это поле должно быть заполнена")
     private String middleName;
 
     @Column(columnDefinition = "TEXT")
