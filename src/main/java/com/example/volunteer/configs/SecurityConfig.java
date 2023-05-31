@@ -51,14 +51,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        List<String> list1 = Arrays.asList("https://diploma-kappa.vercel.app/", "https://diploma-kappa.vercel.app");
-        List<String> list2 = Arrays.asList("GET","POST", "PUT", "DELETE", "OPTIONS");
-        List<String> list3 = Arrays.asList("*");
         http.cors().configurationSource(request -> {
             CorsConfiguration cors = new CorsConfiguration();
-            cors.setAllowedOrigins(list1);
-            cors.setAllowedMethods(list2);
-            cors.setAllowedHeaders(list3);
+            cors.setAllowedOrigins(Arrays.asList("https://diploma-kappa.vercel.app/", "https://diploma-kappa.vercel.app"));
+            cors.setAllowedMethods(Arrays.asList("GET","POST", "PUT", "DELETE", "OPTIONS"));
+            cors.setAllowedHeaders(Arrays.asList("Access-Control-Allow-Headers","Access-Control-Allow-Origin","Access-Control-Request-Method", "Access-Control-Request-Headers","Origin","Cache-Control", "Content-Type", "Authorization"));
             return cors;
         });
 
