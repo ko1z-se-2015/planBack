@@ -281,7 +281,7 @@ public class PlanService {
         placeholderMap.put("{{currentYear}}", Integer.toString(year));
         placeholderMap.put("{{teacherFullName}}", teacherFullName);
         placeholderMap.put("{{planYear}}", plan.getYear());
-        placeholderMap.put("teacherInitials", teacherSurname);
+        placeholderMap.put("{{teacherInitials}}", teacherSurname);
         placeholderMap.put("departmentName", departmentName);
         placeholderMap.put("directorInitials", directorSurname);
         placeholderMap.put("{{name}}", docxName);
