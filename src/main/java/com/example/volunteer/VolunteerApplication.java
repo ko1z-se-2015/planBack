@@ -473,90 +473,90 @@ public class VolunteerApplication {
                           PositionService positionService, DegreeService degreeService,
                           KpiSectionService kpiSectionService) {
         return args -> {
-            directors.add(olzhas);
-            directors.add(zhibek);
-            directors.add(assel);
-            directors.add(baurzhan);
-
-            positionList.forEach(positionService::savePosition);
-            degreeList.forEach(degreeService::saveDegree);
-
-            roleService.addRole("TEACHER");
-            roleService.addRole("DIRECTOR");
-
-            userService.createTeacher(teacher);
-            userService.createDirector(director);
-
-            directors.forEach(userService::createDirector);
-
-            userService.assignPositionByEmailAndName("clashofkanat@gmail.com", "ASSOCIATE PROFESSOR");
-            userService.assignDegreeByEmailAndName("clashofkanat@gmail.com", "RESEARCH TEACHER");
-            userService.assignDegreeByEmailAndName("myrzasary05012003@mail.ru", "RESEARCH TEACHER");
-            userService.assignPositionByEmailAndName("myrzasary05012003@mail.ru", "ASSOCIATE PROFESSOR");
-
-            departmentService.createDepartment(department);
-            departmentService.addTeacher(department, teacher);
-
-            departments.forEach(departmentService::createDepartment);
-//            plan.setCreatedBy(userService.getByEmail("asd@asd.ru"));
-//            plan.setCreatedFor(userService.getByEmail("kk@kk.kz"));
-//            planService.createPlan(plan);
-
-            teachers.forEach(userService::verify);
-
-            //SAVE KPI SECTIONS
-            //PROFESSOR
-            for (KpiSection kpiSection : kpiSectionProfessorAndHighResearch) {
-                kpiSectionService.save(kpiSection, "PROFESSOR", "HIGH-RESEARCH TEACHER");
-            }
-
-            for (KpiSection kpiSection : kpiSectionProfessorAndResearch) {
-                kpiSectionService.save(kpiSection, "PROFESSOR", "RESEARCH TEACHER");
-            }
-
-            for (KpiSection kpiSection : kpiSectionProfessorAndTeacher) {
-                kpiSectionService.save(kpiSection, "PROFESSOR", "TEACHER");
-            }
-            //ASSOCIATE PROFESSOR
-            for (KpiSection kpiSection : kpiSectionAssociateProfessorAndHighResearch) {
-                kpiSectionService.save(kpiSection, "ASSOCIATE PROFESSOR", "HIGH-RESEARCH TEACHER");
-            }
-
-            for (KpiSection kpiSection : kpiSectionAssociateProfessorAndResearch) {
-                kpiSectionService.save(kpiSection, "ASSOCIATE PROFESSOR", "RESEARCH TEACHER");
-            }
-
-            for (KpiSection kpiSection : kpiSectionAssociateProfessorAndTeacher) {
-                kpiSectionService.save(kpiSection, "ASSOCIATE PROFESSOR", "TEACHER");
-            }
-            //ASSISTANT PROFESSOR
-            for (KpiSection kpiSection : kpiSectionAssistantProfessorAndHighResearch) {
-                kpiSectionService.save(kpiSection, "ASSISTANT PROFESSOR", "HIGH-RESEARCH TEACHER");
-            }
-
-            for (KpiSection kpiSection : kpiSectionAssistantProfessorAndResearch) {
-                kpiSectionService.save(kpiSection, "ASSISTANT PROFESSOR", "RESEARCH TEACHER");
-            }
-
-            for (KpiSection kpiSection : kpiSectionAssistantProfessorAndTeacher) {
-                kpiSectionService.save(kpiSection, "ASSISTANT PROFESSOR", "TEACHER");
-            }
-            //SENIOR LECTURER
-            for (KpiSection kpiSection : kpiSectionSeniorLectorAndResearch) {
-                kpiSectionService.save(kpiSection, "SENIOR LECTURER", "RESEARCH TEACHER");
-            }
-
-            for (KpiSection kpiSection : kpiSectionSeniorLectorAndTeacher) {
-                kpiSectionService.save(kpiSection, "SENIOR LECTURER", "TEACHER");
-            }
-            //INSTRUCTOR
-            for (KpiSection kpiSection : kpiSectionInstructorAndResearch) {
-                kpiSectionService.save(kpiSection, "INSTRUCTOR", "RESEARCH TEACHER");
-            }
-
-            for (KpiSection kpiSection : kpiSectionInstructorAndTeacher) {
-                kpiSectionService.save(kpiSection, "INSTRUCTOR", "TEACHER");
-            }
+//            directors.add(olzhas);
+//            directors.add(zhibek);
+//            directors.add(assel);
+//            directors.add(baurzhan);
+//
+//            positionList.forEach(positionService::savePosition);
+//            degreeList.forEach(degreeService::saveDegree);
+//
+//            roleService.addRole("TEACHER");
+//            roleService.addRole("DIRECTOR");
+//
+//            userService.createTeacher(teacher);
+//            userService.createDirector(director);
+//
+//            directors.forEach(userService::createDirector);
+//
+//            userService.assignPositionByEmailAndName("clashofkanat@gmail.com", "ASSOCIATE PROFESSOR");
+//            userService.assignDegreeByEmailAndName("clashofkanat@gmail.com", "RESEARCH TEACHER");
+//            userService.assignDegreeByEmailAndName("myrzasary05012003@mail.ru", "RESEARCH TEACHER");
+//            userService.assignPositionByEmailAndName("myrzasary05012003@mail.ru", "ASSOCIATE PROFESSOR");
+//
+//            departmentService.createDepartment(department);
+//            departmentService.addTeacher(department, teacher);
+//
+//            departments.forEach(departmentService::createDepartment);
+////            plan.setCreatedBy(userService.getByEmail("asd@asd.ru"));
+////            plan.setCreatedFor(userService.getByEmail("kk@kk.kz"));
+////            planService.createPlan(plan);
+//
+//            teachers.forEach(userService::verify);
+//
+//            //SAVE KPI SECTIONS
+//            //PROFESSOR
+//            for (KpiSection kpiSection : kpiSectionProfessorAndHighResearch) {
+//                kpiSectionService.save(kpiSection, "PROFESSOR", "HIGH-RESEARCH TEACHER");
+//            }
+//
+//            for (KpiSection kpiSection : kpiSectionProfessorAndResearch) {
+//                kpiSectionService.save(kpiSection, "PROFESSOR", "RESEARCH TEACHER");
+//            }
+//
+//            for (KpiSection kpiSection : kpiSectionProfessorAndTeacher) {
+//                kpiSectionService.save(kpiSection, "PROFESSOR", "TEACHER");
+//            }
+//            //ASSOCIATE PROFESSOR
+//            for (KpiSection kpiSection : kpiSectionAssociateProfessorAndHighResearch) {
+//                kpiSectionService.save(kpiSection, "ASSOCIATE PROFESSOR", "HIGH-RESEARCH TEACHER");
+//            }
+//
+//            for (KpiSection kpiSection : kpiSectionAssociateProfessorAndResearch) {
+//                kpiSectionService.save(kpiSection, "ASSOCIATE PROFESSOR", "RESEARCH TEACHER");
+//            }
+//
+//            for (KpiSection kpiSection : kpiSectionAssociateProfessorAndTeacher) {
+//                kpiSectionService.save(kpiSection, "ASSOCIATE PROFESSOR", "TEACHER");
+//            }
+//            //ASSISTANT PROFESSOR
+//            for (KpiSection kpiSection : kpiSectionAssistantProfessorAndHighResearch) {
+//                kpiSectionService.save(kpiSection, "ASSISTANT PROFESSOR", "HIGH-RESEARCH TEACHER");
+//            }
+//
+//            for (KpiSection kpiSection : kpiSectionAssistantProfessorAndResearch) {
+//                kpiSectionService.save(kpiSection, "ASSISTANT PROFESSOR", "RESEARCH TEACHER");
+//            }
+//
+//            for (KpiSection kpiSection : kpiSectionAssistantProfessorAndTeacher) {
+//                kpiSectionService.save(kpiSection, "ASSISTANT PROFESSOR", "TEACHER");
+//            }
+//            //SENIOR LECTURER
+//            for (KpiSection kpiSection : kpiSectionSeniorLectorAndResearch) {
+//                kpiSectionService.save(kpiSection, "SENIOR LECTURER", "RESEARCH TEACHER");
+//            }
+//
+//            for (KpiSection kpiSection : kpiSectionSeniorLectorAndTeacher) {
+//                kpiSectionService.save(kpiSection, "SENIOR LECTURER", "TEACHER");
+//            }
+//            //INSTRUCTOR
+//            for (KpiSection kpiSection : kpiSectionInstructorAndResearch) {
+//                kpiSectionService.save(kpiSection, "INSTRUCTOR", "RESEARCH TEACHER");
+//            }
+//
+//            for (KpiSection kpiSection : kpiSectionInstructorAndTeacher) {
+//                kpiSectionService.save(kpiSection, "INSTRUCTOR", "TEACHER");
+//            }
         };
     }
 
