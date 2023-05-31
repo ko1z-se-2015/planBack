@@ -468,11 +468,16 @@ public class VolunteerApplication {
             new User("Дана", "Еспенбетова", "Алтынбеккызы", "Dana.Yespenbetova@astanait.edu.kz", "qwerty")
             ));
 
+    User Elvira = new User("Эльвира", "Айтмұханбетова", "Айтмұханбетқызы", "Elvira.Aitmukhanbetova@astanait.edu.kz", "qwerty");
+
     @Bean
     CommandLineRunner run(RoleService roleService, UserService userService, DepartmentService departmentService, PlanService planService,
                           PositionService positionService, DegreeService degreeService,
                           KpiSectionService kpiSectionService) {
         return args -> {
+            userService.verify(Elvira);
+            userService.assignPositionByEmailAndName("Elvira.Aitmukhanbetova@astanait.edu.kz", "SENIOR LECTURER");
+            userService.assignDegreeByEmailAndName("Elvira.Aitmukhanbetova@astanait.edu.kz", "RESEARCH TEACHER");
 //            directors.add(olzhas);
 //            directors.add(zhibek);
 //            directors.add(assel);
