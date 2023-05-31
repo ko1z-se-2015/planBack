@@ -19,6 +19,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
@@ -50,11 +51,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        List<String> list1 = Arrays.asList("https://diploma-kappa.vercel.app/", "https://diploma-kappa.vercel.app");
+        List<String> list2 = Arrays.asList("GET","POST", "PUT", "DELETE", "OPTIONS");
+        List<String> list3 = Arrays.asList("*");
         http.cors().configurationSource(request -> {
             CorsConfiguration cors = new CorsConfiguration();
-            cors.setAllowedOrigins(List.of("https://diploma-kappa.vercel.app", "https://diploma-kappa.vercel.app/"));
-            cors.setAllowedMethods(List.of("GET","POST", "PUT", "DELETE", "OPTIONS"));
-            cors.setAllowedHeaders(List.of("*"));
+            cors.setAllowedOrigins(list1);
+            cors.setAllowedMethods(list2);
+            cors.setAllowedHeaders(list3);
             return cors;
         });
 
