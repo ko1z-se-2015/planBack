@@ -452,6 +452,7 @@ public class VolunteerApplication {
             new User("ДИДАР", "ЕДИЛХАН", "", "d.yedilkhan@astanait.edu.kz", "qwerty"),
             new User("Шолпан", "Саймасаева", "Мауленқызы", "Sholpan.Saimassayeva@astanait.edu.kz", "qwerty"),
             new User("Айвар", "Сахипов", "Айтуарович", "Aivar.Sakhipov@astanait.edu.kz", "qwerty"),
+
             new User("Жандос", "Сералиев", "Маратович", "zh.seraliyev@astanait.edu.kz", "qwerty"),
             new User("Гульсим", "Тулепова", "Нуржановна", "g.tulepova@astanait.edu.kz", "qwerty"),
             new User("Шыңғыс", "Алшынов", "Қайратұлы", "Shyngys.Alshynov@astanait.edu.kz", "qwerty"),
