@@ -110,7 +110,7 @@ public class UserController {
         String token = userService.generateUserToken(user);
 
         String subject = "Email Verification";
-        String text = "Please click the following link to verify your email: https://ipp-aitu-back.herokuapp.com/user/verify?token=" + token;
+        String text = "Please click the following link to verify your email: https://ipp-aitu.herokuapp.com/user/verify?token=" + token;
         emailNotificationService.sendSimpleMessage(user.getEmail(), subject, text);
 
         return new ResponseEntity<>("Verification mail has been sent", HttpStatus.OK);
@@ -162,7 +162,7 @@ public class UserController {
         String token = userService.generateUserToken(temp);
 
         String subject = "Resetting the password";
-        String text = "Please click the following link to reset your password: https://ipp-aitu-back.herokuapp.com/user/verifyReset?token=" + token;
+        String text = "Please click the following link to reset your password: https://ipp-aitu.herokuapp.com/user/verifyReset?token=" + token;
         emailNotificationService.sendSimpleMessage(user.getEmail(), subject, text);
 
         return new ResponseEntity<>("Password reset mail has been sent", HttpStatus.OK);
