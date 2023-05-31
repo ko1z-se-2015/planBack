@@ -502,7 +502,7 @@ public class VolunteerApplication {
 //            plan.setCreatedFor(userService.getByEmail("kk@kk.kz"));
 //            planService.createPlan(plan);
 
-            teachers.forEach(userService::verify);
+//            teachers.forEach(userService::verify);
 
             //SAVE KPI SECTIONS
             //PROFESSOR
