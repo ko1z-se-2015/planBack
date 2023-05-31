@@ -475,9 +475,9 @@ public class VolunteerApplication {
                           PositionService positionService, DegreeService degreeService,
                           KpiSectionService kpiSectionService) {
         return args -> {
-            userService.verify(Elvira);
-            userService.assignPositionByEmailAndName("Elvira.Aitmukhanbetova@astanait.edu.kz", "SENIOR LECTURER");
-            userService.assignDegreeByEmailAndName("Elvira.Aitmukhanbetova@astanait.edu.kz", "RESEARCH TEACHER");
+//            userService.verify(Elvira);
+//            userService.assignPositionByEmailAndName("Elvira.Aitmukhanbetova@astanait.edu.kz", "SENIOR LECTURER");
+//            userService.assignDegreeByEmailAndName("Elvira.Aitmukhanbetova@astanait.edu.kz", "RESEARCH TEACHER");
 //            directors.add(olzhas);
 //            directors.add(zhibek);
 //            directors.add(assel);
