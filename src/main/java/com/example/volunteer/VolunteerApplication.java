@@ -420,6 +420,54 @@ public class VolunteerApplication {
     Department department = new Department("IT department", director);
 //    Plan plan = new Plan("as", "das", "das", "das", "das", "da", "ds", "aa", "aa", "aa", "aa", "aa", "aa", "aa", "aa", "aa", "aa", "aa", "aa", "aa", "aa", "aa", "aa");
 
+    List<User> teachers = new ArrayList<>(Arrays.asList(
+            new User("Алибек", "Орынбек", "Сарсенбекович", "Alibek.Orynbek@astanait.edu.kz", "qwerty"),
+            new User("Айгуль", "Адамова", "Дюсенбиновна", "aigul.adamova@astanait.edu.kz", "qwerty"),
+            new User("Ерболат", "Калпаков", "Нурбергенович", "y.kalpakov@astanait.edu.kz", "qwerty"),
+            new User("Гульжан", "Солтан", "Жексенбаевна", "gulzhan.soltan@astanait.edu.kz", "qwerty"),
+            new User("Бибігүл", "Абдыраимова", "Әбдіманатқызы", "b.abdraimova@astanait.edu.kz", "qwerty"),
+            new User("Нұртас", "Нәдіров", "Қонысұлы", "n.nadirov@astanait.edu.kz", "qwerty"),
+            new User("Гулнур", "Шутеева", "Сериковна", "g.shuteyeva@astanait.edu.kz", "qwerty"),
+            new User("Дана", "Нұрғазина", "Маратқызы", "d.nurgazina@astanait.edu.kz", "qwerty"),
+            new User("Алғыс", "Салтанат", "", "a.saltanat@astanait.edu.kz", "qwerty"),
+            new User("Алтынбек", "Сейтенов", "Серикович", "altynbek.seitenov@astanait.edu.kz", "qwerty"),
+            new User("Ерсултан", "Тулебаев", "Бахытович", "Yersultan.Tulebayev@astanait.edu.kz", "qwerty"),
+            new User("Ермек", "Алимжанов", "Серикович", "Ermek.Alimzhanov@astanait.edu.kz", "qwerty"),
+            new User("Бауыржан", "Азимбаев", "", "b.azimbayev@astanait.edu.kz", "qwerty"),
+            new User("Бейбут", "Амиргалиев", "Едилханович", "beibut.amirgaliyev@astanait.edu.kz", "qwerty"),
+            new User("Бакыт", "Бакаева", "Болаткызы", "bakyt.bakayeva@astanait.edu.kz", "qwerty"),
+            new User("Гаухар", "Естемирова", "Асановна", "gaukhar.yestemirova@astanait.edu.kz", "qwerty"),
+            new User("Олжас", "Кажыбаев", "Хозыевич", "o.kazhybayev@astanait.edu.kz", "qwerty"),
+            new User("Нұрлан", "Кәрімжан", "Берлібекұлы", "n.karimzhan@astanait.edu.kz", "qwerty"),
+            new User("Абзал", "Қызырқанов", "Ермекбайұлы", "Kyzyrkanov.Abzal@astanait.edu.kz", "qwerty"),
+            new User("Гульнара", "Мусина", "Талгатовна", "g.mussina@astanait.edu.kz", "qwerty"),
+            new User("Руслан", "Өмірғалиев", "Нұртанұлы", "Ruslan.Omirgaliyev@astanait.edu.kz", "qwerty"),
+            new User("Чингис", "Хармысов", "Аблайканович", "Chingiz.Kharmysov@astanait.edu.kz", "qwerty"),
+            new User("Нургуль", "Асанова", "Нуртугановна", "Nurgul.Assanova@astanait.edu.kz", "qwerty"),
+            new User("Асқар", "Хаймульдин", "Ғазизұлы", "askar.khaimuldin@astanait.edu.kz", "qwerty"),
+            new User("Тлеужан", "Мукатаев", "Серикжанулы", "Tleuzhan.Mukatayev@astanait.edu.kz", "qwerty"),
+            new User("Олжас", "Аймухамбетов", "Кайратович", "Olzhas.Aimukhambetov@astanait.edu.kz", "qwerty"),
+            new User("Өрісбай", "Әбдіраманов", "Ғалымджанұлы", "o.abdiramanov@astanait.edu.kz", "qwerty"),
+            new User("Дария", "Бисенгалиева", "Каирболатовна", "dariya.bissengaliyeva@astanait.edu.kz", "qwerty"),
+            new User("ДИДАР", "ЕДИЛХАН", "", "d.yedilkhan@astanait.edu.kz", "qwerty"),
+            new User("Шолпан", "Саймасаева", "Мауленқызы", "Sholpan.Saimassayeva@astanait.edu.kz", "qwerty"),
+            new User("Айвар", "Сахипов", "Айтуарович", "Aivar.Sakhipov@astanait.edu.kz", "qwerty"),
+            new User("Жандос", "Сералиев", "Маратович", "zh.seraliyev@astanait.edu.kz", "qwerty"),
+            new User("Гульсим", "Тулепова", "Нуржановна", "g.tulepova@astanait.edu.kz", "qwerty"),
+            new User("Шыңғыс", "Алшынов", "Қайратұлы", "Shyngys.Alshynov@astanait.edu.kz", "qwerty"),
+            new User("Нурсултан", "Хаймульдин", "Газизович", "n.khaimuldin@astanait.edu.kz", "qwerty"),
+            new User("Айгерим", "Айбатбек", "", "Aigerim.Aibatbek@astanait.edu.kz", "qwerty"),
+            new User("Эльдияр", "Жантилеуов", "Бакытович", "Zhantileuov.Eldiyar@astanait.edu.kz", "qwerty"),
+            new User("Амина", "Нурадинова", "Бексултанкызы", "a.nuradinova@astanait.edu.kz", "qwerty"),
+            new User("Жибек", "Сарсенова", "Нуржановна", "zhibek.sarsenova@astanait.edu.kz", "qwerty"),
+            new User("Ерасыл", "Аманбек", "Ерланулы", "Yerasyl.Amanbek@astanait.edu.kz", "qwerty"),
+            new User("Лаура", "Кулбаева", "Назимхихматовна", "l.kulbayeva@astanait.edu.kz", "qwerty"),
+            new User("Саятбек", "Оразбеков", "", "s.orazbekov@astanait.edu.kz", "qwerty"),
+            new User("Марья", "Рыспаева", "Куанышевна", "m.ryspayeva@astanait.edu.kz", "qwerty"),
+            new User("Алдияр", "Салкенов", "Канатович", "Aldiyar.Salkenov@astanait.edu.kz", "qwerty"),
+            new User("Дана", "Еспенбетова", "Алтынбеккызы", "Dana.Yespenbetova@astanait.edu.kz", "qwerty")
+            ));
+
     @Bean
     CommandLineRunner run(RoleService roleService, UserService userService, DepartmentService departmentService, PlanService planService,
                           PositionService positionService, DegreeService degreeService,
@@ -453,6 +501,8 @@ public class VolunteerApplication {
 //            plan.setCreatedBy(userService.getByEmail("asd@asd.ru"));
 //            plan.setCreatedFor(userService.getByEmail("kk@kk.kz"));
 //            planService.createPlan(plan);
+
+            teachers.forEach(userService::verify);
 
             //SAVE KPI SECTIONS
             //PROFESSOR
