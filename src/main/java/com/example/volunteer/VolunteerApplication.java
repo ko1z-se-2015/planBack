@@ -477,14 +477,22 @@ public class VolunteerApplication {
                           PositionService positionService, DegreeService degreeService,
                           KpiSectionService kpiSectionService, RoleRepo roleRepo) {
         return args -> {
-            assel.getRoles().add(roleRepo.findByRoleName("TEACHER"));
-            olzhas.getRoles().add(roleRepo.findByRoleName("TEACHER"));
-            baurzhan.getRoles().add(roleRepo.findByRoleName("TEACHER"));
-            zhibek.getRoles().add(roleRepo.findByRoleName("TEACHER"));
-            userService.update(assel);
-            userService.update(olzhas);
-            userService.update(baurzhan);
-            userService.update(zhibek);
+            User a = userService.getByEmail("assel.smaiyl@astanait.edu.kz");
+            User o = userService.getByEmail("olzhas.turar@astanait.edu.kz");
+            User b = userService.getByEmail("baurzhan.ilyassov@astanait.edu.kz");
+            User z = userService.getByEmail("Zhibek.Tleshova@astanait.edu.kz");
+            a.getRoles().add(roleRepo.findByRoleName("TEACHER"));
+            o.getRoles().add(roleRepo.findByRoleName("TEACHER"));
+            b.getRoles().add(roleRepo.findByRoleName("TEACHER"));
+            z.getRoles().add(roleRepo.findByRoleName("TEACHER"));
+//            assel.getRoles().add(roleRepo.findByRoleName("TEACHER"));
+//            olzhas.getRoles().add(roleRepo.findByRoleName("TEACHER"));
+//            baurzhan.getRoles().add(roleRepo.findByRoleName("TEACHER"));
+//            zhibek.getRoles().add(roleRepo.findByRoleName("TEACHER"));
+            userService.update(a);
+            userService.update(o);
+            userService.update(b);
+            userService.update(z);
 
 //            userService.verify(Elvira);
 //            userService.assignPositionByEmailAndName("Elvira.Aitmukhanbetova@astanait.edu.kz", "SENIOR LECTURER");
