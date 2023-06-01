@@ -477,10 +477,10 @@ public class VolunteerApplication {
                           PositionService positionService, DegreeService degreeService,
                           KpiSectionService kpiSectionService, RoleRepo roleRepo) {
         return args -> {
-            assel.getRoles().add(roleRepo.findByRoleName("TEACHER"));
-            olzhas.getRoles().add(roleRepo.findByRoleName("TEACHER"));
-            baurzhan.getRoles().add(roleRepo.findByRoleName("TEACHER"));
-            zhibek.getRoles().add(roleRepo.findByRoleName("TEACHER"));
+//            assel.getRoles().add(roleRepo.findByRoleName("TEACHER"));
+//            olzhas.getRoles().add(roleRepo.findByRoleName("TEACHER"));
+//            baurzhan.getRoles().add(roleRepo.findByRoleName("TEACHER"));
+//            zhibek.getRoles().add(roleRepo.findByRoleName("TEACHER"));
 
 //            userService.verify(Elvira);
 //            userService.assignPositionByEmailAndName("Elvira.Aitmukhanbetova@astanait.edu.kz", "SENIOR LECTURER");
