@@ -2,6 +2,7 @@ package com.example.volunteer;
 
 import com.example.volunteer.entities.*;
 import com.example.volunteer.entities.kpi_sections.KpiSection;
+import com.example.volunteer.repositories.RoleRepo;
 import com.example.volunteer.services.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -401,7 +402,7 @@ public class VolunteerApplication {
     ));
 
     User teacher = new User("Kanat", "Berkinbayev", "Galymuly", "0.5", "clashofkanat@gmail.com",  "qwerty");
-    User director = new User("Daniyar", "Myrzasary", "Timuruly", "1", "myrzasary05012003@mail.ru", "qwerty");
+    //User director = new User("Daniyar", "Myrzasary", "Timuruly", "1", "myrzasary05012003@mail.ru", "qwerty");
 
     User olzhas = new User("Олжас", "Тұрар", "Нұрқонысұлы", "1", "olzhas.turar@astanait.edu.kz", "olzhas");
     User assel = new User("Асель", "Смайыл", "Маралбайқызы", "1", "assel.smaiyl@astanait.edu.kz", "assel");
@@ -417,7 +418,7 @@ public class VolunteerApplication {
             new Department("Department of General Educational Disciplines", zhibek)
     ));
 
-    Department department = new Department("IT department", director);
+//    Department department = new Department("IT department", director);
 //    Plan plan = new Plan("as", "das", "das", "das", "das", "da", "ds", "aa", "aa", "aa", "aa", "aa", "aa", "aa", "aa", "aa", "aa", "aa", "aa", "aa", "aa", "aa", "aa");
 
     List<User> teachers = new ArrayList<>(Arrays.asList(
@@ -474,8 +475,13 @@ public class VolunteerApplication {
     @Bean
     CommandLineRunner run(RoleService roleService, UserService userService, DepartmentService departmentService, PlanService planService,
                           PositionService positionService, DegreeService degreeService,
-                          KpiSectionService kpiSectionService) {
+                          KpiSectionService kpiSectionService, RoleRepo roleRepo) {
         return args -> {
+            assel.getRoles().add(roleRepo.findByRoleName("TEACHER"));
+            olzhas.getRoles().add(roleRepo.findByRoleName("TEACHER"));
+            baurzhan.getRoles().add(roleRepo.findByRoleName("TEACHER"));
+            zhibek.getRoles().add(roleRepo.findByRoleName("TEACHER"));
+
 //            userService.verify(Elvira);
 //            userService.assignPositionByEmailAndName("Elvira.Aitmukhanbetova@astanait.edu.kz", "SENIOR LECTURER");
 //            userService.assignDegreeByEmailAndName("Elvira.Aitmukhanbetova@astanait.edu.kz", "RESEARCH TEACHER");
