@@ -558,36 +558,36 @@ public class PlanService {
                         Cell lecturesFact = dataRow.createCell(5);
                         lecturesFact.setCellValue(academicWork.getLecturesFact());
                         lecturesFact.setCellStyle(blueBackgroundCellStyle);
-                        sumLecturesFact += isEmptyOrWhitespace(academicWork.getLecturesPlan()) ? 0 : Integer.parseInt(academicWork.getLecturesFact());
+                        sumLecturesFact += isEmptyOrWhitespace(academicWork.getLecturesFact()) ? 0 : Integer.parseInt(academicWork.getLecturesFact());
 
                         Cell practicePlan = dataRow.createCell(6);
                         practicePlan.setCellValue(academicWork.getPracticesPlan());
-                        sumPractiePlan += isEmptyOrWhitespace(academicWork.getLecturesPlan()) ? 0 : Integer.parseInt(academicWork.getPracticesPlan());
+                        sumPractiePlan += isEmptyOrWhitespace(academicWork.getPracticesPlan()) ? 0 : Integer.parseInt(academicWork.getPracticesPlan());
 
 
                         Cell practiceFact = dataRow.createCell(7);
                         practiceFact.setCellValue(academicWork.getPracticesFact());
                         practiceFact.setCellStyle(blueBackgroundCellStyle);
-                        sumPracticeFact += isEmptyOrWhitespace(academicWork.getLecturesPlan()) ? 0 : Integer.parseInt(academicWork.getPracticesFact());
+                        sumPracticeFact += isEmptyOrWhitespace(academicWork.getPracticesFact()) ? 0 : Integer.parseInt(academicWork.getPracticesFact());
 
                         Cell officePlan = dataRow.createCell(8);
                         officePlan.setCellValue(academicWork.getHoursPlan());
-                        sumHoursPlan += isEmptyOrWhitespace(academicWork.getLecturesPlan()) ? 0 : Integer.parseInt(academicWork.getHoursPlan());
+                        sumHoursPlan += isEmptyOrWhitespace(academicWork.getHoursPlan()) ? 0 : Integer.parseInt(academicWork.getHoursPlan());
 
 
                         Cell officeFact = dataRow.createCell(9);
                         officeFact.setCellValue(academicWork.getHoursFact());
                         officeFact.setCellStyle(blueBackgroundCellStyle);
-                        sumHoursFact += isEmptyOrWhitespace(academicWork.getLecturesPlan()) ? 0 : Integer.parseInt(academicWork.getHoursFact());
+                        sumHoursFact += isEmptyOrWhitespace(academicWork.getHoursFact()) ? 0 : Integer.parseInt(academicWork.getHoursFact());
 
                         Cell totalPlan = dataRow.createCell(10);
                         totalPlan.setCellValue(academicWork.getTotalPlan());
-                        sumTotalPlan += isEmptyOrWhitespace(academicWork.getLecturesPlan()) ? 0 : Integer.parseInt(academicWork.getTotalPlan());
+                        sumTotalPlan += isEmptyOrWhitespace(academicWork.getTotalPlan()) ? 0 : Integer.parseInt(academicWork.getTotalPlan());
 
                         Cell totalFact = dataRow.createCell(11);
                         totalFact.setCellValue(academicWork.getTotalFact());
                         totalFact.setCellStyle(blueBackgroundCellStyle);
-                        sumTotalFact += isEmptyOrWhitespace(academicWork.getLecturesPlan()) ? 0 : Integer.parseInt(academicWork.getTotalFact());
+                        sumTotalFact += isEmptyOrWhitespace(academicWork.getTotalFact()) ? 0 : Integer.parseInt(academicWork.getTotalFact());
 
                     }
 
