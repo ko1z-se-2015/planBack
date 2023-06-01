@@ -477,15 +477,15 @@ public class VolunteerApplication {
                           PositionService positionService, DegreeService degreeService,
                           KpiSectionService kpiSectionService, RoleRepo roleRepo) {
         return args -> {
-            User a = userService.getByEmail("assel.smaiyl@astanait.edu.kz");
-            User o = userService.getByEmail("olzhas.turar@astanait.edu.kz");
-            User b = userService.getByEmail("baurzhan.ilyassov@astanait.edu.kz");
-            User z = userService.getByEmail("Zhibek.Tleshova@astanait.edu.kz");
-
-            departmentService.addTeacher(departmentService.findByName("Department of Computer Engineering"), a);
-            departmentService.addTeacher(departmentService.findByName("Department of Computational and Data Science"), o);
-            departmentService.addTeacher(departmentService.findByName("Department of Intellectual Systems and Cybersecurity"), b);
-            departmentService.addTeacher(departmentService.findByName("Department of General Educational Disciplines"), z);
+//            User a = userService.getByEmail("assel.smaiyl@astanait.edu.kz");
+//            User o = userService.getByEmail("olzhas.turar@astanait.edu.kz");
+//            User b = userService.getByEmail("baurzhan.ilyassov@astanait.edu.kz");
+//            User z = userService.getByEmail("Zhibek.Tleshova@astanait.edu.kz");
+//
+//            departmentService.addTeacher(departmentService.findByName("Department of Computer Engineering"), a);
+//            departmentService.addTeacher(departmentService.findByName("Department of Computational and Data Science"), o);
+//            departmentService.addTeacher(departmentService.findByName("Department of Intellectual Systems and Cybersecurity"), b);
+//            departmentService.addTeacher(departmentService.findByName("Department of General Educational Disciplines"), z);
 
 //            a.getRoles().add(roleRepo.findByRoleName("TEACHER"));
 //            o.getRoles().add(roleRepo.findByRoleName("TEACHER"));
